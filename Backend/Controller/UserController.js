@@ -30,17 +30,17 @@ export const signUp = async (req, res) => {
 
 // Login Function
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { Email, Password } = req.body;
 
   try {
     // Find user by email
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ Email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     // Check password (in production, compare hashed passwords)
-    if (user.password !== password) {
+    if (user.Password !== Password) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
