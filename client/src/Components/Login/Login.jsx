@@ -1,6 +1,10 @@
 import React from "react";
+import SignUp from "../SignUp/SignUp"
+import { useState } from "react";
 
 const Login = () => {
+    const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+
   return (
     <div
       className="h-screen flex items-center justify-center bg-cover bg-center"
@@ -70,7 +74,7 @@ const Login = () => {
           <p className="text-center text-sm text-gray-600 mt-6">
             Don’t have an account?{" "}
             <a
-              href="/register"
+              onClick={() => setIsSignUpOpen(true)}
               className="text-pink-500 font-medium hover:underline"
             >
               Sign Up
@@ -87,6 +91,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {isSignUpOpen && <SignUp onClose={() => setIsSignUpOpen(false)} />}
     </div>
   );
 };
