@@ -9,10 +9,10 @@ function App() {
     <div className="h-screen">
       <Routes>
         {/* Correct usage of Route */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
 
         {/* Default route to redirect to login */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );
