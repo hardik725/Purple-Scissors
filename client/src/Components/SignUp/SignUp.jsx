@@ -1,49 +1,52 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = ({ onClose }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    age: "",
-    place: "",
-    mobile: "",
-  });
-
+  const [name, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [age, setAge] = useState("");
+  const [place, setPlace] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     setError(null); // Clear any previous errors
 
     try {
-      const response = await fetch("https://purple-scissors.onrender.com/user/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://purple-scissors.onrender.com/user/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            Name: name,
+            Email: email,
+            Password: password,
+            Age: age,
+            Place: place,
+            PhoneNumber: phoneNumber,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
-        alert("Account created successfully!");
-        onClose(); // Close the SignUp modal
+        console.log("User Signed Up:", data);
+        navigate("/"); // Navigate to home on successful sign-up
+        onClose;
       } else {
         const errorData = await response.json();
-        setError(errorData.message || "Failed to sign up. Please try again.");
+        setError(errorData.message || "Sign-up failed. Please try again.");
       }
-    } catch (err) {
-      setError("An error occurred. Please try again.");
-      console.error(err);
+    } catch (error) {
+      console.error("Sign-Up Error:", error);
+      setError("Something went wrong. Please try again.");
     }
   };
 
@@ -58,7 +61,7 @@ const SignUp = ({ onClose }) => {
           ✕
         </button>
 
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+        <h2 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
           Create an Account
         </h2>
 
@@ -68,127 +71,80 @@ const SignUp = ({ onClose }) => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSignUp}>
           {/* Full Name */}
           <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Full Name
-            </label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400"
               placeholder="Enter your full name"
+              value={name}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400"
             />
           </div>
 
-          {/* Email Address */}
+          {/* Email */}
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email Address
-            </label>
             <input
               type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400"
             />
           </div>
 
           {/* Password */}
           <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
             <input
               type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400"
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400"
             />
           </div>
 
           {/* Age */}
           <div className="mb-4">
-            <label
-              htmlFor="age"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Age
-            </label>
             <input
               type="number"
-              id="age"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              required
-              className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400"
               placeholder="Enter your age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400"
             />
           </div>
 
           {/* Place */}
           <div className="mb-4">
-            <label
-              htmlFor="place"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Place
-            </label>
             <input
               type="text"
-              id="place"
-              name="place"
-              value={formData.place}
-              onChange={handleChange}
-              required
-              className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400"
               placeholder="Enter your place"
+              value={place}
+              onChange={(e) => setPlace(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400"
             />
           </div>
 
-          {/* Mobile Number */}
-          <div className="mb-6">
-            <label
-              htmlFor="mobile"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Mobile Number
-            </label>
+          {/* Phone Number */}
+          <div className="mb-4">
             <input
               type="tel"
-              id="mobile"
-              name="mobile"
-              value={formData.mobile}
-              onChange={handleChange}
+              placeholder="Enter your phone number"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
               required
-              className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400"
-              placeholder="Enter your mobile number"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400"
             />
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold shadow-lg hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-500 transition-all duration-300"

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import SignUp from "../SignUp/SignUp";
 
-const Login = () => {
+const Login = ({onLogin}) => {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,16 +19,16 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ Email: email, Password: password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert("Login successful!");
-        // Perform further actions like saving tokens or redirecting
+        onLogin(email); // Pass the username to the parent component
+        navigate('/dashboard');
       } else {
-        setError(data.message || "Invalid login credentials.");
+        console.error("Login Failed");
       }
     } catch (err) {
       setError("An error occurred while trying to log in.");
@@ -79,7 +79,7 @@ const Login = () => {
                 type="email"
                 id="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setUserEmail(e.target.value)}
                 className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400 transition-all duration-200"
                 placeholder="Enter your email"
               />
