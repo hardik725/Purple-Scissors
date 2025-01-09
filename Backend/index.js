@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
+import UserRouter from "./Router/UserRouter.js"
 
 dotenv.config();
 
@@ -12,6 +13,9 @@ const URI = process.env.MongoDBURI;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Routes
+app.use("/user",UserRouter);
 
 // Log MongoDB URI for debugging
 console.log("MongoDB URI:", URI);
