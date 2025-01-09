@@ -1,34 +1,33 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-  name: {
+  Name: {
     type: String,
     required: true,
     trim: true,
   },
-  email: {
+  Email: {
     type: String,
     required: true,
     unique: true,
-    lowercase: true,
     trim: true,
   },
-  password: {
+  Password: {
     type: String,
     required: true,
-    minlength: 6,
+    minlength: 4,
   },
-  age: {
+  Age: {
     type: Number,
     required: true,
     min: 0, // Ensures age cannot be negative
   },
-  place: {
+  Place: {
     type: String,
     required: true,
     trim: true,
   },
-  phoneNumber: {
+  PhoneNumber: {
     type: String,
     required: false,
     match: [/^\d{10}$/, "Please enter a valid phone number"], // Validates a 10-digit phone number
