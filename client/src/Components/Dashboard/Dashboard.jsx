@@ -4,15 +4,17 @@ const Dashboard = ({ email, onLogout }) => {
   return (
     <div className="min-h-screen bg-gradient-to-r from-pink-500 to-purple-600 text-white flex flex-col">
       {/* Header */}
-      <header className="p-6 bg-purple-800 shadow-md flex justify-between items-center">
-        <h1 className="text-3xl font-extrabold tracking-wide">Salon Dashboard</h1>
-        <div className="flex items-center space-x-4">
-          <p className="text-lg font-medium">
+      <header className="p-4 bg-purple-800 shadow-md flex flex-col md:flex-row md:justify-between md:items-center">
+        <h1 className="text-2xl md:text-3xl font-extrabold tracking-wide mb-2 md:mb-0 text-center md:text-left">
+          Salon Dashboard
+        </h1>
+        <div className="flex flex-col md:flex-row md:items-center md:space-x-4 text-center">
+          <p className="text-sm md:text-lg font-medium">
             Welcome, <span className="font-semibold">{email || "Guest"}!</span>
           </p>
           <button
             onClick={onLogout}
-            className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition-all"
+            className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition-all mt-2 md:mt-0"
           >
             Logout
           </button>
@@ -20,79 +22,60 @@ const Dashboard = ({ email, onLogout }) => {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 p-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Appointment Management */}
-          <div className="bg-white text-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
-            <h2 className="text-2xl font-bold mb-4">Appointments</h2>
-            <p className="text-gray-600 mb-4">
-              View and manage your upcoming appointments with ease.
-            </p>
-            <button className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition-all">
-              Manage Appointments
-            </button>
-          </div>
-
-          {/* Staff Management */}
-          <div className="bg-white text-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
-            <h2 className="text-2xl font-bold mb-4">Staff</h2>
-            <p className="text-gray-600 mb-4">
-              View and assign tasks to your professional staff.
-            </p>
-            <button className="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600 transition-all">
-              View Staff
-            </button>
-          </div>
-
-          {/* Inventory Management */}
-          <div className="bg-white text-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
-            <h2 className="text-2xl font-bold mb-4">Inventory</h2>
-            <p className="text-gray-600 mb-4">
-              Keep track of your salon products and supplies.
-            </p>
-            <button className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition-all">
-              Check Inventory
-            </button>
-          </div>
-
-          {/* Customer Feedback */}
-          <div className="bg-white text-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
-            <h2 className="text-2xl font-bold mb-4">Customer Feedback</h2>
-            <p className="text-gray-600 mb-4">
-              Read and respond to reviews and suggestions from your customers.
-            </p>
-            <button className="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600 transition-all">
-              View Feedback
-            </button>
-          </div>
-
-          {/* Promotions and Offers */}
-          <div className="bg-white text-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
-            <h2 className="text-2xl font-bold mb-4">Promotions</h2>
-            <p className="text-gray-600 mb-4">
-              Create and promote exciting offers for your customers.
-            </p>
-            <button className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition-all">
-              Manage Promotions
-            </button>
-          </div>
-
-          {/* Reports and Analytics */}
-          <div className="bg-white text-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
-            <h2 className="text-2xl font-bold mb-4">Analytics</h2>
-            <p className="text-gray-600 mb-4">
-              Get insights into your salon's performance and growth.
-            </p>
-            <button className="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600 transition-all">
-              View Analytics
-            </button>
-          </div>
+      <div className="flex-1 p-4 md:p-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Cards */}
+          {[
+            {
+              title: "Appointments",
+              description: "View and manage your upcoming appointments with ease.",
+              button: "Manage Appointments",
+            },
+            {
+              title: "Staff",
+              description: "View and assign tasks to your professional staff.",
+              button: "View Staff",
+            },
+            {
+              title: "Inventory",
+              description: "Keep track of your salon products and supplies.",
+              button: "Check Inventory",
+            },
+            {
+              title: "Customer Feedback",
+              description: "Read and respond to reviews and suggestions from your customers.",
+              button: "View Feedback",
+            },
+            {
+              title: "Promotions",
+              description: "Create and promote exciting offers for your customers.",
+              button: "Manage Promotions",
+            },
+            {
+              title: "Analytics",
+              description: "Get insights into your salon's performance and growth.",
+              button: "View Analytics",
+            },
+          ].map((card, index) => (
+            <div
+              key={index}
+              className="bg-white text-gray-800 rounded-lg shadow-md p-4 sm:p-6 hover:shadow-xl transition-all flex flex-col"
+            >
+              <h2 className="text-xl md:text-2xl font-bold mb-4">{card.title}</h2>
+              <p className="text-sm md:text-base text-gray-600 mb-4">
+                {card.description}
+              </p>
+              <button className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition-all self-start">
+                {card.button}
+              </button>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="p-6 bg-purple-800 text-center">
-        <p className="text-sm font-medium">
+      <footer className="p-4 bg-purple-800 text-center">
+        <p className="text-xs md:text-sm font-medium">
           &copy; {new Date().getFullYear()} Your Salon. All rights reserved.
         </p>
       </footer>
