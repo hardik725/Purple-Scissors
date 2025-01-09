@@ -1,9 +1,41 @@
-import React from "react";
-import SignUp from "../SignUp/SignUp"
-import { useState } from "react";
+import React, { useState } from "react";
+import SignUp from "../SignUp/SignUp";
 
 const Login = () => {
-    const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("https://purple-scissors.onrender.com/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Login successful!");
+        // Perform further actions like saving tokens or redirecting
+      } else {
+        setError(data.message || "Invalid login credentials.");
+      }
+    } catch (err) {
+      setError("An error occurred while trying to log in.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div
@@ -18,7 +50,7 @@ const Login = () => {
         {/* Logo Section */}
         <div className="hidden md:flex flex-col items-center justify-center w-1/2 text-white p-8">
           <img
-            src="https://static.vecteezy.com/system/resources/previews/054/267/527/non_2x/scissors-outline-slip-style-icon-vector.jpg" // Replace with your logo's URL
+            src="https://static.vecteezy.com/system/resources/previews/054/267/527/non_2x/scissors-outline-slip-style-icon-vector.jpg"
             alt="Logo"
             className="w-40 h-40 mb-6"
           />
@@ -35,7 +67,7 @@ const Login = () => {
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
             Login to Your Account
           </h2>
-          <form>
+          <form onSubmit={handleLogin}>
             <div className="mb-6">
               <label
                 htmlFor="email"
@@ -46,6 +78,8 @@ const Login = () => {
               <input
                 type="email"
                 id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400 transition-all duration-200"
                 placeholder="Enter your email"
               />
@@ -60,25 +94,31 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400 transition-all duration-200"
                 placeholder="Enter your password"
               />
             </div>
+            {error && (
+              <p className="text-sm text-red-500 mb-4">{error}</p>
+            )}
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold shadow-lg hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-500 transition-all duration-300"
+              disabled={loading}
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
           <p className="text-center text-sm text-gray-600 mt-6">
             Don’t have an account?{" "}
-            <a
+            <span
               onClick={() => setIsSignUpOpen(true)}
-              className="text-pink-500 font-medium hover:underline"
+              className="text-pink-500 font-medium hover:underline cursor-pointer"
             >
               Sign Up
-            </a>
+            </span>
           </p>
           <div className="mt-8 text-center text-sm text-gray-500">
             <p>Forgot your password?</p>

@@ -1,13 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 
 const SignUp = ({ onClose }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    age: "",
+    place: "",
+    mobile: "",
+  });
+
+  const [error, setError] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null); // Clear any previous errors
+
+    try {
+      const response = await fetch("https://purple-scissors.onrender.com/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        alert("Account created successfully!");
+        onClose(); // Close the SignUp modal
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Failed to sign up. Please try again.");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+      console.error(err);
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 relative">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+          className="absolute top-2 right-2 text-gray-600 hover:text-red-600 transition-all duration-200 text-xl"
         >
           ✕
         </button>
@@ -16,7 +62,13 @@ const SignUp = ({ onClose }) => {
           Create an Account
         </h2>
 
-        <form>
+        {error && (
+          <div className="mb-4 text-red-600 text-center font-medium">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit}>
           {/* Full Name */}
           <div className="mb-4">
             <label
@@ -28,6 +80,10 @@ const SignUp = ({ onClose }) => {
             <input
               type="text"
               id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
               className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400"
               placeholder="Enter your full name"
             />
@@ -44,6 +100,10 @@ const SignUp = ({ onClose }) => {
             <input
               type="email"
               id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
               className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400"
               placeholder="Enter your email"
             />
@@ -60,6 +120,10 @@ const SignUp = ({ onClose }) => {
             <input
               type="password"
               id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
               className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400"
               placeholder="Enter your password"
             />
@@ -76,6 +140,10 @@ const SignUp = ({ onClose }) => {
             <input
               type="number"
               id="age"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              required
               className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400"
               placeholder="Enter your age"
             />
@@ -92,6 +160,10 @@ const SignUp = ({ onClose }) => {
             <input
               type="text"
               id="place"
+              name="place"
+              value={formData.place}
+              onChange={handleChange}
+              required
               className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400"
               placeholder="Enter your place"
             />
@@ -108,6 +180,10 @@ const SignUp = ({ onClose }) => {
             <input
               type="tel"
               id="mobile"
+              name="mobile"
+              value={formData.mobile}
+              onChange={handleChange}
+              required
               className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400"
               placeholder="Enter your mobile number"
             />
