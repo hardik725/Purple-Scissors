@@ -46,3 +46,23 @@ export const bookAppointment = async (req, res) => {
     res.status(500).json({ error: "An error occurred while booking the appointment." });
   }
 };
+
+export const findAppointment = async (req, res) => {
+  const { Email } = req.body;
+
+  try {
+    // Fetch appointments based on the email
+    const appointments = await Appointment.find({ Email });
+
+    // Map and return the Date and Time of each appointment
+    const alldata = appointments.map((appointment) => ({
+      Date: appointment.Date,
+      Time: appointment.Time,
+    }));
+
+    res.status(200).json({ alldata });
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    res.status(500).json({ error: "An error occurred while fetching appointments." });
+  }
+};
