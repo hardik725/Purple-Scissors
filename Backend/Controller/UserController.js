@@ -26,12 +26,12 @@ export const signUp = async (req, res) => {
 
     // Create a new user
     const newUser = new User({
-      Name,
-      Email,
-      Password, // Note: Use hashing for passwords in production (e.g., bcrypt)
+      Name:Name,
+      Email:Email,
+      Password:Password, // Note: Use hashing for passwords in production (e.g., bcrypt)
       Age: ageNumber, // Store age as a number
-      Place,
-      PhoneNumber,
+      Place:Place,
+      PhoneNumber:PhoneNumber,
     });
 
     await newUser.save();
