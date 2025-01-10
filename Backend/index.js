@@ -11,42 +11,47 @@ const app = express();
 const PORT = process.env.PORT || 4001;
 const URI = process.env.MongoDBURI;
 
+// Check if URI is defined
+if (!URI) {
+  console.error("MongoDB URI is not defined in the environment variables.");
+  process.exit(1);
+}
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/user",UserRouter);
+app.use("/user", UserRouter);
+app.use("/appointment", AppointmentRouter);
 
-app.use("appointment",AppointmentRouter);
-
-// Log MongoDB URI for debugging
-console.log("MongoDB URI:", URI);
-
-// Enable Mongoose debugging for detailed logs
-mongoose.set('debug', true);
+// Example route
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to the API!' });
+});
 
 // MongoDB connection
-mongoose.connect(URI)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((error) => {
+(async () => {
+  try {
+    await mongoose.connect(URI);
+    console.log("Connected to MongoDB");
+  } catch (error) {
     console.error("MongoDB Connection Error:", error.message);
-    console.error("Error Details:", error);
-  });
-
-// Capture MongoDB connection errors
-mongoose.connection.on('error', (error) => {
-  console.error("MongoDB Connection Error (Event):", error.message);
-});
+    process.exit(1);
+  }
+})();
 
 // Log MongoDB disconnection events
 mongoose.connection.on('disconnected', () => {
   console.log("MongoDB disconnected");
 });
 
-// Example route
-app.get('/', (req, res) => {
-  res.send('Bye World!');
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  console.log("Closing MongoDB connection...");
+  await mongoose.connection.close();
+  console.log("MongoDB connection closed. Exiting process.");
+  process.exit(0);
 });
 
 // Start the server
