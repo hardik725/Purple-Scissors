@@ -11,6 +11,6 @@ router.get("/available-slots", getAvailableSlots);
 router.post("/book", bookAppointment);
 
 // Router to get Appointments
-router.get("/getappointment/:email",findAppointment);
+router.get("/getappointment/:Email",findAppointment);
 
 export default router;
