@@ -84,7 +84,7 @@ const Navbar = ({ email, onLogout }) => {
                   Services
                 </li>
                 <li className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer transition">
-                  About Us
+                <Link to="/appointment">Appointment</Link>
                 </li>
                 <li className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer transition">
                   Contact

@@ -133,14 +133,14 @@ const Dashboard = ({ email, onLogout }) => {
         feedback:
           "The service was amazing! My hair has never looked better. Highly recommend!",
         image:
-          "https://images.pexels.com/photos/3740167/pexels-photo-3740167.jpeg",
+          "https://i.mdel.net/i/db/2018/1/829928/829928-500w.jpg",
       },
       {
         name: "Emma",
         feedback:
           "I had a relaxing experience. The facial treatment left my skin glowing!",
         image:
-          "https://images.pexels.com/photos/4142132/pexels-photo-4142132.jpeg",
+          "https://c4.wallpaperflare.com/wallpaper/276/354/404/emma-roberts-wallpaper-preview.jpg",
       },
     ].map((testimonial, index) => (
       <div
@@ -171,67 +171,74 @@ const Dashboard = ({ email, onLogout }) => {
 </section>
 
 
-{/* Make an Appointment Section */}
-<section className="py-20 bg-gradient-to-r from-[#FDE2E4] via-[#FAD4D8] to-[#FFE2E2]">
-  <div className="text-center mb-12">
-    <h2 className="text-5xl font-display font-extrabold text-[#4A4A4A] tracking-wide">
-      Book Your <span className="text-[#D96161]">Appointment</span>
-    </h2>
-    <p className="mt-4 text-lg text-[#555] font-serif max-w-2xl mx-auto">
-      Your journey to relaxation and rejuvenation begins here. Fill out the form below to secure your personalized session with us.
-    </p>
-  </div>
-  <div className="flex flex-col md:flex-row items-center justify-center gap-12">
-    {/* Image Section */}
-    <div className="w-full md:w-1/2 flex justify-center">
-      <img
-        src="https://images.pexels.com/photos/3993433/pexels-photo-3993433.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-        alt="Relaxation"
-        className="rounded-2xl shadow-xl transform transition-all hover:scale-105 hover:rotate-1 duration-300 ease-in-out"
-      />
+{/* Write a Review Section */}
+<section className="py-16 bg-gradient-to-r from-[#E8F6F3] via-[#D1EEE7] to-[#BDE4DD]">
+  <div className="container mx-auto px-6 lg:px-20">
+    <div className="text-center mb-14">
+      <h2 className="text-4xl md:text-5xl font-display font-bold text-[#204E4A] tracking-wider">
+        Share Your <span className="text-[#2FA79B]">Experience</span>
+      </h2>
+      <p className="mt-5 text-base md:text-lg text-[#4D7A74] font-serif max-w-2xl mx-auto">
+        Help us grow by sharing your honest feedback. Your reviews help others
+        and us to keep improving!
+      </p>
     </div>
-    {/* Form Section */}
-    <div className="w-full md:w-1/2 bg-white p-10 rounded-2xl shadow-2xl">
-      <form className="space-y-6">
-        {/* Input Fields */}
-        <div className="flex flex-col md:flex-row gap-6">
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
-          />
-          <input
-            type="email"
-            placeholder="Email Address"
-            className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
-          />
-        </div>
-        <div className="flex flex-col md:flex-row gap-6">
-          <input
-            type="tel"
-            placeholder="Phone Number"
-            className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
-          />
-          <input
-            type="date"
-            className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
-          />
-        </div>
-        <textarea
-          placeholder="Additional Notes"
-          className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
-          rows="4"
-        ></textarea>
-        {/* Button */}
-        <button className="w-full bg-gradient-to-r from-[#F28E8E] to-[#D96161] text-white px-6 py-4 rounded-full text-lg font-bold shadow-lg hover:opacity-90 transition-all duration-300">
-          Confirm Appointment
-        </button>
-      </form>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* Image Section */}
+      <div className="flex justify-center">
+        <img
+          src="https://images.pexels.com/photos/7755651/pexels-photo-7755651.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+          alt="Happy Customer"
+          className="rounded-xl shadow-lg transform transition-all hover:scale-110 duration-500 ease-in-out"
+        />
+      </div>
+      {/* Form Section */}
+      <div className="bg-white p-8 md:p-12 rounded-3xl shadow-lg">
+        <form className="space-y-6">
+          {/* Input Fields */}
+          <div className="space-y-4">
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
+            />
+            <input
+              type="email"
+              placeholder="Email Address"
+              className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
+            />
+          </div>
+          <textarea
+            placeholder="Write your review here..."
+            className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
+            rows="5"
+          ></textarea>
+          {/* Rating Dropdown */}
+          <div className="flex items-center gap-4">
+            <label htmlFor="rating" className="font-serif text-lg text-[#204E4A]">
+              Rating:
+            </label>
+            <select
+              id="rating"
+              className="p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
+            >
+              <option value="">Select a rating</option>
+              {[...Array(10).keys()].map((num) => (
+                <option key={num + 1} value={num + 1}>
+                  {num + 1} Star{num > 0 && "s"}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* Submit Button */}
+          <button className="w-full bg-gradient-to-r from-[#84C8BF] to-[#2FA79B] text-white px-6 py-4 rounded-full text-lg font-bold shadow-md hover:opacity-90 transition-all duration-300">
+            Submit Review
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </section>
-
-
       </div>
     </div>
   );
