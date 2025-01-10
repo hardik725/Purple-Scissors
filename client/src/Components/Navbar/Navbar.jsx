@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faScissors, faBars, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router";
 
 const Navbar = ({ email, onLogout }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -28,11 +29,12 @@ const Navbar = ({ email, onLogout }) => {
         <div className="flex items-center space-x-4">
           <FontAwesomeIcon
             icon={faScissors}
-            className="text-[#6A737B] text-3xl"
+            className="text-purple-800 text-3xl"
           />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9F8170] via-[#D9A687] to-[#B27B6E] text-3xl font-semibold">
-            Purple Scissors
-          </span>
+<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9F8170] via-[#D9A687] to-[#B27B6E] text-4xl font-serif font-extrabold tracking-wider">
+  Purple Scissors
+</span>
+
         </div>
 
         {/* Links Section */}
@@ -40,7 +42,9 @@ const Navbar = ({ email, onLogout }) => {
           <ul className="hidden md:flex space-x-6 text-[#6A737B] text-lg font-medium items-center">
             <li className="hover:underline cursor-pointer flex items-center">Home</li>
             <li className="hover:underline cursor-pointer flex items-center">Services</li>
-            <li className="hover:underline cursor-pointer flex items-center">About Us</li>
+            <li className="hover:underline cursor-pointer flex items-center">
+            <Link to="/appointment">Appointment</Link>
+            </li>
             <li className="hover:underline cursor-pointer flex items-center">Contact</li>
             {email && (
               <button

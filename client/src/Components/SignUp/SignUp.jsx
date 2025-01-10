@@ -14,32 +14,38 @@ const SignUp = ({ onClose }) => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    setError(null); // Clear any previous errors
-
+    setError(null);
+  
+    console.log({
+      Name: name,
+      Email: email,
+      Password: password,
+      Age: age,
+      Place: place,
+      PhoneNumber: phoneNumber,
+    });
+  
     try {
-      const response = await fetch(
-        "https://purple-scissors.onrender.com/user/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            Name: name,
-            Email: email,
-            Password: password,
-            Age: age,
-            Place: place,
-            PhoneNumber: phoneNumber,
-          }),
-        }
-      );
-
+      const response = await fetch("https://purple-scissors.onrender.com/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Age: age,
+          Email: email,
+          Name: name,       
+          Password: password,
+          PhoneNumber: phoneNumber,
+          Place: place,        
+        }),
+      });
+  
       if (response.ok) {
         const data = await response.json();
         console.log("User Signed Up:", data);
         navigate("/"); // Navigate to home on successful sign-up
-        onClose;
+        onClose();
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Sign-up failed. Please try again.");
@@ -49,6 +55,8 @@ const SignUp = ({ onClose }) => {
       setError("Something went wrong. Please try again.");
     }
   };
+  
+  
 
   return (
 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 sm:p-6">
