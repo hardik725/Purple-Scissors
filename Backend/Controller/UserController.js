@@ -2,7 +2,7 @@ import User from "../Model/User.js";
 
 // Sign Up Function
 export const signUp = async (req, res) => {
-  const { Name, Email, Password, Age, Place, PhoneNumber } = req.body;
+  const { Age,Email,Name,Password,PhoneNumber,Place } = req.body;
 
   // Validate required fields
   if (!Name || !Email || !Password || !Age || !Place || !PhoneNumber) {
