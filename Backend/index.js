@@ -18,7 +18,7 @@ app.use(express.json());
 // Routes
 app.use("/user",UserRouter);
 
-app.use("/appointment",AppointmentRouter);
+app.use("appointment",AppointmentRouter);
 
 // Log MongoDB URI for debugging
 console.log("MongoDB URI:", URI);

@@ -1,21 +1,12 @@
 import User from "../Model/User.js";
 
 // Sign Up Function
-
 export const signUp = async (req, res) => {
   const { Name, Email, Password, Age, Place, PhoneNumber } = req.body;
 
-  // Input validation
-  if (!Name || !Email || !Password || !Age || !Place || !PhoneNumber) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
   try {
-    // Check if the user already exists by PhoneNumber or Email
-    const existingUser = await User.findOne({ 
-      $or: [{ PhoneNumber }, { Email }] 
-    });
-
+    // Check if the user already exists
+    const existingUser = await User.findOne({ Email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
@@ -24,7 +15,7 @@ export const signUp = async (req, res) => {
     const newUser = new User({
       Name,
       Email,
-      Password, // Remember to hash the password before saving!
+      Password, // Note: Use hashing for passwords in production (e.g., bcrypt)
       Age,
       Place,
       PhoneNumber,
@@ -33,11 +24,9 @@ export const signUp = async (req, res) => {
     await newUser.save();
     return res.status(201).json({ message: "User created successfully", user: newUser });
   } catch (error) {
-    console.error("Sign Up Error:", error);
     return res.status(500).json({ message: "Error signing up", error: error.message });
   }
 };
-
 
 // Login Function
 export const login = async (req, res) => {
