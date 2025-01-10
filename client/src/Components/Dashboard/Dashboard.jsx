@@ -1,84 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Navbar from "../Navbar/Navbar";
 
 const Dashboard = ({ email, onLogout }) => {
-  return (
-    <div className="min-h-screen bg-gradient-to-r from-pink-500 to-purple-600 text-white flex flex-col">
-      {/* Header */}
-      <header className="p-4 bg-purple-800 shadow-md flex flex-col md:flex-row md:justify-between md:items-center">
-        <h1 className="text-2xl md:text-3xl font-extrabold tracking-wide mb-2 md:mb-0 text-center md:text-left">
-          Salon Dashboard
-        </h1>
-        <div className="flex flex-col md:flex-row md:items-center md:space-x-4 text-center">
-          <p className="text-sm md:text-lg font-medium">
-            Welcome, <span className="font-semibold">{email || "Guest"}!</span>
-          </p>
-          <button
-            onClick={onLogout}
-            className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition-all mt-2 md:mt-0"
-          >
-            Logout
-          </button>
-        </div>
-      </header>
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-      {/* Main Content */}
-      <div className="flex-1 p-4 md:p-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Cards */}
-          {[
-            {
-              title: "Appointments",
-              description: "View and manage your upcoming appointments with ease.",
-              button: "Manage Appointments",
-            },
-            {
-              title: "Staff",
-              description: "View and assign tasks to your professional staff.",
-              button: "View Staff",
-            },
-            {
-              title: "Inventory",
-              description: "Keep track of your salon products and supplies.",
-              button: "Check Inventory",
-            },
-            {
-              title: "Customer Feedback",
-              description: "Read and respond to reviews and suggestions from your customers.",
-              button: "View Feedback",
-            },
-            {
-              title: "Promotions",
-              description: "Create and promote exciting offers for your customers.",
-              button: "Manage Promotions",
-            },
-            {
-              title: "Analytics",
-              description: "Get insights into your salon's performance and growth.",
-              button: "View Analytics",
-            },
-          ].map((card, index) => (
-            <div
-              key={index}
-              className="bg-white text-gray-800 rounded-lg shadow-md p-4 sm:p-6 hover:shadow-xl transition-all flex flex-col"
-            >
-              <h2 className="text-xl md:text-2xl font-bold mb-4">{card.title}</h2>
-              <p className="text-sm md:text-base text-gray-600 mb-4">
-                {card.description}
-              </p>
-              <button className="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition-all self-start">
-                {card.button}
-              </button>
-            </div>
-          ))}
-        </div>
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return (
+    <div className="bg-gradient-to-b from-white to-[#FFFAF6] min-h-screen">
+      {/* Navbar */}
+      <Navbar email={email} onLogout={onLogout} />
+
+      {/* Horizontal Scrollable Menu */}
+      <div className={`grid ${isMobile ? "grid-cols-5 gap-1 px-2 py-4"  : "grid-cols-5 px-4 py-8"}  bg-[#FFFAF6] shadow-md justify-center`}>
+        {[
+          { label: "Face", icon: "https://images.pexels.com/photos/5069412/pexels-photo-5069412.jpeg?auto=compress&cs=tinysrgb&w=600" },
+          { label: "Lips", icon: "https://images.pexels.com/photos/324655/pexels-photo-324655.jpeg?auto=compress&cs=tinysrgb&w=600" },
+          { label: "Hair", icon: "https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=600" },
+          { label: "Skin", icon: "https://images.pexels.com/photos/6724414/pexels-photo-6724414.jpeg?auto=compress&cs=tinysrgb&w=600" },
+          { label: "Nails", icon: "https://images.pexels.com/photos/3997389/pexels-photo-3997389.jpeg?auto=compress&cs=tinysrgb&w=600" },
+        ].map((item, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-center rounded-lg transform hover:scale-105 transition-all duration-300"
+          >
+            <img
+              src={item.icon}
+              alt={item.label}
+              className="w-12 h-12 md:w-16 md:h-16 rounded-full border-4 border-purple-600 shadow-md"
+            />
+            <p className="mt-2 text-xs md:text-sm font-medium text-gray-800 hover:text-gray-600 transition-colors">
+              {item.label}
+            </p>
+          </div>
+        ))}
       </div>
 
-      {/* Footer */}
-      <footer className="p-4 bg-purple-800 text-center">
-        <p className="text-xs md:text-sm font-medium">
-          &copy; {new Date().getFullYear()} Your Salon. All rights reserved.
-        </p>
-      </footer>
+      {/* Hero Section */}
+      <section className="flex flex-col items-center md:flex-row px-4 md:px-8 py-12">
+        <div className="w-full md:w-1/2">
+          <img
+            src="https://images.pexels.com/photos/6724383/pexels-photo-6724383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="Inner Beauty"
+            className="rounded-lg shadow-xl transform transition-all hover:scale-105 duration-300 ease-in-out"
+          />
+        </div>
+        <div className="w-full md:w-1/2 text-center md:text-left mt-8 md:mt-0">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#6D6F6C] hover:text-[#4B4E49] transition-colors duration-300">
+            Up to <span className="text-red-600">10 Hrs</span> of Bloom
+          </h1>
+          <p className="text-[#A6A89D] mt-4 text-sm md:text-lg leading-relaxed">
+            100% weightless lipstick that lasts through the day while keeping your lips nourished and vibrant.
+          </p>
+        </div>
+      </section>
     </div>
   );
 };
