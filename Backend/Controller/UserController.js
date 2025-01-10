@@ -4,6 +4,17 @@ import User from "../Model/User.js";
 export const signUp = async (req, res) => {
   const { Name, Email, Password, Age, Place, PhoneNumber } = req.body;
 
+  // Validate required fields
+  if (!Name || !Email || !Password || !Age || !Place || !PhoneNumber) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  // Ensure Age is a number
+  const ageNumber = parseInt(Age, 10);
+  if (isNaN(ageNumber) || ageNumber <= 0) {
+    return res.status(400).json({ message: "Age must be a valid number" });
+  }
+
   try {
     // Check if the user already exists
     const existingUser = await User.findOne({ Email });
@@ -16,7 +27,7 @@ export const signUp = async (req, res) => {
       Name,
       Email,
       Password, // Note: Use hashing for passwords in production (e.g., bcrypt)
-      Age,
+      Age: ageNumber, // Store age as a number
       Place,
       PhoneNumber,
     });
@@ -24,9 +35,11 @@ export const signUp = async (req, res) => {
     await newUser.save();
     return res.status(201).json({ message: "User created successfully", user: newUser });
   } catch (error) {
+    console.error("Sign Up Error:", error);
     return res.status(500).json({ message: "Error signing up", error: error.message });
   }
 };
+
 
 // Login Function
 export const login = async (req, res) => {
