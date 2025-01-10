@@ -8,7 +8,9 @@ export const signUp = async (req, res) => {
   if (!Name || !Email || !Password || !Age || !Place || !PhoneNumber) {
     return res.status(400).json({ message: "All fields are required" });
   }
-
+  console.log({
+    Age,Email,Name,Password,PhoneNumber,Place,
+  });
   // Ensure Age is a number
   const ageNumber = parseInt(Age, 10);
   if (isNaN(ageNumber) || ageNumber <= 0) {
