@@ -37,7 +37,7 @@ const SignUp = ({ onClose }) => {
           Name: name,       
           Password: password,
           PhoneNumber: phoneNumber,
-          Place: place,        
+          Place: place
         }),
       });
   

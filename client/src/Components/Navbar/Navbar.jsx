@@ -31,9 +31,11 @@ const Navbar = ({ email, onLogout }) => {
             icon={faScissors}
             className="text-purple-800 text-3xl"
           />
+          <Link to="/dashboard">
 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9F8170] via-[#D9A687] to-[#B27B6E] text-4xl font-serif font-extrabold tracking-wider">
   Purple Scissors
 </span>
+</Link>
 
         </div>
 
