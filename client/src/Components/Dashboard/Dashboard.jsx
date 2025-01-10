@@ -20,22 +20,19 @@ const Dashboard = ({ email, onLogout }) => {
 
   return (
 <div
-  className="min-h-screen bg-cover bg-center bg-fixed"
+  className="min-h-screen bg-cover bg-center bg-fixed -z-20"
   style={{ backgroundImage: "url('https://cdn.pixabay.com/photo/2016/11/18/13/10/female-1834381_1280.jpg')" }}
 >
   {/* Overlay for better readability */}
-  <div className="bg-white bg-opacity-10 backdrop-blur-xl min-h-screen">
+  <div className="bg-white bg-opacity-10 backdrop-blur-xl min-h-screen overflow-x-hidden">
     {/* Navbar */}
     <Navbar email={email} onLogout={onLogout} />
-
     {/* Horizontal Scrollable Menu */}
-    <div className="flex justify-center px-4 py-6">
+    <div className="flex justify-center px-4 py-6 z-20">
       <div
-        className={`flex overflow-x-auto bg-purple-500 bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg ${
-          isMobile ? "w-full p-2" : "w-4/5 p-4 justify-center"
-        }`}
+        className={`flex overflow-x-auto bg-purple-500 bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg w-full max-w-full p-2 ${isMobile ? "" : "justify-center"}`}
       >
-        <div className={`flex ${isMobile ? "gap-3" : "gap-8"} items-center`}>
+        <div className={`flex items-center ${isMobile ? "gap-1" : "gap-3"}`}>
           {[
             { label: "Face", icon: "https://images.pexels.com/photos/5069412/pexels-photo-5069412.jpeg?auto=compress&cs=tinysrgb&w=600" },
             { label: "Lips", icon: "https://images.pexels.com/photos/324655/pexels-photo-324655.jpeg?auto=compress&cs=tinysrgb&w=600" },
@@ -50,7 +47,7 @@ const Dashboard = ({ email, onLogout }) => {
               <img
                 src={item.icon}
                 alt={item.label}
-                className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-[#FFC2C2] shadow-md"
+                className="w-14 h-14 md:w-20 md:h-20 rounded-full border-2 border-[#FFC2C2] shadow-md"
               />
               <p className="mt-2 text-xs md:text-sm font-medium text-white hover:text-[#D96161] transition-colors">
                 {item.label}
@@ -62,7 +59,7 @@ const Dashboard = ({ email, onLogout }) => {
     </div>
 
     {/* Hero Section */}
-    <section className="flex flex-col md:flex-row items-center justify-center px-6 md:px-12 py-10 bg-opacity-90">
+    <section className="flex flex-col md:flex-row items-center justify-center px-4 py-6 bg-opacity-90 w-full max-w-full">
       <div className="w-full md:w-1/2 flex justify-center">
         <img
           src="https://images.pexels.com/photos/6724383/pexels-photo-6724383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -84,6 +81,7 @@ const Dashboard = ({ email, onLogout }) => {
     </section>
   </div>
 </div>
+
 
 
   );
