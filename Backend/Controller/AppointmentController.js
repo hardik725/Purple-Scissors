@@ -48,7 +48,7 @@ export const bookAppointment = async (req, res) => {
 };
 
 export const findAppointment = async (req, res) => {
-  const { Email } = req.body;
+  const { Email } = req.params;
 
   try {
     // Fetch appointments based on the email
