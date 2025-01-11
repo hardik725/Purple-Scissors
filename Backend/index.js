@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import UserRouter from "./Router/UserRouter.js";
 import AppointmentRouter from "./Router/AppointmentRouter.js";
+import EmailTransporter from "./Router/EmailTransporter.js";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(express.json());
 // Routes
 app.use("/user", UserRouter);
 app.use("/appointment", AppointmentRouter);
+app.use("/mail",EmailTransporter);
 
 // Example route
 app.get('/', (req, res) => {
