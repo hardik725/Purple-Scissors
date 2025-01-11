@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SignUp from "../SignUp/SignUp";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 const Login = ({ onLogin }) => {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -28,10 +29,23 @@ const Login = ({ onLogin }) => {
       const data = await response.json();
 
       if (response.ok) {
-        onLogin(email); // Pass the username to the parent component
-        navigate("/dashboard");
-      } else {
+        // Trigger success alert
+        Swal.fire({
+          title: "Login Successful!",
+          text: `Welcome back, ${email}!`,
+          icon: "success", // SweetAlert2 inbuilt success icon
+          showConfirmButton: false, // Remove the "Go to Dashboard" button
+          timer: 1500, // Auto-close the alert after 1.5 seconds
+          timerProgressBar: true, // Show a progress bar for the timer
+        }).then(() => {
+          // Redirect to the dashboard after the timer
+          onLogin(email); // Pass the username to the parent component
+          navigate("/dashboard");
+        });
+      }
+       else {
         console.error("Login Failed");
+        setError(data.message || "Invalid credentials.");
       }
     } catch (err) {
       setError("An error occurred while trying to log in.");
@@ -48,9 +62,7 @@ const Login = ({ onLogin }) => {
           "url('https://images.pexels.com/photos/705255/pexels-photo-705255.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",
       }}
     >
-      {/* Main Container */}
       <div className="flex flex-col md:flex-row w-full sm:max-w-sm md:max-w-4xl lg:max-w-6xl bg-gradient-to-r from-purple-700 via-pink-500 to-red-400 bg-opacity-90 rounded-3xl shadow-2xl overflow-hidden sm:p-6 md:transform md:scale-95 md:hover:scale-100 md:transition-all md:duration-300 md:ease-in-out">
-        {/* Logo Section */}
         <div className="flex flex-col items-center justify-center w-full md:w-1/2 text-white p-4 md:p-8">
           <img
             src="https://static.vecteezy.com/system/resources/previews/054/267/527/non_2x/scissors-outline-slip-style-icon-vector.jpg"
@@ -64,8 +76,6 @@ const Login = ({ onLogin }) => {
             "We’ll style while you smile!"
           </p>
         </div>
-
-        {/* Login Section */}
         <div className="flex-grow w-full md:w-1/2 bg-white bg-opacity-90 p-4 sm:p-6 md:p-10 rounded-b-3xl md:rounded-r-3xl">
           <h2 className="text-lg sm:text-xl md:text-3xl font-bold text-center text-gray-800 mb-4 sm:mb-6 md:mb-8">
             Login to Your Account
