@@ -47,7 +47,7 @@ const Navbar = ({ email, onLogout }) => {
             <li className="hover:underline cursor-pointer flex items-center">
             <Link to="/appointment">Appointment</Link>
             </li>
-            <li className="hover:underline cursor-pointer flex items-center">Contact</li>
+            <li className="hover:underline cursor-pointer flex items-center"><Link to="/contactus">Contact Us</Link></li>
             {email && (
               <button
                 onClick={onLogout}
@@ -87,7 +87,7 @@ const Navbar = ({ email, onLogout }) => {
                 <Link to="/appointment">Appointment</Link>
                 </li>
                 <li className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer transition">
-                  Contact
+                <Link to="/contactus">Contact Us</Link>
                 </li>
                 {email && (
                   <li

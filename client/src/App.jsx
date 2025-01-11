@@ -3,6 +3,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "./Components/Login/Login";
 import Dashboard from "./Components/Dashboard/Dashboard"; // Example of another component using the email
 import Appointment from "./Components/Appointment/Appointment";
+import ContactUs from "./Components/ContactUs/ContactUs";
 
 function App() {
   const [email, setEmail] = useState(""); // State to store the user's email
@@ -28,6 +29,7 @@ function App() {
         {/* Pass the email to other components */}
         <Route path="/dashboard" element={email ? <Dashboard email={email} onLogout={handleLogout} /> : <Navigate to="/" />} />
         <Route path="/appointment" element={email ? <Appointment email={email} onLogout={handleLogout} /> : <Navigate to="/" />} />
+        <Route path="/contactus" element={email ? <ContactUs email={email} onLogout={handleLogout}/> : <Navigate to="/"/>}/>
       </Routes>
     </div>
   );
