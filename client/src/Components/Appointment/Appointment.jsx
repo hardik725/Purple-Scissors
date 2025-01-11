@@ -85,10 +85,22 @@ const Appointment = ({ email, onLogout }) => {
           Time: selectedSlot,
         }),
       });
+      const emailresponse = await fetch("https://purple-scissors.onrender.com/mail/book-appointment",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Email: email,
+          Date: date,
+          Time: selectedSlot,
+          Name: formData.name,
+        })
+      });
 
       const data = await response.json();
-
-      if (response.ok) {
+      const emaildata = await emailresponse.json();
+      if (response.ok && emaildata.message === "Appointment booked successfully, confirmation email sent!") {
         setSuccessMessage("Appointment booked successfully!");
         setErrorMessage("");
         fetchUserAppointments(); // Refresh appointments after booking
