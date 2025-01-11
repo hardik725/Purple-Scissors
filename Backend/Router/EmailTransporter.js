@@ -37,6 +37,34 @@ const transporter = nodemailer.createTransport({
       res.status(500).json({ message: 'Something went wrong, please try again later.' });
     }
   });
+
+  router.post('/book-appointment', async (req, res) => {
+    const { Email, Date, Time, Name } = req.body;
+  
+    // Validate required fields
+    if (!Email || !Date || !Time || !Name) {
+      return res.status(400).json({ message: 'Please provide all required information.' });
+    }
+  
+    try {
+      const mailOptions = {
+        from: process.env.EMAIL_USER,  // Your email
+        to: Email,                 // User's email address
+        subject: `Appointment Confirmation`, // Custom subject
+        text: `Dear ${Name},\n\nYour appointment has been successfully booked!\n\nDate: ${Date}\nTime: ${Time}\n\nThank you for booking with us! We look forward to your appointment.\n\nBest regards,\nYour Company Name`, // Message body
+      };
+  
+      // Send the confirmation email to the user
+      await transporter.sendMail(mailOptions);
+  
+      // Optionally, send a notification to yourself as an admin or save to DB
+  
+      res.status(200).json({ message: 'Appointment booked successfully, confirmation email sent!' });
+    } catch (error) {
+      console.error('Error sending appointment email:', error);
+      res.status(500).json({ message: 'Something went wrong, please try again later.' });
+    }
+  });
   
 
   export default router;
