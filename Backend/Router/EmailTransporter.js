@@ -39,7 +39,7 @@ const transporter = nodemailer.createTransport({
   });
 
   router.post('/book-appointment', async (req, res) => {
-    const { Email, Date, Time, Name } = req.body;
+    const { Date, Email, Name , Time} = req.body;
   
     // Validate required fields
     if (!Email || !Date || !Time || !Name) {
