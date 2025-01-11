@@ -13,18 +13,19 @@ const transporter = nodemailer.createTransport({
   
   // Contact Form Route
   router.post('/contact', async (req, res) => {
-    const { email, message } = req.body;
+    const { email, message, name } = req.body;
   
-    if (!email || !message) {
-      return res.status(400).json({ message: 'Please provide both email and message.' });
+    // Validate required fields
+    if (!name || !email || !message) {
+      return res.status(400).json({ message: 'Please provide name, email, and message.' });
     }
   
     try {
       const mailOptions = {
         from: email,
         to: process.env.EMAIL_USER,
-        subject: `Contact Us Message from ${email}`,
-        text: message,
+        subject: `New Contact Us Message from ${name}`, // Custom subject
+        text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       };
   
       // Send email
@@ -36,5 +37,6 @@ const transporter = nodemailer.createTransport({
       res.status(500).json({ message: 'Something went wrong, please try again later.' });
     }
   });
+  
 
   export default router;
