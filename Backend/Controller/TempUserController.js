@@ -3,61 +3,63 @@ import crypto from "crypto";
 import nodemailer from "nodemailer";
 import fetch from "node-fetch";
 
-
+// Configure the email transporter
+const transporter = nodemailer.createTransport({
+  service: "gmail", // Use your email provider; "Gmail" is an example
+  auth: {
+    user: process.env.EMAIL_USER, // Replace with your email
+    pass: process.env.EMAIL_PASS, // Replace with your email's app password
+  },
+});
 
 export const createTempUser = async (req, res) => {
-    const { Age, Email, Name, Password, PhoneNumber, Place } = req.body;
-  
-    try {
-      // Generate a random verification code
-      const VerificationCode = crypto.randomBytes(3).toString("hex").toUpperCase();
-      const ageNumber = parseInt(Age, 10);
-  
-      // Create the TempUser
-      const tempUser = new TempUser({
-        Name,
-        Email,
-        Password,
-        Age: ageNumber,
-        Place,
-        PhoneNumber,
-        VerificationCode,
-      });
-  
-      await tempUser.save();
-  
-      // Configure the email transporter
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
-        },
-      });
-  
-      try {
-        // Send the verification code to the user's email
-        await transporter.sendMail({
-          from: process.env.EMAIL_USER,
-          to: Email,
-          subject: "Your Verification Code",
-          text: `Hello ${Name}, your verification code is: ${VerificationCode}`,
-        });
-  
-        res.status(201).json({
-          message: "Temporary user created. Verification code sent via email.",
-          tempUserId: tempUser._id,
-        });
-      } catch (emailError) {
-        console.error("Error sending email:", emailError);
-        return res.status(500).json({ message: "Failed to send verification email." });
+  const { Age, Email, Name, Password, PhoneNumber, Place } = req.body;
+
+  try {
+    // Generate a random verification code
+    const VerificationCode = crypto.randomBytes(3).toString("hex").toUpperCase();
+    const ageNumber = parseInt(Age, 10);
+
+    // Create the TempUser
+    const tempUser = new TempUser({
+      Name: Name,
+      Email: Email,
+      Password: Password,
+      Age: ageNumber,
+      Place: Place,
+      PhoneNumber: PhoneNumber,
+      VerificationCode:VerificationCode
+    });
+
+    await tempUser.save();
+
+    // Send the verification code to the user's email
+    const mailOptions = {
+      from: process.env.EMAIL_USER, // Sender address
+      to: Email, // Recipient's email address
+      subject: "Your Verification Code",
+      text: `Hello ${Name},\n\nYour verification code is: ${VerificationCode}\n\nThis code is valid for 5 minutes.`,
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error("Error sending email:", err);
+        return res
+          .status(500)
+          .json({ message: "Failed to send verification email." });
       }
-    } catch (error) {
-      console.error("Error creating TempUser:", error);
-      res.status(500).json({ message: "Failed to create temporary user." });
-    }
-  };
-  
+      console.log("Verification email sent:", info.response);
+    });
+
+    res.status(201).json({
+      message: "Temporary user created. Verification code sent via email.",
+      tempUserId: tempUser._id,
+    });
+  } catch (error) {
+    console.error("Error creating TempUser:", error);
+    res.status(500).json({ message: "Failed to create temporary user." });
+  }
+};
 
 export const verifyTempUser = async (req, res) => {
     const { Email, VerificationCode, Password } = req.body;
