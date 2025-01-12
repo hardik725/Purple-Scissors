@@ -1,4 +1,5 @@
 import Appointment from "../Model/Appointment.js";
+import nodemailer from "nodemailer";
 
 // Fetch available time slots for a given date
 export const getAvailableSlots = async (req, res) => {
