@@ -1,10 +1,28 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import AdminDashboard from "../../AdminPages/AdminDashboard/AdminDashboard";
 import CustomerReviews from "../../AdminPages/CustomerReviews/CustomerReviews";
 import ManageAppointments from "../../AdminPages/ManageAppointments/ManageAppointments";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const AdminPage = () => {
   const [activeSection, setActiveSection] = useState("dashboard"); // State to track the active section
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768);
+      };
+  
+      // Add event listener for window resize
+      window.addEventListener("resize", handleResize);
+  
+      // Cleanup the event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
 
   const renderContent = () => {
     switch (activeSection) {
@@ -24,7 +42,7 @@ const AdminPage = () => {
         return <AdminDashboard />;
     }
   };
-
+  if(!isMobile){
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-gradient-to-br from-teal-500 to-[#204E4A]">
       {/* Sidebar */}
@@ -116,6 +134,145 @@ const AdminPage = () => {
       </main>
     </div>
   );
+}else{
+  return(
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage: `url("https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 left-0 h-full w-64 bg-[#204E4A]/70 text-white shadow-lg transform transition-transform duration-300 backdrop-blur-md z-20 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {/* Close Button */}
+        <div className="flex justify-between items-center p-4">
+          <h1 className="text-xl font-bold text-[#FFFCF9]">Salon Admin</h1>
+          <button
+            onClick={() => setIsSidebarOpen(false)}
+            className="text-white focus:outline-none"
+          >
+            <FontAwesomeIcon icon={faTimes} className="text-2xl" />
+          </button>
+        </div>
+        <nav className="mt-6">
+          <ul className="space-y-4">
+            <li>
+              <button
+                onClick={() => {
+                  setActiveSection("dashboard");
+                  setIsSidebarOpen(false);
+                }}
+                className={`block w-full px-4 py-2 text-left hover:bg-[#2FA79B] rounded-md ${
+                  activeSection === "dashboard" ? "bg-[#2FA79B]" : ""
+                }`}
+              >
+                Dashboard
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  setActiveSection("appointments");
+                  setIsSidebarOpen(false);
+                }}
+                className={`block w-full px-4 py-2 text-left hover:bg-[#2FA79B] rounded-md ${
+                  activeSection === "appointments" ? "bg-[#2FA79B]" : ""
+                }`}
+              >
+                Manage Appointments
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  setActiveSection("services");
+                  setIsSidebarOpen(false);
+                }}
+                className={`block w-full px-4 py-2 text-left hover:bg-[#2FA79B] rounded-md ${
+                  activeSection === "services" ? "bg-[#2FA79B]" : ""
+                }`}
+              >
+                Services
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  setActiveSection("reviews");
+                  setIsSidebarOpen(false);
+                }}
+                className={`block w-full px-4 py-2 text-left hover:bg-[#2FA79B] rounded-md ${
+                  activeSection === "reviews" ? "bg-[#2FA79B]" : ""
+                }`}
+              >
+                Reviews
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  setActiveSection("team");
+                  setIsSidebarOpen(false);
+                }}
+                className={`block w-full px-4 py-2 text-left hover:bg-[#2FA79B] rounded-md ${
+                  activeSection === "team" ? "bg-[#2FA79B]" : ""
+                }`}
+              >
+                Team
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  setActiveSection("settings");
+                  setIsSidebarOpen(false);
+                }}
+                className={`block w-full px-4 py-2 text-left hover:bg-[#2FA79B] rounded-md ${
+                  activeSection === "settings" ? "bg-[#2FA79B]" : ""
+                }`}
+              >
+                Settings
+              </button>
+            </li>
+          </ul>
+        </nav>
+        <button className="mt-6 w-full px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-md">
+          Logout
+        </button>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex flex-col">
+        {/* Navbar */}
+        <header className="flex items-center justify-between px-4 py-2 bg-[#204E4A]/70 text-white backdrop-blur-md">
+          <button
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="text-white focus:outline-none"
+          >
+            <FontAwesomeIcon icon={faBars} className="text-2xl" />
+          </button>
+          <div className="flex items-center">
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/054/267/527/non_2x/scissors-outline-slip-style-icon-vector.jpg"
+              alt="Purple Scissors Logo"
+              className="h-8 w-8 mr-2"
+            />
+            <h1 className="text-lg font-semibold">Purple Scissors</h1>
+          </div>
+        </header>
+
+        {/* Content Area */}
+        <main className="p-4">{renderContent()}</main>
+      </div>
+    </div>
+  );
+}
 };
 
 export default AdminPage;
