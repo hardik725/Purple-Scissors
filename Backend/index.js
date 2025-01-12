@@ -6,6 +6,7 @@ import UserRouter from "./Router/UserRouter.js";
 import AppointmentRouter from "./Router/AppointmentRouter.js";
 import EmailTransporter from "./Router/EmailTransporter.js";
 import TempUserRouter from "./Router/TempUserRouter.js";
+import ReviewRouter from "./Router/ReviewRouter.js";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use("/user", UserRouter);
 app.use("/appointment", AppointmentRouter);
 app.use("/mail",EmailTransporter);
 app.use("/temp",TempUserRouter);
+app.use("/review",ReviewRouter);
 
 
 // Example route
