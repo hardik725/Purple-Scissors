@@ -76,7 +76,7 @@ function App() {
           path="/adminpage"
           element={
             email === "shammi.priyam.13@gmail.com" ? (
-              <AdminPage />
+              <AdminPage email={email} onLogout={handleLogout}/>
             ) : (
               <Navigate to="/" />
             )

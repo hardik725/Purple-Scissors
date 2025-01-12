@@ -5,7 +5,7 @@ import ManageAppointments from "../../AdminPages/ManageAppointments/ManageAppoin
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const AdminPage = () => {
+const AdminPage = ({username,onLogout}) => {
   const [activeSection, setActiveSection] = useState("dashboard"); // State to track the active section
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -44,12 +44,25 @@ const AdminPage = () => {
   };
   if(!isMobile){
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-gradient-to-br from-teal-500 to-[#204E4A]">
+    <div         style={{
+      backgroundImage:
+        "url('https://images.pexels.com/photos/5128267/pexels-photo-5128267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }} 
+    className="min-h-screen flex flex-col lg:flex-row bg-gradient-to-br from-teal-500 to-[#204E4A]">
       {/* Sidebar */}
-      <aside className="w-full lg:w-1/4 bg-[#204E4A] text-white shadow-lg flex flex-col p-6 transition-all duration-300 ease-in-out transform hover:w-1/5">
+      <aside className="w-full lg:w-1/4 bg-[#204E4A] text-white shadow-lg flex flex-col p-6 transition-all duration-300 ease-in-out transform hover:w-1/5 backdrop-blur-md opacity-65">
         <div className="p-6 text-center">
-          <h1 className="text-3xl font-bold text-[#FFFCF9]">Salon Admin</h1>
-          <p className="mt-2 text-lg text-[#E0F7FA]">Welcome, User</p>
+          <div className="flex justify-center">
+        <img
+              src="https://static.vecteezy.com/system/resources/previews/054/267/527/non_2x/scissors-outline-slip-style-icon-vector.jpg"
+              alt="Purple Scissors Logo"
+              className="h-12 w-12 mr-2 rounded-md"
+            />
+            </div>
+          <h1 className="text-3xl font-bold text-[#FFFCF9]">Purple Scissors</h1>
+          <p className="mt-2 text-lg text-[#E0F7FA]">Welcome, Shammi</p>
         </div>
         <nav className="mt-6 flex-1">
           <ul className="space-y-4">
@@ -115,7 +128,8 @@ const AdminPage = () => {
             </li>
           </ul>
         </nav>
-        <button className="mt-auto w-full px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-md transition-all duration-300">
+        <button onClick={onLogout} 
+        className="mt-auto w-full px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-md transition-all duration-300">
           Logout
         </button>
       </aside>
@@ -123,12 +137,6 @@ const AdminPage = () => {
       {/* Main Content */}
       <main
         className="flex-1 p-6 lg:p-12 bg-gray-50 bg-opacity-80 backdrop-blur-lg"
-        style={{
-          backgroundImage:
-            "url('https://images.pexels.com/photos/5128267/pexels-photo-5128267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
       >
         {renderContent()}
       </main>
@@ -242,7 +250,8 @@ const AdminPage = () => {
             </li>
           </ul>
         </nav>
-        <button className="mt-6 w-full px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-md">
+        <button onClick={onLogout} 
+        className="mt-6 w-full px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-md">
           Logout
         </button>
       </div>
@@ -268,7 +277,7 @@ const AdminPage = () => {
         </header>
 
         {/* Content Area */}
-        <main className="p-4">{renderContent()}</main>
+        <main className="p-4 backdrop-blur-md opacity-55">{renderContent()}</main>
       </div>
     </div>
   );
