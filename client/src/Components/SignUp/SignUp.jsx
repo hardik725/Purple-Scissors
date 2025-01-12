@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SignUp = ({ onClose }) => {
-  const [name, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
@@ -19,7 +19,7 @@ const SignUp = ({ onClose }) => {
 
     try {
       const response = await fetch(
-        "https://purple-scissors.onrender.com/user/signup",
+        "https://purple-scissors.onrender.com/temp/create",
         {
           method: "POST",
           headers: {
@@ -37,14 +37,13 @@ const SignUp = ({ onClose }) => {
       );
 
       if (response.ok) {
-        const data = await response.json();
         Swal.fire({
           icon: "success",
-          title: "Account Created",
-          text: "Your account has been successfully created!",
+          title: "Verification Required",
+          text: "A verification code has been sent to your email. Please verify your account.",
           confirmButtonColor: "#6C63FF",
         }).then(() => {
-          navigate("/"); // Navigate to home on successful sign-up
+          navigate("/verify"); // Redirect to verification page
           onClose(); // Close the sign-up modal
         });
       } else {
@@ -97,7 +96,7 @@ const SignUp = ({ onClose }) => {
               type="text"
               placeholder="Enter your full name"
               value={name}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               required
               className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
             />
