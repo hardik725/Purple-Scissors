@@ -3,14 +3,7 @@ import crypto from "crypto";
 import nodemailer from "nodemailer";
 import fetch from "node-fetch";
 
-// Configure the email transporter
-const transporter = nodemailer.createTransport({
-  service: "gmail", // Use your email provider; "Gmail" is an example
-  auth: {
-    user: process.env.EMAIL_USER, // Replace with your email
-    pass: process.env.EMAIL_PASS, // Replace with your email's app password
-  },
-});
+
 
 export const createTempUser = async (req, res) => {
   const { Age, Email, Name, Password, PhoneNumber, Place } = req.body;
@@ -33,22 +26,21 @@ export const createTempUser = async (req, res) => {
 
     await tempUser.save();
 
-    // Send the verification code to the user's email
-    const mailOptions = {
-      from: process.env.EMAIL_USER, // Sender address
-      to: Email, // Recipient's email address
-      subject: "Your Verification Code",
-      text: `Hello ${Name},\n\nYour verification code is: ${VerificationCode}\n\nThis code is valid for 5 minutes.`,
-    };
+    // Configure the email transporter
+const transporter = nodemailer.createTransport({
+    service: "gmail", // Use your email provider; "Gmail" is an example
+    auth: {
+      user: process.env.EMAIL_USER, // Replace with your email
+      pass: process.env.EMAIL_PASS, // Replace with your email's app password
+    },
+  });
 
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.error("Error sending email:", err);
-        return res
-          .status(500)
-          .json({ message: "Failed to send verification email." });
-      }
-      console.log("Verification email sent:", info.response);
+    // Send the verification code to the user's email
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: Email,
+      subject: "Your Verification Code",
+      text: `Hello ${Name}, your verification code is: ${VerificationCode}`,
     });
 
     res.status(201).json({
