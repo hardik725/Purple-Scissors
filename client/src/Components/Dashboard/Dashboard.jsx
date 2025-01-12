@@ -290,7 +290,7 @@ const Dashboard = ({ email, onLogout }) => {
         className="p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
       >
         <option value="">Select a rating</option>
-        {[...Array(10).keys()].map((num) => (
+        {[...Array(5).keys()].map((num) => (
           <option key={num + 1} value={num + 1}>
             {num + 1} Star{num > 0 && "s"}
           </option>
