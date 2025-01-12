@@ -76,3 +76,74 @@ export const allAppointments = async (req,res) => {
     res.status(500).json({ message: 'Internal server error.' });
   }
 };
+
+// Function to send a cancellation email
+const sendCancellationEmail = async (email, date, time, reason) => {
+  try {
+    // Create a transporter for sending emails using Nodemailer
+    const transporter = nodemailer.createTransport({
+      service: 'gmail', // You can change this based on your email provider
+      auth: {
+        user: process.env.EMAIL_USER,  // Your email address
+        pass: process.env.EMAIL_PASS,   // Your email password or app-specific password
+      },
+    });
+
+    // Mail options
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Appointment Cancellation Confirmation',
+      text: `Dear user,\n\nYour appointment scheduled for ${date} at ${time} has been cancelled.\n\nReason for cancellation: ${reason}\n\nIf this was a mistake, please contact us as soon as possible.\n\nBest regards,\nPurple Scissors Team`,
+    };
+
+    // Send the email
+    await transporter.sendMail(mailOptions);
+    console.log('Cancellation email sent');
+  } catch (error) {
+    console.error('Error sending cancellation email:', error);
+  }
+};
+
+// Delete multiple appointments and send email notifications with reasons
+export const deleteAppointments = async (req, res) => {
+  const { appointments } = req.body;  // Get the array of appointment objects from the request body
+
+  if (!appointments || appointments.length === 0) {
+    return res.status(400).json({ error: "Please provide the appointments to cancel." });
+  }
+
+  try {
+    for (let appointmentDetails of appointments) {
+      const { Date, Time, Reason } = appointmentDetails;
+
+      if (!Reason) {
+        return res.status(400).json({ error: "Please provide a reason for cancellation for all appointments." });
+      }
+
+      // Find the appointment by Date and Time
+      const appointment = await Appointment.findOne({ Date, Time });
+
+      if (!appointment) {
+        console.log(`Appointment not found for Date: ${Date}, Time: ${Time}`);
+        continue; // Skip this appointment if not found
+      }
+
+      // Extract user email, date, time, and ID
+      const { Email, _id, Date: appointmentDate, Time: appointmentTime } = appointment;
+
+      // Delete the appointment from the database using the _id
+      await Appointment.findByIdAndDelete(_id);
+
+      // Send the cancellation email
+      await sendCancellationEmail(Email, appointmentDate, appointmentTime, Reason);
+
+      console.log(`Appointment for ${appointmentDate} at ${appointmentTime} deleted and email sent.`);
+    }
+
+    res.status(200).json({ message: 'Appointments deleted and emails sent successfully.' });
+  } catch (error) {
+    console.error('Error deleting appointments:', error);
+    res.status(500).json({ error: 'An error occurred while deleting the appointments.' });
+  }
+};
