@@ -1,8 +1,70 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
+import Swal from "sweetalert2";
 
 const Dashboard = ({ email, onLogout }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [name, setName] = useState("");
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!name || !review || !rating) {
+      Swal.fire({
+        icon: "warning",
+        title: "Incomplete Fields",
+        text: "Please fill all fields before submitting.",
+        confirmButtonColor: "#2FA79B",
+      });
+      return;
+    }
+  
+    try {
+      const response = await fetch("https://purple-scissors.onrender.com/review/post", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Name: name,
+          Email: email,
+          Review: review,
+          Rating: rating,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "Thank You!",
+          text: "Your review has been submitted successfully.",
+          confirmButtonColor: "#2FA79B",
+        });
+        setName("");
+        setReview("");
+        setRating("");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Submission Failed",
+          text: data.message || "Unable to submit your review. Please try again.",
+          confirmButtonColor: "#2FA79B",
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Something Went Wrong",
+        text: "An unexpected error occurred. Please try again later.",
+        confirmButtonColor: "#2FA79B",
+      });
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -193,49 +255,58 @@ const Dashboard = ({ email, onLogout }) => {
         />
       </div>
       {/* Form Section */}
-      <div className="bg-white p-8 md:p-12 rounded-3xl shadow-lg">
-        <form className="space-y-6">
-          {/* Input Fields */}
-          <div className="space-y-4">
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
-            />
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
-            />
-          </div>
-          <textarea
-            placeholder="Write your review here..."
-            className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
-            rows="5"
-          ></textarea>
-          {/* Rating Dropdown */}
-          <div className="flex items-center gap-4">
-            <label htmlFor="rating" className="font-serif text-lg text-[#204E4A]">
-              Rating:
-            </label>
-            <select
-              id="rating"
-              className="p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
-            >
-              <option value="">Select a rating</option>
-              {[...Array(10).keys()].map((num) => (
-                <option key={num + 1} value={num + 1}>
-                  {num + 1} Star{num > 0 && "s"}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* Submit Button */}
-          <button className="w-full bg-gradient-to-r from-[#84C8BF] to-[#2FA79B] text-white px-6 py-4 rounded-full text-lg font-bold shadow-md hover:opacity-90 transition-all duration-300">
-            Submit Review
-          </button>
-        </form>
-      </div>
+{/* Form Section */}
+<div className="bg-white p-8 md:p-12 rounded-3xl shadow-lg">
+  <form className="space-y-6" onSubmit={handleSubmit}>
+    {/* Input Fields */}
+    <div className="space-y-4">
+      <input
+        id="name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        type="text"
+        placeholder="Full Name"
+        className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
+      />
+    </div>
+    <textarea
+      id="review"
+      value={review}
+      onChange={(e) => setReview(e.target.value)}
+      placeholder="Write your review here..."
+      className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
+      rows="5"
+      required
+    ></textarea>
+    {/* Rating Dropdown */}
+    <div className="flex items-center gap-4">
+      <label htmlFor="rating" className="font-serif text-lg text-[#204E4A]">
+        Rating:
+      </label>
+      <select
+        id="rating"
+        value={rating}
+        onChange={(e) => setRating(e.target.value)}
+        className="p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
+      >
+        <option value="">Select a rating</option>
+        {[...Array(10).keys()].map((num) => (
+          <option key={num + 1} value={num + 1}>
+            {num + 1} Star{num > 0 && "s"}
+          </option>
+        ))}
+      </select>
+    </div>
+    {/* Submit Button */}
+    <button
+      type="submit"
+      className="w-full bg-gradient-to-r from-[#84C8BF] to-[#2FA79B] text-white px-6 py-4 rounded-full text-lg font-bold shadow-md hover:opacity-90 transition-all duration-300"
+    >
+      Submit Review
+    </button>
+  </form>
+</div>
+
     </div>
   </div>
 </section>
