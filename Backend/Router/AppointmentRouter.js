@@ -1,6 +1,6 @@
 // routes/appointmentRoutes.js
 import express from "express";
-import { getAvailableSlots,bookAppointment, findAppointment } from "../Controller/AppointmentController.js";
+import { getAvailableSlots,bookAppointment, findAppointment, allAppointments } from "../Controller/AppointmentController.js";
 
 const router = express.Router();
 
@@ -12,5 +12,8 @@ router.post("/book", bookAppointment);
 
 // Router to get Appointments
 router.get("/getappointment/:Email",findAppointment);
+
+// Router to get all the appointments
+router.get("/allappointments",allAppointments);
 
 export default router;

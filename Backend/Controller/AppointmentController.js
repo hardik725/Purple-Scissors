@@ -66,3 +66,13 @@ export const findAppointment = async (req, res) => {
     res.status(500).json({ error: "An error occurred while fetching appointments." });
   }
 };
+
+export const allAppointments = async (req,res) => {
+  try{
+  const appointments = await Appointment.find();
+  res.status(200).json({appointments});
+  }catch(error){
+    console.error('Error fetching all reviews:', error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+};
