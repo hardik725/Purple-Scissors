@@ -277,7 +277,7 @@ const AdminPage = ({username,onLogout}) => {
         </header>
 
         {/* Content Area */}
-        <main className="p-4 backdrop-blur-md opacity-55">{renderContent()}</main>
+        <main className="p-4">{renderContent()}</main>
       </div>
     </div>
   );
