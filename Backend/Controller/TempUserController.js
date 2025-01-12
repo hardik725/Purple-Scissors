@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export const createTempUser = async (req, res) => {
-  const { Name, Email, Password, Age, Place, PhoneNumber } = req.body;
+  const { Age, Email, Name, Password, PhoneNumber, Place } = req.body;
 
   try {
     // Generate a random verification code
@@ -22,13 +22,13 @@ export const createTempUser = async (req, res) => {
 
     // Create the TempUser
     const tempUser = new TempUser({
-      Name,
-      Email,
-      Password,
+      Name: Name,
+      Email: Email,
+      Password: Password,
       Age: ageNumber,
-      Place,
-      PhoneNumber,
-      VerificationCode,
+      Place: Place,
+      PhoneNumber: PhoneNumber,
+      VerificationCode: VerificationCode,
     });
 
     await tempUser.save();
