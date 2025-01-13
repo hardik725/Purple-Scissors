@@ -182,22 +182,22 @@ const Login = ({ onLogin }) => {
       className="w-16 h-16"
     />
   </div>
-  <h1 className="text-xl font-serif font-bold text-gray-700 text-center">
+  <h1 className="text-xl font-kugile font-bold text-gray-700 text-center">
     Welcome to <span className="text-purple-700">Purple Scissors!</span>
   </h1>
-  <p className="text-sm font-elegant text-gray-500 mt-2 text-center italic">
+  {/* <p className="text-sm font-elegant text-gray-500 mt-2 text-center italic">
     "We’ll style while you smile!"
-  </p>
+  </p> */}
 </div>
 
-    <h2 className="text-xl font-semibold font-serif text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent mb-6">
+    <h2 className="text-lg font-semibold font-kugile text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent mb-6">
       Login to Your Account
     </h2>
     <form onSubmit={handleLogin}>
       <div className="mb-4">
         <label
           htmlFor="email"
-          className="block text-sm font-medium font-serif text-gray-700"
+          className="block text-xs font-medium font-kugile text-gray-700"
         >
           Email Address
         </label>
@@ -206,14 +206,14 @@ const Login = ({ onLogin }) => {
           id="email"
           value={email}
           onChange={(e) => setUserEmail(e.target.value)}
-          className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400 transition-all duration-200 placeholder-gray-400"
+          className="w-full mt-2 p-3 border text-xs border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400 transition-all duration-200 placeholder-gray-400"
           placeholder="Enter your email"
         />
       </div>
       <div className="mb-6">
         <label
           htmlFor="password"
-          className="block text-sm font-medium font-serif text-gray-700"
+          className="block text-xs font-medium font-kugile text-gray-700"
         >
           Password
         </label>
@@ -222,14 +222,14 @@ const Login = ({ onLogin }) => {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400 transition-all duration-200 placeholder-gray-400"
+          className="w-full mt-2 text-xs p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400 transition-all duration-200 placeholder-gray-400"
           placeholder="Enter your password"
         />
       </div>
       {error && <p className="text-sm text-red-500 mb-4">{error}</p>}
       <button
         type="submit"
-        className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-lg font-semibold font-serif shadow-md hover:scale-105 transition-transform duration-300"
+        className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-lg font-semibold font-kugile shadow-md hover:scale-105 transition-transform duration-300"
         disabled={loading}
       >
         {loading ? "Logging in..." : "Login"}

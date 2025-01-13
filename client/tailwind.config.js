@@ -13,6 +13,7 @@ export default {
         greatvibes: ['Great Vibes', 'cursive'],
         montserrat: ['Montserrat', 'sans-serif'],
         poppins: ['"Poppins"', "sans-serif"],
+        kugile: ['Kugile', 'sans-serif'],
       },
     },
   },
