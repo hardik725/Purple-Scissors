@@ -12,7 +12,7 @@ export default {
         dancing: ['Dancing Script', 'cursive'],
         greatvibes: ['Great Vibes', 'cursive'],
         montserrat: ['Montserrat', 'sans-serif'],
-
+        poppins: ['"Poppins"', "sans-serif"],
       },
     },
   },

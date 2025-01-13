@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import SignUp from "../SignUp/SignUp";
 import Swal from "sweetalert2"; // Import SweetAlert2
 
@@ -8,6 +8,21 @@ const Login = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+      useEffect(() => {
+        const handleResize = () => {
+          setIsMobile(window.innerWidth <= 768);
+        };
+    
+        // Add event listener for window resize
+        window.addEventListener("resize", handleResize);
+    
+        // Cleanup the event listener on component unmount
+        return () => {
+          window.removeEventListener("resize", handleResize);
+        };
+      }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -53,6 +68,8 @@ const Login = ({ onLogin }) => {
       setLoading(false);
     }
   };
+
+  if(!isMobile){
 
   return (
     <div
@@ -145,6 +162,104 @@ const Login = ({ onLogin }) => {
       {isSignUpOpen && <SignUp onClose={() => setIsSignUpOpen(false)} />}
     </div>
   );
+}else{
+  return(
+<div
+  className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-purple-700 via-pink-500 to-red-400 px-6 py-10"
+  style={{
+    backgroundImage:
+      "url('https://images.pexels.com/photos/705255/pexels-photo-705255.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+>
+  <div className="bg-white bg-opacity-90 p-8 rounded-3xl shadow-xl w-full max-w-sm">
+  <div className="flex flex-col items-center mb-6 bg-gradient-to-r from-purple-200 via-purple-300 to-purple-400 rounded-lg p-5 shadow-md max-w-sm mx-auto">
+  <div className="bg-white p-2 rounded-full shadow-md mb-4">
+    <img
+      src="https://static.vecteezy.com/system/resources/previews/054/267/527/non_2x/scissors-outline-slip-style-icon-vector.jpg"
+      alt="Logo"
+      className="w-16 h-16"
+    />
+  </div>
+  <h1 className="text-xl font-serif font-bold text-gray-700 text-center">
+    Welcome to <span className="text-purple-700">Purple Scissors!</span>
+  </h1>
+  <p className="text-sm font-elegant text-gray-500 mt-2 text-center italic">
+    "We’ll style while you smile!"
+  </p>
+</div>
+
+    <h2 className="text-xl font-semibold font-poppins text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent mb-6">
+      Login to Your Account
+    </h2>
+    <form onSubmit={handleLogin}>
+      <div className="mb-4">
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium font-montserrat text-gray-700"
+        >
+          Email Address
+        </label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setUserEmail(e.target.value)}
+          className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-400 transition-all duration-200 placeholder-gray-400"
+          placeholder="Enter your email"
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="password"
+          className="block text-sm font-medium font-montserrat text-gray-700"
+        >
+          Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-400 transition-all duration-200 placeholder-gray-400"
+          placeholder="Enter your password"
+        />
+      </div>
+      {error && <p className="text-sm text-red-500 mb-4">{error}</p>}
+      <button
+        type="submit"
+        className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-lg font-semibold shadow-md hover:scale-105 transition-transform duration-300"
+        disabled={loading}
+      >
+        {loading ? "Logging in..." : "Login"}
+      </button>
+    </form>
+    <p className="text-center text-sm text-gray-600 mt-4">
+      Don’t have an account?{" "}
+      <span
+        onClick={() => setIsSignUpOpen(true)}
+        className="text-pink-500 font-medium hover:underline cursor-pointer"
+      >
+        Sign Up
+      </span>
+    </p>
+    <div className="mt-4 text-center text-sm text-gray-500">
+      <p>Forgot your password?</p>
+      <a
+        href="/reset-password"
+        className="text-purple-500 font-medium hover:underline"
+      >
+        Reset it here
+      </a>
+    </div>
+  </div>
+  {isSignUpOpen && <SignUp onClose={() => setIsSignUpOpen(false)} />}
+</div>
+
+
+  );
+}
 };
 
 export default Login;
