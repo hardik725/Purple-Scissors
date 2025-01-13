@@ -190,14 +190,14 @@ const Login = ({ onLogin }) => {
   </p>
 </div>
 
-    <h2 className="text-xl font-semibold font-poppins text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent mb-6">
+    <h2 className="text-xl font-semibold font-serif text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent mb-6">
       Login to Your Account
     </h2>
     <form onSubmit={handleLogin}>
       <div className="mb-4">
         <label
           htmlFor="email"
-          className="block text-sm font-medium font-montserrat text-gray-700"
+          className="block text-sm font-medium font-serif text-gray-700"
         >
           Email Address
         </label>
@@ -213,7 +213,7 @@ const Login = ({ onLogin }) => {
       <div className="mb-6">
         <label
           htmlFor="password"
-          className="block text-sm font-medium font-montserrat text-gray-700"
+          className="block text-sm font-medium font-serif text-gray-700"
         >
           Password
         </label>
@@ -229,7 +229,7 @@ const Login = ({ onLogin }) => {
       {error && <p className="text-sm text-red-500 mb-4">{error}</p>}
       <button
         type="submit"
-        className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-lg font-semibold shadow-md hover:scale-105 transition-transform duration-300"
+        className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-lg font-semibold font-serif shadow-md hover:scale-105 transition-transform duration-300"
         disabled={loading}
       >
         {loading ? "Logging in..." : "Login"}
