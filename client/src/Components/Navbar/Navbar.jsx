@@ -24,9 +24,9 @@ const Navbar = ({ email, onLogout }) => {
 
   return (
     <nav className="bg-transparent backdrop-blur-md shadow-lg relative z-30">
-      <div className="container mx-auto flex justify-between items-center py-4 px-6">
+      <div className="container mx-auto flex justify-between items-center py-4">
         {/* Logo Section */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 ml-6">
           <FontAwesomeIcon
             icon={faScissors}
             className="text-purple-800 text-3xl"
@@ -60,7 +60,7 @@ const Navbar = ({ email, onLogout }) => {
         ) : (
           <div className="relative z-40">
             <button
-              className="flex items-center space-x-2 bg-gradient-to-r from-[#7F7FD5] via-[#86A8E7] to-[#91EAE4] text-white px-4 py-2 rounded-lg font-semibold shadow-lg hover:from-[#6B6ECF] hover:via-[#7D9BE0] hover:to-[#7ADAE1] transition"
+              className="flex mr-6 items-center space-x-2 bg-gradient-to-r from-[#7F7FD5] via-[#86A8E7] to-[#91EAE4] text-white px-4 py-2 rounded-lg font-semibold shadow-lg hover:from-[#6B6ECF] hover:via-[#7D9BE0] hover:to-[#7ADAE1] transition"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
               <FontAwesomeIcon icon={faBars} className="text-xl" />
@@ -72,7 +72,7 @@ const Navbar = ({ email, onLogout }) => {
               />
             </button>
             <div
-              className={`absolute right-0 mt-2 bg-gradient-to-b from-purple-700 to-gray-700 shadow-xl rounded-xl py-4 text-white w-52 transform transition-transform duration-300 ease-out ${
+              className={`absolute top-[72px] right-0 mt-2 bg-gradient-to-b from-purple-700 to-gray-700 shadow-xl rounded-md py-4 text-white w-52 transform transition-transform duration-300 ease-out ${
                 isDropdownOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
               }`}
             >

@@ -91,14 +91,13 @@ const Dashboard = ({ email, onLogout }) => {
         <Navbar email={email} onLogout={onLogout} />
         
         {/* Horizontal Scrollable Menu */}
-        <div className="flex justify-center px-4 py-6 z-20">
+        <div className="flex justify-center px-2 py-6 z-20">
           <div
-            className={`flex overflow-x-auto bg-purple-500 bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg w-full max-w-full p-2 ${isMobile ? "" : "justify-center"}`}
+            className={`flex overflow-x-auto bg-purple-500 bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg w-full max-w-full p-1 justify-center`}
           >
-            <div className={`flex items-center ${isMobile ? "gap-1" : "gap-3"}`}>
+            <div className={`flex items-center ${isMobile ? "gap-3" : "gap-5"}`}>
               {[ 
                 { label: "Face", icon: "https://images.pexels.com/photos/5069412/pexels-photo-5069412.jpeg?auto=compress&cs=tinysrgb&w=600" },
-                { label: "Lips", icon: "https://images.pexels.com/photos/324655/pexels-photo-324655.jpeg?auto=compress&cs=tinysrgb&w=600" },
                 { label: "Hair", icon: "https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=600" },
                 { label: "Skin", icon: "https://images.pexels.com/photos/6724414/pexels-photo-6724414.jpeg?auto=compress&cs=tinysrgb&w=600" },
                 { label: "Nails", icon: "https://images.pexels.com/photos/3997389/pexels-photo-3997389.jpeg?auto=compress&cs=tinysrgb&w=600" },
@@ -110,7 +109,7 @@ const Dashboard = ({ email, onLogout }) => {
                   <img
                     src={item.icon}
                     alt={item.label}
-                    className="w-14 h-14 md:w-20 md:h-20 rounded-full border-2 border-[#FFC2C2] shadow-md"
+                    className="w-16 h-16 md:w-[128px] md:h-[128px] rounded-full border-2 border-[#FFC2C2] shadow-md"
                   />
                   <p className="mt-2 text-xs md:text-sm font-medium text-white hover:text-[#D96161] transition-colors">
                     {item.label}
