@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const Dashboard = ({ email, onLogout }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -97,24 +98,25 @@ const Dashboard = ({ email, onLogout }) => {
           >
             <div className={`flex items-center ${isMobile ? "gap-3" : "gap-5"}`}>
               {[ 
-                { label: "Face", icon: "https://images.pexels.com/photos/5069412/pexels-photo-5069412.jpeg?auto=compress&cs=tinysrgb&w=600" },
-                { label: "Hair", icon: "https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=600" },
-                { label: "Skin", icon: "https://images.pexels.com/photos/6724414/pexels-photo-6724414.jpeg?auto=compress&cs=tinysrgb&w=600" },
-                { label: "Nails", icon: "https://images.pexels.com/photos/3997389/pexels-photo-3997389.jpeg?auto=compress&cs=tinysrgb&w=600" },
+                { label: "Face", icon: "https://images.pexels.com/photos/5069412/pexels-photo-5069412.jpeg?auto=compress&cs=tinysrgb&w=600" , id:"facepage" },
+                { label: "Hair", icon: "https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=600", id:"hairpage" },
+                { label: "Skin", icon: "https://images.pexels.com/photos/6724414/pexels-photo-6724414.jpeg?auto=compress&cs=tinysrgb&w=600",id:"skinpage" },
+                { label: "Nails", icon: "https://images.pexels.com/photos/3997389/pexels-photo-3997389.jpeg?auto=compress&cs=tinysrgb&w=600",id:"nailspage" },
               ].map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center rounded-lg transform hover:scale-105 transition-all duration-300"
-                >
-                  <img
-                    src={item.icon}
-                    alt={item.label}
-                    className="w-16 h-16 md:w-[128px] md:h-[128px] rounded-full border-2 border-[#FFC2C2] shadow-md"
-                  />
-                  <p className="mt-2 text-xs md:text-sm font-medium text-white hover:text-[#D96161] transition-colors">
-                    {item.label}
-                  </p>
-                </div>
+                <Link
+                to={`/${item.id}`}
+                key={index}
+                className="flex flex-col items-center rounded-lg transform hover:scale-105 transition-all duration-300"
+              >
+                <img
+                  src={item.icon}
+                  alt={item.label}
+                  className="w-16 h-16 md:w-[128px] md:h-[128px] rounded-full border-2 border-[#FFC2C2] shadow-md"
+                />
+                <p className="mt-2 text-xs md:text-sm font-medium text-white hover:text-[#D96161] transition-colors">
+                  {item.label}
+                </p>
+              </Link>
               ))}
             </div>
           </div>
