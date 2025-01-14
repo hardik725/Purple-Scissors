@@ -64,3 +64,15 @@ export const login = async (req, res) => {
     return res.status(500).json({ message: "Error logging in", error: error.message });
   }
 };
+
+export const username = async (req,res) => {
+  const {Email} = req.body;
+
+  try{
+    const user = await User.findOne({Email});
+      res.status(200).json(reviews);
+  }catch(error){
+    console.error('Error fetching all reviews:', error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+};
