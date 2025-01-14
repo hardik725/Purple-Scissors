@@ -45,7 +45,9 @@ const Navbar = ({ email, userName,onLogout }) => {
             <li className="hover:underline cursor-pointer flex items-center">
               <Link to="/">Home</Link>
             </li>
-            <li className="hover:underline cursor-pointer flex items-center">Services</li>
+            <li className="hover:underline cursor-pointer flex items-center">
+              <Link to="/product">Products</Link>
+            </li>
             <li className="hover:underline cursor-pointer flex items-center">
             <Link to="/appointment">Appointment</Link>
             </li>
@@ -83,7 +85,7 @@ const Navbar = ({ email, userName,onLogout }) => {
                 <Link to="/">Home</Link>
                 </li>
                 <li className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer transition">
-                  Services
+                  <Link to="/product">Product</Link>
                 </li>
                 <li className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer transition">
                 <Link to="/appointment">Appointment</Link>
