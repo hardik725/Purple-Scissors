@@ -10,6 +10,6 @@ router.post("/signup", signUp);
 router.post("/login", login);
 
 // Get username
-router.get("/getname", username);
+router.post("/getname", username);
 
 export default router;
