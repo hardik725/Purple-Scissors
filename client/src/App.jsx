@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "./Components/Login/Login";
 import Dashboard from "./Components/Dashboard/Dashboard";
@@ -10,17 +10,52 @@ import HairPage from "./Components/HairPage/HairPage";
 
 function App() {
   const [email, setEmail] = useState(""); // State to store the user's email
+  const [userName, setUserName] = useState(""); // State to store the user's name
 
   // Function to handle login
   const handleLogin = (user) => {
     setEmail(user);
+    localStorage.setItem("userEmail", user); // Save email to localStorage
+    fetchUserName(user); // Fetch the user's name after login
   };
 
   // Function to handle logout
   const handleLogout = () => {
     setEmail(null);
-    localStorage.removeItem("username"); // Remove from localStorage
+    setUserName("");
+    localStorage.removeItem("userEmail"); // Remove email from localStorage
   };
+
+  // Function to fetch the user's name from the API
+  const fetchUserName = async (userEmail) => {
+    try {
+      const response = await fetch("https://purple-scissors.onrender.com/user/getname", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ Email: userEmail }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setUserName(data); // Assuming the API response contains { name: "User's Name" }
+    } catch (error) {
+      console.error("Failed to fetch user name:", error);
+    }
+  };
+
+  // Check if the user is already logged in
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("userEmail");
+    if (storedEmail) {
+      setEmail(storedEmail);
+      fetchUserName(storedEmail);
+    }
+  }, []);
 
   return (
     <div className="h-screen">
@@ -46,7 +81,7 @@ function App() {
           path="/dashboard"
           element={
             email ? (
-              <Dashboard email={email} onLogout={handleLogout} />
+              <Dashboard email={email} userName={userName} onLogout={handleLogout} />
             ) : (
               <Navigate to="/" />
             )
@@ -56,7 +91,7 @@ function App() {
           path="/appointment"
           element={
             email ? (
-              <Appointment email={email} onLogout={handleLogout} />
+              <Appointment email={email} userName={userName} onLogout={handleLogout} />
             ) : (
               <Navigate to="/" />
             )
@@ -66,7 +101,7 @@ function App() {
           path="/contactus"
           element={
             email ? (
-              <ContactUs email={email} onLogout={handleLogout} />
+              <ContactUs email={email} userName={userName} onLogout={handleLogout} />
             ) : (
               <Navigate to="/" />
             )
@@ -77,19 +112,22 @@ function App() {
           path="/adminpage"
           element={
             email === "shammi.priyam.13@gmail.com" ? (
-              <AdminPage email={email} onLogout={handleLogout}/>
+              <AdminPage email={email} userName={userName} onLogout={handleLogout} />
             ) : (
               <Navigate to="/" />
             )
           }
         />
-        <Route path="/hairpage"           element={
+        <Route
+          path="/hairpage"
+          element={
             email ? (
-              <HairPage email={email} onLogout={handleLogout} />
+              <HairPage email={email} userName={userName} onLogout={handleLogout} />
             ) : (
               <Navigate to="/" />
             )
-          }/>
+          }
+        />
       </Routes>
     </div>
   );

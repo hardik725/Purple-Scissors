@@ -3,7 +3,7 @@ import { useState,useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 
 
-const HairPage = ({ email, onLogout }) => {
+const HairPage = ({ email, userName, onLogout }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   
         useEffect(() => {
@@ -89,29 +89,38 @@ const HairPage = ({ email, onLogout }) => {
   return (
 <div className="bg-[#EDEDFD] text-black font-kugile relative">
   {/* Navbar */}
-  <Navbar email={email} onLogout={onLogout} />
+  <Navbar email={email} userName={userName} onLogout={onLogout} />
 
   {/* Hair Section Header */}
   <div className="bg-gradient-to-r from-gray-800 via-black to-gray-800 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-gray-400 transition duration-300">
     Hair Section
   </div>
 
-  {/* Decorative Elements */}
+  {/* Decorative Background */}
   <div className="absolute inset-0 -z-10">
-    {/* Add Gradient Decoration */}
-    <div className="bg-gradient-to-br from-gray-300 via-white to-gray-200 w-full h-full opacity-30"></div>
+    {/* Blurred Background Image */}
+    <div
+      style={{
+        backgroundImage: `url('https://img.freepik.com/free-photo/comb-scissor-set-copy-space_23-2148352909.jpg?t=st=1736844747~exp=1736848347~hmac=67689b97a28bdc208b55da1ed22915abc9dde6429c6c616052a62b544dd3e80b&w=1380')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        filter: "blur(8px)",
+        opacity: "0.7",
+      }}
+      className="w-full h-full"
+    ></div>
 
     {/* Floating Shapes */}
-    <div className="absolute top-10 left-10 w-20 h-20 bg-black rounded-full opacity-10 animate-bounce"></div>
-    <div className="absolute bottom-20 right-20 w-16 h-16 bg-gray-700 rounded-full opacity-20 animate-pulse"></div>
-    <div className="absolute top-40 left-60 w-14 h-14 bg-gray-800 rounded-lg opacity-10 animate-ping"></div>
+    <div className="absolute top-10 left-10 w-32 h-32 bg-gray-400 rounded-full opacity-20"></div>
+    <div className="absolute bottom-16 right-16 w-24 h-24 bg-gray-500 rounded-full opacity-30"></div>
+    <div className="absolute top-1/2 left-1/3 w-40 h-40 bg-gray-300 rounded-lg rotate-12 opacity-10"></div>
   </div>
 
   {/* Categories Section */}
   <div className="space-y-12 relative z-10">
     {categories.map((category, index) => {
       // Calculate dynamic margin-top based on the number of services
-      const marginTop = category.services.length * 39; // Adjust multiplier as needed
+      const marginTop = category.services.length * 39;
 
       return (
         <div
@@ -134,7 +143,7 @@ const HairPage = ({ email, onLogout }) => {
 
           {/* Services List */}
           <ul
-            className={`absolute w-11/12 md:w-1/2 bg-black bg-opacity-80 p-6 space-y-4 shadow-lg ${
+            className={`absolute w-11/12 md:w-1/2 bg-black bg-opacity-80 p-6 space-y-4 shadow-lg font-forum ${
               index % 2 === 0 ? "left-4" : "right-4"
             }`}
             style={{
@@ -175,7 +184,7 @@ const HairPage = ({ email, onLogout }) => {
     return( 
         <div className="bg-gray-100 text-black font-kugile">
         {/* Navbar */}
-        <Navbar email={email} onLogout={onLogout} />
+        <Navbar email={email} userName={userName} onLogout={onLogout} />
         <div className="bg-gradient-to-r from-gray-800 via-black to-gray-800 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-gray-400 transition duration-300">
     Hair Section
   </div>
@@ -200,11 +209,11 @@ const HairPage = ({ email, onLogout }) => {
               {/* Overlay with Title */}
   
               {/* Services */}
-              <ul className="p-6 bg-black text-white space-y-4 opacity-70">
+              <ul className="p-6 bg-black text-white space-y-2 opacity-90 font-forum">
                 {category.services.map((service, i) => (
                   <li
                     key={`${service.name}-${i}`}
-                    className="flex justify-between text-lg"
+                    className="flex justify-between text-sm"
                   >
                     <span>{service}</span>
                     <span>TBD</span>

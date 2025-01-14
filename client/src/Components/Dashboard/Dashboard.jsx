@@ -3,7 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
 
-const Dashboard = ({ email, onLogout }) => {
+const Dashboard = ({ email, userName, onLogout }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [name, setName] = useState("");
   const [review, setReview] = useState("");
@@ -89,7 +89,7 @@ const Dashboard = ({ email, onLogout }) => {
       {/* Overlay for better readability */}
       <div className="bg-white bg-opacity-10 backdrop-blur-xl min-h-screen overflow-x-hidden">
         {/* Navbar */}
-        <Navbar email={email} onLogout={onLogout} />
+        <Navbar email={email} userName={userName} onLogout={onLogout} />
         
         {/* Horizontal Scrollable Menu */}
         <div className="flex justify-center px-2 py-6 z-20">

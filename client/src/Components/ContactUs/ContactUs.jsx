@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../Navbar/Navbar";
 
-const ContactUs = ({ email, onLogout }) => {
+const ContactUs = ({ email,userName, onLogout }) => {
   const [name, setName] = useState("");
   const [emailInput, setEmailInput] = useState("");
   const [message, setMessage] = useState("");
@@ -33,7 +33,7 @@ const ContactUs = ({ email, onLogout }) => {
     <div className="min-h-screen bg-cover bg-center bg-fixed" 
          style={{ backgroundImage: "url('https://images.pexels.com/photos/9882401/pexels-photo-9882401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')" }}>
       <div className="bg-white bg-opacity-5 backdrop-blur-sm min-h-screen">
-        <Navbar email={email} onLogout={onLogout} />
+        <Navbar email={email} userName={userName} onLogout={onLogout} />
         <div className="container mx-auto px-4 py-12">
           <h1 className="text-5xl font-bold text-center text-purple-700 mb-10">
             Contact Us

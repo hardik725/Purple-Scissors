@@ -14,6 +14,7 @@ export default {
         montserrat: ['Montserrat', 'sans-serif'],
         poppins: ['"Poppins"', "sans-serif"],
         kugile: ['Kugile', 'sans-serif'],
+        forum: ["'Forum'", "serif"],
       },
     },
   },
