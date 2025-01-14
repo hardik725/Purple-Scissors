@@ -7,6 +7,7 @@ import ContactUs from "./Components/ContactUs/ContactUs";
 import VerificationPage from "./Components/VerificationPage/VerificationPage";
 import AdminPage from "./Components/AdminPage/AdminPage";
 import HairPage from "./Components/HairPage/HairPage";
+import MakeupPage from "./Components/MakeupPage/MakeupPage";
 
 function App() {
   const [email, setEmail] = useState(""); // State to store the user's email
@@ -123,6 +124,16 @@ function App() {
           element={
             email ? (
               <HairPage email={email} userName={userName} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/makeuppage"
+          element={
+            email ? (
+              <MakeupPage email={email} userName={userName} onLogout={handleLogout} />
             ) : (
               <Navigate to="/" />
             )

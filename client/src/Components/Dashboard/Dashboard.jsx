@@ -92,7 +92,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
         <Navbar email={email} userName={userName} onLogout={onLogout} />
         
         {/* Horizontal Scrollable Menu */}
-        <div className="flex justify-center px-2 py-6 z-20">
+        {/* <div className="flex justify-center px-2 py-6 z-20">
           <div
             className={`flex overflow-x-auto bg-purple-500 bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg w-full max-w-full p-1 justify-center`}
           >
@@ -120,7 +120,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Hero Section */}
         <section className="flex flex-col md:flex-row items-center justify-center px-2 py-6 bg-opacity-90 w-full max-w-full">
@@ -154,28 +154,30 @@ const Dashboard = ({ email, userName, onLogout }) => {
     <div className="mt-2 w-16 h-1 bg-black mx-auto rounded"></div>
   </div>
   <div className="flex flex-wrap justify-center gap-8">
-    {[
-      { label: "Skin Care Services", icon: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" },
-      { label: "Hair Styling Services", icon: "https://cdn.pixabay.com/photo/2018/02/14/21/45/woman-3153999_1280.jpg" },
-      { label: "Cosmetics Services", icon: "https://images.pexels.com/photos/5069401/pexels-photo-5069401.jpeg" },
-      { label: "Make-Up Services", icon: "https://img.freepik.com/free-photo/team-bride-celebrating-before-wedding_23-2149329143.jpg?t=st=1736522338~exp=1736525938~hmac=023df7c8a0a861bc1b929f645c279ad4b967d271e10e0471c4b969c8ccefeeb7&w=740" },
-    ].map((service, index) => (
-      <div
-        key={index}
-        className="relative w-[280px] h-[400px] bg-white shadow-lg overflow-hidden rounded-xl transform hover:scale-105 transition-all duration-300"
-      >
-        <img
-          src={service.icon}
-          alt={service.label}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-50"></div>
-        <div className="absolute bottom-5 left-5 right-5 text-white">
-          <h3 className="text-2xl font-bold uppercase">{service.label}</h3>
-        </div>
+  {[
+    { label: "Skin Care Services", icon: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", id: "skinpage" },
+    { label: "Hair Styling Services", icon: "https://cdn.pixabay.com/photo/2018/02/14/21/45/woman-3153999_1280.jpg", id: "hairpage" },
+    { label: "Facial Services", icon: "https://images.pexels.com/photos/5069401/pexels-photo-5069401.jpeg", id: "facepage" },
+    { label: "Make-Up Services", icon: "https://img.freepik.com/free-photo/team-bride-celebrating-before-wedding_23-2149329143.jpg?t=st=1736522338~exp=1736525938~hmac=023df7c8a0a861bc1b929f645c279ad4b967d271e10e0471c4b969c8ccefeeb7&w=740", id: "makeuppage" },
+  ].map((service, index) => (
+    <Link 
+      to={`/${service.id}`} 
+      key={index} 
+      className="relative w-[280px] h-[400px] bg-white shadow-lg overflow-hidden rounded-xl transform hover:scale-105 transition-all duration-300"
+    >
+      <img
+        src={service.icon}
+        alt={service.label}
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-50"></div>
+      <div className="absolute bottom-5 left-5 right-5 text-white">
+        <h3 className="text-2xl font-bold uppercase">{service.label}</h3>
       </div>
-    ))}
-  </div>
+    </Link>
+  ))}
+</div>
+
 </section>
 
 
