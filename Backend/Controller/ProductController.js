@@ -2,7 +2,7 @@ import Product from "../Model/Product.js";
 
 // Function to get products by category
 export const getProductsByCategory = async (req, res) => {
-  const { mainCategory} = req.query;
+  const { mainCategory} = req.body;
   try {
     const query = { "Category.main": mainCategory };
 
@@ -15,7 +15,7 @@ export const getProductsByCategory = async (req, res) => {
 
 // Function to get products by company name
 export const getProductsByCompany = async (req, res) => {
-  const { companyName } = req.query;
+  const { companyName } = req.body;
   try {
     const products = await Product.find({ Company: companyName });
     res.status(200).json({ success: true, products });
@@ -26,7 +26,7 @@ export const getProductsByCompany = async (req, res) => {
 
 // Function to get products by sub-category
 export const getProductsBySubCategory = async (req, res) => {
-  const { subCategory } = req.query;
+  const { subCategory } = req.body;
   try {
     const products = await Product.find({ "Category.sub": subCategory });
     res.status(200).json({ success: true, products });
