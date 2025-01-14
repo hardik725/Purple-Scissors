@@ -70,7 +70,9 @@ export const username = async (req,res) => {
 
   try{
     const user = await User.findOne({Email});
-      res.status(200).json(reviews);
+    if(user){
+      res.status(200).json(user.Name);
+    }
   }catch(error){
     console.error('Error fetching all reviews:', error);
     res.status(500).json({ message: 'Internal server error.' });
