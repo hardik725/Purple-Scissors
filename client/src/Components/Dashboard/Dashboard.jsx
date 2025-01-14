@@ -83,7 +83,7 @@ const Dashboard = ({ email, onLogout }) => {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-fixed -z-20"
+      className="min-h-screen bg-cover bg-center bg-fixed -z-20 font-kugile"
       style={{ backgroundImage: "url('https://cdn.pixabay.com/photo/2016/11/18/13/10/female-1834381_1280.jpg')" }}
     >
       {/* Overlay for better readability */}

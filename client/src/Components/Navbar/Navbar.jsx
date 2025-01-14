@@ -41,8 +41,10 @@ const Navbar = ({ email, onLogout }) => {
 
         {/* Links Section */}
         {!isMobile ? (
-          <ul className="hidden md:flex space-x-6 text-[#6A737B] text-lg font-medium items-center">
-            <li className="hover:underline cursor-pointer flex items-center">Home</li>
+          <ul className="hidden md:flex space-x-6 text-[#cdd3d8] text-lg font-medium items-center">
+            <li className="hover:underline cursor-pointer flex items-center">
+              <Link to="/">Home</Link>
+            </li>
             <li className="hover:underline cursor-pointer flex items-center">Services</li>
             <li className="hover:underline cursor-pointer flex items-center">
             <Link to="/appointment">Appointment</Link>
@@ -78,7 +80,7 @@ const Navbar = ({ email, onLogout }) => {
             >
               <ul className="flex flex-col">
                 <li className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer rounded-t-xl transition">
-                  Home
+                <Link to="/">Home</Link>
                 </li>
                 <li className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer transition">
                   Services

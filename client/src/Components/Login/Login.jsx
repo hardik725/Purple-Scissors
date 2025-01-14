@@ -73,7 +73,7 @@ const Login = ({ onLogin }) => {
 
   return (
     <div
-      className="h-screen flex items-center justify-center bg-cover bg-center px-4"
+      className="h-screen flex items-center justify-center bg-cover bg-center px-4 font-kugile"
       style={{
         backgroundImage:
           "url('https://images.pexels.com/photos/705255/pexels-photo-705255.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",

@@ -87,66 +87,101 @@ const HairPage = ({ email, onLogout }) => {
   ];
   if(!isMobile){
   return (
-    <div className="bg-white text-black">
-      {/* Navbar */}
-      <Navbar email={email} onLogout={onLogout} />
+<div className="bg-[#EDEDFD] text-black font-kugile relative">
+  {/* Navbar */}
+  <Navbar email={email} onLogout={onLogout} />
 
-      {/* Categories */}
-      <div className="space-y-12">
-        {categories.map((category, index) => {
-          // Calculate dynamic margin-top based on the number of services
-          const marginTop = category.services.length * 39; // Adjust multiplier as needed
+  {/* Hair Section Header */}
+  <div className="bg-gradient-to-r from-gray-800 via-black to-gray-800 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-gray-400 transition duration-300">
+    Hair Section
+  </div>
 
-          return (
-            <div
-              key={index}
-              className="relative mx-auto w-11/12 lg:w-3/5"
-              style={{
-                backgroundImage: `url(${category.image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                height: "500px",
-                marginBottom: `${marginTop}px`,
-              }}
-            >
-              {/* Overlay Content */}
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-8">
-                <h2 className="text-3xl font-bold text-white mb-4">
-                  {category.title}
-                </h2>
-              </div>
+  {/* Decorative Elements */}
+  <div className="absolute inset-0 -z-10">
+    {/* Add Gradient Decoration */}
+    <div className="bg-gradient-to-br from-gray-300 via-white to-gray-200 w-full h-full opacity-30"></div>
 
-              {/* Services List */}
-              <ul
-                className={`absolute w-11/12 md:w-1/2 bg-black bg-opacity-80 p-6 space-y-4 shadow-lg ${
-                  index % 2 === 0 ? "left-4" : "right-4"
-                }`}
-                style={{ top: "60%", maxHeight: `${category.services.length*55}px` }}
+    {/* Floating Shapes */}
+    <div className="absolute top-10 left-10 w-20 h-20 bg-black rounded-full opacity-10 animate-bounce"></div>
+    <div className="absolute bottom-20 right-20 w-16 h-16 bg-gray-700 rounded-full opacity-20 animate-pulse"></div>
+    <div className="absolute top-40 left-60 w-14 h-14 bg-gray-800 rounded-lg opacity-10 animate-ping"></div>
+  </div>
+
+  {/* Categories Section */}
+  <div className="space-y-12 relative z-10">
+    {categories.map((category, index) => {
+      // Calculate dynamic margin-top based on the number of services
+      const marginTop = category.services.length * 39; // Adjust multiplier as needed
+
+      return (
+        <div
+          key={index}
+          className="relative mx-auto w-11/12 lg:w-3/5"
+          style={{
+            backgroundImage: `url(${category.image})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "500px",
+            marginBottom: `${marginTop}px`,
+          }}
+        >
+          {/* Overlay Content */}
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-8">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              {category.title}
+            </h2>
+          </div>
+
+          {/* Services List */}
+          <ul
+            className={`absolute w-11/12 md:w-1/2 bg-black bg-opacity-80 p-6 space-y-4 shadow-lg ${
+              index % 2 === 0 ? "left-4" : "right-4"
+            }`}
+            style={{
+              top: "60%",
+              maxHeight: `${category.services.length * 55}px`,
+            }}
+          >
+            {category.services.map((service, i) => (
+              <li
+                key={`${service}-${i}`}
+                className="flex justify-between text-white text-lg border-b border-gray-500 pb-2"
               >
-                {category.services.map((service, i) => (
-                  <li
-                    key={`${service}-${i}`}
-                    className="flex justify-between text-white text-lg border-b border-gray-500 pb-2"
-                  >
-                    <span>{service}</span>
-                    <span>Price TBD</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+                <span>{service}</span>
+                <span>Price TBD</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    })}
+  </div>
+
+  {/* Call-to-Action Section */}
+  <div className="mt-8 p-6 bg-gray-800 text-white text-center rounded-lg shadow-md">
+    <h3 className="text-4xl font-bold mb-4">Explore Our Top Services!</h3>
+    <p className="text-lg mb-6">
+      Discover a wide range of services tailored to your needs. Click below to
+      learn more.
+    </p>
+    <button className="px-6 py-2 bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-400 transition duration-300">
+      Learn More
+    </button>
+  </div>
+</div>
+
   );
 }else{
     return( 
         <div className="bg-gray-100 text-black font-kugile">
         {/* Navbar */}
         <Navbar email={email} onLogout={onLogout} />
+        <div className="bg-gradient-to-r from-gray-800 via-black to-gray-800 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-gray-400 transition duration-300">
+    Hair Section
+  </div>
   
         {/* Categories */}
-        <div className=" py-4">
+        <div >
           {categories.map((category, index) => (
             <div
               key={index}
