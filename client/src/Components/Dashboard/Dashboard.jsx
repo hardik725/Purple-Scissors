@@ -155,7 +155,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
   </div>
   <div className="flex flex-wrap justify-center gap-8">
   {[
-    { label: "Skin Care Services", icon: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", id: "skinpage" },
+    { label: "Body & Beauty Essentials", icon: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", id: "essentialspage" },
     { label: "Hair Styling Services", icon: "https://cdn.pixabay.com/photo/2018/02/14/21/45/woman-3153999_1280.jpg", id: "hairpage" },
     { label: "Facial Services", icon: "https://images.pexels.com/photos/5069401/pexels-photo-5069401.jpeg", id: "facepage" },
     { label: "Make-Up Services", icon: "https://img.freepik.com/free-photo/team-bride-celebrating-before-wedding_23-2149329143.jpg?t=st=1736522338~exp=1736525938~hmac=023df7c8a0a861bc1b929f645c279ad4b967d271e10e0471c4b969c8ccefeeb7&w=740", id: "makeuppage" },
