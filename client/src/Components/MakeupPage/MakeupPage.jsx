@@ -20,28 +20,65 @@ const MakeupPage = ({ email, userName, onLogout }) => {
     {
       title: "Bridal Makeup",
       image:
-        "https://i.ibb.co/RPGxQQt/anushkasharma.jpg",
-      services: ["Classic Bridal Look", "Airbrush Makeup", "HD Bridal Makeup", "Contemporary Bridal Styles"],
+        "https://media.istockphoto.com/id/1174369498/photo/an-important-part-of-her-culture.jpg?s=612x612&w=0&k=20&c=pcRZSo9txn1brW0wcVYTey8i6H223DtO8KgKDlBqkcc=",
+      services: [
+        "Classic Bridal Look",
+        "Airbrush Makeup",
+        "HD Bridal Makeup",
+        "Contemporary Bridal Styles",
+        "Traditional Bridal Look",
+        "Reception Bridal Makeup",
+        "Engagement Ceremony Look",
+        "Pre-Bridal Skincare & Makeup Packages",
+      ],
     },
     {
       title: "Party Makeup",
       image:
-        "https://images.pexels.com/photos/3779002/pexels-photo-3779002.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      services: ["Evening Glam Look", "Cocktail Party Makeup", "Themed Party Styles", "Custom Glitter Effects"],
+        "https://media.istockphoto.com/id/964839486/photo/nice-rich-independent-confident-successful-luxury-sexy-girl-holding-hat-on-her-head-with-hands.jpg?s=612x612&w=0&k=20&c=O_ikrZq3YgPLt_lRXtLdVa52TjkcVbyBST6OeOx40xA=",
+      services: [
+        "Evening Glam Look",
+        "Cocktail Party Makeup",
+        "Themed Party Styles",
+        "Custom Glitter Effects",
+        "Festive Makeup",
+        "Matte Finish Party Look",
+        "Glow & Shimmer Makeup",
+        "Prom Makeup Styles",
+      ],
     },
     {
       title: "Professional Makeup",
       image:
-        "https://images.pexels.com/photos/6476061/pexels-photo-6476061.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      services: ["Corporate Looks", "Photo Shoot Makeup", "Editorial Makeup", "Interview Ready Styles"],
+        "https://media.istockphoto.com/id/687244776/photo/makeup-artist-applying-eyeshadow-on-a-girl.jpg?s=612x612&w=0&k=20&c=QkFL3oe-poYi4p1ZaboIOVie_ycRz0fTJG9Ex5LpNoQ=",
+      services: [
+        "Corporate Looks",
+        "Photo Shoot Makeup",
+        "Editorial Makeup",
+        "Interview Ready Styles",
+        "Portfolio Shoot Makeup",
+        "Stage & Performance Makeup",
+        "TV/Camera Ready Makeup",
+        "Custom Professional Looks",
+      ],
     },
     {
       title: "Everyday Makeup",
       image:
-        "https://images.pexels.com/photos/4753901/pexels-photo-4753901.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      services: ["Subtle Day Look", "Natural Glow", "No-Makeup Makeup Look", "Minimalist Styles"],
+        "https://img.freepik.com/free-photo/young-woman-applying-compact-powder-with-makeup-brush_23-2148161319.jpg?t=st=1736958825~exp=1736962425~hmac=ed0dd8c53d5ab378a5a929447ecca47ce34e979bbc36fe02be8892ff3f263272&w=1380",
+      services: [
+        "Subtle Day Look",
+        "Natural Glow",
+        "No-Makeup Makeup Look",
+        "Minimalist Styles",
+        "Light Contouring & Highlighting",
+        "Casual Party Ready Look",
+        "Quick 10-Minute Makeup",
+        "Fresh & Dewy Everyday Look",
+      ],
     },
   ];
+  
 
   if (!isMobile) {
     return (
@@ -52,9 +89,9 @@ const MakeupPage = ({ email, userName, onLogout }) => {
           Makeup Section
         </div>
 
-        <div className="space-y-12 relative z-10">
+        <div className="space-y-12 relative z-10 mt-2">
           {categories.map((category, index) => {
-            const marginTop = category.services.length * 39;
+            const marginTop = category.services.length * 31;
 
             return (
               <div
