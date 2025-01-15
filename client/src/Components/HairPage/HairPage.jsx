@@ -117,7 +117,7 @@ const HairPage = ({ email, userName, onLogout }) => {
   </div>
 
   {/* Categories Section */}
-  <div className="space-y-12 relative z-10">
+  <div className="space-y-12 relative z-10 mt-2">
     {categories.map((category, index) => {
       // Calculate dynamic margin-top based on the number of services
       const marginTop = category.services.length * 39;
