@@ -9,6 +9,7 @@ import AdminPage from "./Components/AdminPage/AdminPage";
 import HairPage from "./Components/HairPage/HairPage";
 import MakeupPage from "./Components/MakeupPage/MakeupPage";
 import ProductHome from "./Components/ProductHome/ProductHome";
+import CompanyProduct from "./Components/CompanyProduct/CompanyProduct";
 
 function App() {
   const [email, setEmail] = useState(""); // State to store the user's email
@@ -67,7 +68,7 @@ function App() {
           path="/"
           element={
             email ? (
-              email === "shammi.priyam.13@gmail.com" ? (
+              email === "purple.scissors.org@gmail.com" ? (
                 <Navigate to="/adminpage" />
               ) : (
                 <Navigate to="/dashboard" />
@@ -113,7 +114,7 @@ function App() {
         <Route
           path="/adminpage"
           element={
-            email === "shammi.priyam.13@gmail.com" ? (
+            email === "purple.scissors.org@gmail.com" ? (
               <AdminPage email={email} userName={userName} onLogout={handleLogout} />
             ) : (
               <Navigate to="/" />
@@ -149,7 +150,19 @@ function App() {
             <Navigate to="/" />
           )
         }/>
+      <Route
+  path="/companyproduct/:company/:companyImage"
+  element={
+    email ? (
+      <CompanyProduct email={email} userName={userName} onLogout={handleLogout} />
+    ) : (
+      <Navigate to="/" />
+    )
+  }
+/>        
       </Routes>
+
+
     </div>
   );
 }

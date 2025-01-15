@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
 import Navbar from "../Navbar/Navbar";
+import { Link } from 'react-router';
 
 const ProductHome = ({ email, userName, onLogout }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -60,7 +61,7 @@ const ProductHome = ({ email, userName, onLogout }) => {
 
 
       {/* Sliding Offers Section */}
-      <section className="offers-section relative bg-gray-100 py-6">
+      <section className="offers-section relative bg-gray-100">
       <div
         className="hero-image w-full h-auto bg-cover bg-center rounded-lg shadow-md transition-transform duration-500"
         style={{
@@ -127,25 +128,21 @@ const ProductHome = ({ email, userName, onLogout }) => {
       { name: "VLCC", image: "https://images.seeklogo.com/logo-png/52/2/vlcc-personal-care-logo-png_seeklogo-521769.png?v=1958556243998270512" },
       { name: "Matrix", image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg..." },
     ].map((brand, index) => (
-      <div
-        key={index}
-        className="company-card bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center 
-                   hover:shadow-lg transition-shadow duration-300"
-      >
-        <img
-          src={brand.image}
-          alt={brand.name}
-          className="w-20 sm:w-32 object-contain mb-4"
-        />
-      </div>
+      <Link
+      key={index}
+      to={`/companyproduct/${brand.name}/${encodeURIComponent(brand.image)}`}
+      className="company-card bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center 
+                 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+    >
+      <img
+        src={brand.image}
+        alt={brand.name}
+        className="w-20 sm:w-32 object-contain mb-4"
+      />
+    </Link>
     ))}
   </div>
 </section>
-
-
-
-
-
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-4 text-center">
         © 2025 Salon Products | All Rights Reserved
