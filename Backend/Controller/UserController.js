@@ -78,3 +78,125 @@ export const username = async (req,res) => {
     res.status(500).json({ message: 'Internal server error.' });
   }
 };
+
+
+// here the backend for market place is there like order wishlist and cart adding and removing
+//
+//
+// add to cart wishlist and ordr 
+// Add item to Cart
+export const addToCart = async (req, res) => {
+  const { Email, Product } = req.body;
+
+  try {
+    const user = await User.findById(Email);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.Cart.push(Product); // Add product to Cart
+    await user.save();
+    return res.status(201).json({ message: "Product added to cart", user });
+  } catch (error) {
+    console.error("Error adding to cart", error);
+    return res.status(500).json({ message: "Error adding to cart", error: error.message });
+  }
+};
+
+// Add item to Orders
+export const addToOrders = async (req, res) => {
+  const { Email, Product } = req.body;
+
+  try {
+    const user = await User.findById(Email);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.Orders.push(Product); // Add product to Orders
+    await user.save();
+    return res.status(201).json({ message: "Product added to orders", user });
+  } catch (error) {
+    console.error("Error adding to orders", error);
+    return res.status(500).json({ message: "Error adding to orders", error: error.message });
+  }
+};
+
+// Add item to Wishlist
+export const addToWishlist = async (req, res) => {
+  const { Email, Product } = req.body;
+
+  try {
+    const user = await User.findById(Email);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.Wishlist.push(Product); // Add product to Wishlist
+    await user.save();
+    return res.status(201).json({ message: "Product added to wishlist", user });
+  } catch (error) {
+    console.error("Error adding to wishlist", error);
+    return res.status(500).json({ message: "Error adding to wishlist", error: error.message });
+  }
+};
+
+// NOW FROM HERE REMOVING FROM CART WISHLIST IS THERE 
+
+// Remove item from Cart
+export const removeFromCart = async (req, res) => {
+  const { Email, ProductId } = req.body;
+
+  try {
+    const user = await User.findById(Email);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.Cart.pull({ _id: ProductId }); // Remove product from Cart
+    await user.save();
+    return res.status(200).json({ message: "Product removed from cart", user });
+  } catch (error) {
+    console.error("Error removing from cart", error);
+    return res.status(500).json({ message: "Error removing from cart", error: error.message });
+  }
+};
+
+// Remove item from Orders
+export const removeFromOrders = async (req, res) => {
+  const { Email, ProductId } = req.body;
+
+  try {
+    const user = await User.findById(Email);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.Orders.pull({ _id: ProductId }); // Remove product from Orders
+    await user.save();
+    return res.status(200).json({ message: "Product removed from orders", user });
+  } catch (error) {
+    console.error("Error removing from orders", error);
+    return res.status(500).json({ message: "Error removing from orders", error: error.message });
+  }
+};
+
+// Remove item from Wishlist
+export const removeFromWishlist = async (req, res) => {
+  const { Email, ProductId } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.Wishlist.pull({ _id: ProductId }); // Remove product from Wishlist
+    await user.save();
+    return res.status(200).json({ message: "Product removed from wishlist", user });
+  } catch (error) {
+    console.error("Error removing from wishlist", error);
+    return res.status(500).json({ message: "Error removing from wishlist", error: error.message });
+  }
+};
+

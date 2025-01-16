@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    unique: true, // Ensures no duplicate email
   },
   Password: {
     type: String,
@@ -34,8 +35,64 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  // Default empty arrays for Cart, Orders, and Wishlist
+  Cart: [{
+    ProductName: {
+      type: String,
+      required: true,
+    },
+    Price: {
+      type: Number,
+      required: true,
+    },
+    Quantity: {
+      type: Number,
+      required: true,
+    },
+    ImageUrl: {
+      type: String,
+      required: true,
+    },
+  }],
+  Orders: [{
+    Name: {
+      type: String,
+      required: true,
+    },
+    Price: {
+      type: Number,
+      required: true,
+    },
+    Quantity: {
+      type: Number,
+      required: true,
+    },
+    ImageUrl: {
+      type: String,
+      required: true,
+    },
+    OrderDate: {
+      type: Date,
+      default: Date.now,
+    },
+  }],
+  Wishlist: [{
+    Name: {
+      type: String,
+      required: true,
+    },
+    Price: {
+      type: Number,
+      required: true,
+    },
+    ImageUrl: {
+      type: String,
+      required: true,
+    },
+  }],
 });
 
+// Create the User model using the schema
 const User = mongoose.model("User", UserSchema);
 
 export default User;
