@@ -47,12 +47,103 @@ const transporter = nodemailer.createTransport({
     }
   
     try {
-  
       const mailOptions = {
         from: process.env.EMAIL_USER, // Your email
         to: Email,                   // User's email address
         subject: `Appointment Confirmation`, // Custom subject
-        text: `Dear ${Name},\n\nYour appointment has been successfully booked!\n\nDate: ${Date}\nTime: ${Time}\nServices: ${Services.join(", ")}\n\nThank you for booking with us! We look forward to your appointment.\n\nBest regards,\nYour Company Name`, // Message body
+        html: `
+          <html>
+            <head>
+              <style>
+                body {
+                  font-family: Arial, sans-serif;
+                  background-color: #f7f7f7;
+                  margin: 0;
+                  padding: 0;
+                }
+                .email-container {
+                  width: 100%;
+                  max-width: 600px;
+                  margin: 0 auto;
+                  background-color: #ffffff;
+                  border-radius: 8px;
+                  overflow: hidden;
+                }
+                .email-header {
+                  background-color: #6b3f98;
+                  color: #ffffff;
+                  text-align: center;
+                  padding: 20px;
+                }
+                .email-header img {
+                  width: 80px;
+                  height: auto;
+                }
+                .email-content {
+                  padding: 30px;
+                  text-align: left;
+                  color: #333333;
+                }
+                .email-content h1 {
+                  color: #6b3f98;
+                }
+                .appointment-details {
+                  margin: 20px 0;
+                  padding: 20px;
+                  background-color: #f0f0f0;
+                  border-radius: 8px;
+                  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                .appointment-details p {
+                  margin: 8px 0;
+                }
+                .footer {
+                  background-color: #6b3f98;
+                  color: #ffffff;
+                  text-align: center;
+                  padding: 10px;
+                }
+                .footer p {
+                  margin: 0;
+                }
+                .footer a {
+                  color: #ffffff;
+                  text-decoration: none;
+                  font-weight: bold;
+                }
+              </style>
+            </head>
+            <body>
+              <div class="email-container">
+                <div class="email-header">
+                  <img src="https://static.vecteezy.com/system/resources/previews/054/267/527/non_2x/scissors-outline-slip-style-icon-vector.jpg" alt="Purple Scissors Logo">
+                  <h2>Purple Scissors Salon</h2>
+                </div>
+  
+                <div class="email-content">
+                  <h1>Your Appointment is Confirmed!</h1>
+                  <p>Dear <strong>${Name}</strong>,</p>
+                  <p>Thank you for booking an appointment with us! We're excited to have you at Purple Scissors Salon. Here are your appointment details:</p>
+                  
+                  <div class="appointment-details">
+                    <p><strong>Appointment Date:</strong> ${Date}</p>
+                    <p><strong>Appointment Time:</strong> ${Time}</p>
+                    <p><strong>Services Selected:</strong> ${Services.join(", ")}</p>
+                  </div>
+  
+                  <p>If you have any questions or need to reschedule, feel free to reach out to us.</p>
+                  <p>We look forward to seeing you soon!</p>
+                </div>
+  
+                <div class="footer">
+                  <p>Best regards,</p>
+                  <p><strong>Purple Scissors Salon Team</strong></p>
+                  <p><a href="mailto:support@purplescissors.com">Contact Us</a> | <a href="https://www.purplescissors.com">Visit Our Website</a></p>
+                </div>
+              </div>
+            </body>
+          </html>
+        `,
       };
   
       // Send the confirmation email to the user
@@ -64,6 +155,7 @@ const transporter = nodemailer.createTransport({
       res.status(500).json({ message: 'Something went wrong, please try again later.' });
     }
   });
+  
   
 
   export default router;
