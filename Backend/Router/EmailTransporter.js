@@ -39,29 +39,38 @@ const transporter = nodemailer.createTransport({
   });
 
   router.post('/book-appointment', async (req, res) => {
-    const { Date, Email, Name , Time} = req.body;
+    const { Date, Email, Name, Time, Services } = req.body;
   
     // Validate required fields
-    if (!Email || !Date || !Time || !Name) {
-      return res.status(400).json({ message: 'Please provide all required information.' });
+    if (!Email || !Date || !Time || !Name || !Services || !Array.isArray(Services) || Services.length === 0) {
+      return res.status(400).json({ message: 'Please provide all required information, including services.' });
     }
   
     try {
+      // Save appointment details in the database
+      const newAppointment = new Appointment({
+        Name,
+        Services,
+        Date,
+        Time,
+        Email,
+      });
+  
+      await newAppointment.save();
+  
       const mailOptions = {
-        from: process.env.EMAIL_USER,  // Your email
-        to: Email,                 // User's email address
+        from: process.env.EMAIL_USER, // Your email
+        to: Email,                   // User's email address
         subject: `Appointment Confirmation`, // Custom subject
-        text: `Dear ${Name},\n\nYour appointment has been successfully booked!\n\nDate: ${Date}\nTime: ${Time}\n\nThank you for booking with us! We look forward to your appointment.\n\nBest regards,\nYour Company Name`, // Message body
+        text: `Dear ${Name},\n\nYour appointment has been successfully booked!\n\nDate: ${Date}\nTime: ${Time}\nServices: ${Services.join(", ")}\n\nThank you for booking with us! We look forward to your appointment.\n\nBest regards,\nYour Company Name`, // Message body
       };
   
       // Send the confirmation email to the user
       await transporter.sendMail(mailOptions);
   
-      // Optionally, send a notification to yourself as an admin or save to DB
-  
       res.status(200).json({ message: 'Appointment booked successfully, confirmation email sent!' });
     } catch (error) {
-      console.error('Error sending appointment email:', error);
+      console.error('Error booking appointment or sending email:', error);
       res.status(500).json({ message: 'Something went wrong, please try again later.' });
     }
   });
