@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"
 
 const Appointment = ({ email,userName, onLogout }) => {
   const [formData, setFormData] = useState({
@@ -11,10 +13,11 @@ const Appointment = ({ email,userName, onLogout }) => {
   });
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState("");
+  const [selectedServices, setSelectedServices] = useState([]); // State for selected services
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [userAppointments, setUserAppointments] = useState([]);
-
+  
   // Fetch available slots based on the selected date
   const fetchAvailableSlots = async (date) => {
     try {
@@ -34,11 +37,13 @@ const Appointment = ({ email,userName, onLogout }) => {
       setErrorMessage("Error fetching available slots. Please try again.");
     }
   };
-
+  
   // Fetch user's booked appointments
   const fetchUserAppointments = async () => {
     try {
-      const response = await fetch(`https://purple-scissors.onrender.com/appointment/getappointment/${email}`);
+      const response = await fetch(
+        `https://purple-scissors.onrender.com/appointment/getappointment/${email}`
+      );
       const data = await response.json();
       if (response.ok) {
         setUserAppointments(data.alldata || []);
@@ -49,7 +54,7 @@ const Appointment = ({ email,userName, onLogout }) => {
       setErrorMessage("Error fetching user appointments. Please try again.");
     }
   };
-
+  
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,22 +62,32 @@ const Appointment = ({ email,userName, onLogout }) => {
       ...prevData,
       [name]: value,
     }));
-
+  
     if (name === "date") {
       fetchAvailableSlots(value); // Fetch slots when the date changes
     }
   };
-
+  
+  // Handle service selection
+  const toggleService = (service) => {
+    setSelectedServices((prev) =>
+      prev.includes(service)
+        ? prev.filter((s) => s !== service) // Remove service if already selected
+        : [...prev, service] // Add service if not selected
+    );
+  };
+  
   // Handle form submission for booking an appointment
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, date } = formData;
-
-    if (!email || !date || !selectedSlot) {
-      setErrorMessage("Please provide all required fields, including a time slot.");
+    console.log(formData.name,email,date,selectedSlot,selectedServices);
+  
+    if (!email || !date || !selectedSlot || selectedServices.length === 0) {
+      setErrorMessage("Please provide all required fields, including a time slot and services.");
       return;
     }
-
+  
     try {
       const response = await fetch("https://purple-scissors.onrender.com/appointment/book", {
         method: "POST",
@@ -80,24 +95,31 @@ const Appointment = ({ email,userName, onLogout }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          Name: formData.name,
           Email: email,
           Date: date,
           Time: selectedSlot,
+          Services: selectedServices, // Add selected services
         }),
       });
-      const emailresponse = await fetch("https://purple-scissors.onrender.com/mail/book-appointment",{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Email: email,
-          Date: date,
-          Time: selectedSlot,
-          Name: formData.name,
-        })
-      });
-
+  
+      const emailresponse = await fetch(
+        "https://purple-scissors.onrender.com/mail/book-appointment",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            Email:email,
+            Name:formData.name,
+            Date:date,
+            Services:selectedServices,
+            Time:selectedSlot,
+          }),
+        }
+      );
+  
       const data = await response.json();
       const emaildata = await emailresponse.json();
       if (response.ok && emaildata.message === "Appointment booked successfully, confirmation email sent!") {
@@ -113,6 +135,7 @@ const Appointment = ({ email,userName, onLogout }) => {
         });
         setSelectedSlot("");
         setAvailableSlots([]);
+        setSelectedServices([]); // Reset services selection
       } else {
         setErrorMessage(data.error || "Error booking appointment.");
       }
@@ -120,12 +143,13 @@ const Appointment = ({ email,userName, onLogout }) => {
       setErrorMessage("Error booking appointment. Please try again.");
     }
   };
-
+  
   useEffect(() => {
     if (email) {
       fetchUserAppointments(); // Fetch appointments on component mount if email exists
     }
   }, [email]);
+  
 
   return (
 <>
@@ -150,6 +174,32 @@ const Appointment = ({ email,userName, onLogout }) => {
       </div>
       {/* Form Section */}
       <div className="w-full sm:w-1/2 bg-white p-6 sm:p-10 rounded-2xl shadow-2xl">
+                    {/* Services Section */}
+    <div className="mb-6">
+      <h5 className="text-md font-medium text-gray-800 mb-3">Select Services</h5>
+      <div className="grid grid-cols-3 gap-4">
+        {["Hair", "Face", "Makeup", "Nails", "Grooming"].map((service, index) => (
+          <button
+            key={index}
+            type="button"
+            className={`p-2 text-sm rounded-lg font-medium transition-all duration-300 border border-pink-300 ${
+              selectedServices.includes(service)
+                ? "border-purple-500 bg-gradient-to-r from-pink-400 to-purple-400 text-white shadow-md scale-105"
+                : "bg-gray-100 text-gray-700 hover:bg-gradient-to-r hover:from-pink-100 hover:to-purple-100 hover:text-purple-700"
+            }`}
+            onClick={() =>
+              setSelectedServices((prev) =>
+                prev.includes(service)
+                  ? prev.filter((s) => s !== service)
+                  : [...prev, service]
+              )
+            }
+          >
+            {service}
+          </button>
+        ))}
+      </div>
+    </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
           {/* Input Fields */}
           <div className="flex flex-col sm:flex-row gap-6">
@@ -158,14 +208,6 @@ const Appointment = ({ email,userName, onLogout }) => {
               name="name"
               placeholder="Full Name"
               value={formData.name}
-              onChange={handleChange}
-              className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
               onChange={handleChange}
               className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
             />
@@ -179,33 +221,71 @@ const Appointment = ({ email,userName, onLogout }) => {
               onChange={handleChange}
               className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
             />
-            <input
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-              className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
-            />
           </div>
-          {availableSlots.length > 0 ? (
-            <div>
-              <select
-                name="slot"
-                value={selectedSlot}
-                onChange={(e) => setSelectedSlot(e.target.value)}
-                className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
-              >
-                <option value="">Select a Time Slot</option>
-                {availableSlots.map((slot, index) => (
-                  <option key={index} value={slot}>
-                    {slot}
-                  </option>
-                ))}
-              </select>
-            </div>
-          ) : (
-            <p className="text-gray-500">No slots available for the selected date.</p>
-          )}
+      <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">
+      Select Date
+      </label>
+      <DatePicker
+        selected={formData.date ? new Date(formData.date) : null}
+        onChange={(date) => {
+          const formattedDate = date.toISOString().split("T")[0]; // Format to YYYY-MM-DD
+          handleChange({ target: { name: "date", value: formattedDate } });
+        }}
+        minDate={new Date()}
+        dateFormat="yyyy-MM-dd"
+        className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
+        placeholderText="Select a date"
+      />
+  {availableSlots.length > 0 && (
+  <div className="mt-6">
+    <h4 className="text-lg font-semibold text-purple-700 mb-4">Available Slots</h4>
+    {/* Slots Section */}
+    <div>
+      <h5 className="text-md font-medium text-gray-800 mb-3">Morning Slots</h5>
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        {availableSlots
+          .filter((slot) => slot.includes("AM"))
+          .map((slot, index) => (
+            <button
+              key={`morning-${index}`}
+              type="button"
+              className={`p-3 text-sm rounded-lg font-medium transition-all duration-300 border border-pink-300 ${
+                selectedSlot === slot
+                  ? "border-purple-500 bg-gradient-to-r from-pink-400 to-purple-400 text-white shadow-md scale-105"
+                  : "bg-gray-100 text-gray-700 hover:bg-gradient-to-r hover:from-pink-100 hover:to-purple-100 hover:text-purple-700"
+              }`}
+              onClick={() => setSelectedSlot(slot)}
+            >
+              {slot}
+            </button>
+          ))}
+      </div>
+
+      <h5 className="text-md font-medium text-gray-800 mb-3">Evening Slots</h5>
+      <div className="grid grid-cols-3 gap-4">
+        {availableSlots
+          .filter((slot) => slot.includes("PM"))
+          .map((slot, index) => (
+            <button
+              key={`evening-${index}`}
+              type="button"
+              className={`p-3 text-sm rounded-lg font-medium transition-all duration-300 border border-pink-300 ${
+                selectedSlot === slot
+                  ? "border-purple-500 bg-gradient-to-r from-pink-400 to-purple-400 text-white shadow-md scale-105"
+                  : "bg-gray-100 text-gray-700 hover:bg-gradient-to-r hover:from-pink-100 hover:to-purple-100 hover:text-purple-700"
+              }`}
+              onClick={() => setSelectedSlot(slot)}
+            >
+              {slot}
+            </button>
+          ))}
+      </div>
+    </div>
+  </div>
+)}
+
+
+
           <textarea
             name="notes"
             placeholder="Additional Notes"

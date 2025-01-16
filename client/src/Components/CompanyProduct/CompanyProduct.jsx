@@ -34,60 +34,50 @@ const CompanyProduct = ({ email, userName, onLogout }) => {
 
   return (
 <div className="bg-gray-50 min-h-screen">
-  {/* Navbar */}
   <Navbar email={email} userName={userName} onLogout={onLogout} />
 
-  {/* Company Logo */}
-  <div className="bg-gradient-to-r from-blue-100 via-white to-blue-100 py-10 shadow-md">
-  <div className="container mx-auto flex justify-center">
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <img
-        src={companyImage}
-        alt={`${company} logo`}
-        className="w-80 h-40 object-contain mx-auto"
-      />
-      <p className="text-center text-gray-600 text-sm font-medium mt-4">
-        Your Trusted Partner for Professional Products
-      </p>
+  <div className="bg-company-banner shadow-md mb-8">
+    <div className="container mx-auto flex justify-center">
+      <div className="bg-white shadow-lg rounded-xl p-6">
+        <img
+          src={companyImage}
+          alt={`${company} logo`}
+          className="w-60 h-40 object-contain mx-auto"
+        />
+        <p className="text-center text-gray-700 font-semibold mt-4">
+          Your Trusted Partner for Professional Products
+        </p>
+      </div>
     </div>
   </div>
-</div>
 
-  {/* Products Section */}
-  <div className="container mx-auto px-4 mt-8">
+  <div className="container mx-auto px-4">
     {error ? (
-      <p className="text-red-500 text-center">{error}</p>
+      <div className="text-center text-red-600 bg-red-100 py-2 rounded">
+        {error}
+      </div>
     ) : (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {products.map((product) => (
           <div
             key={product._id}
-            className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col"
+            className="product-card bg-white rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-1"
           >
-            {/* Product Image */}
-            <div className="relative bg-gradient-to-br from-blue-100 via-white to-blue-50">
+            <div className="relative bg-gradient-to-r from-blue-50 to-gray-50 rounded-t-lg">
               <img
-                src={product.Images[0].url} // Update with the actual product image URL field
+                src={product.Images[0].url}
                 alt={product.Name}
                 className="w-full h-56 object-contain p-4"
               />
             </div>
-            {/* Product Details */}
             <div className="p-4">
-              <h2 className="text-sm font-medium text-gray-700 truncate">
-                {product.Name}
-              </h2>
-              <p className="text-gray-600 text-sm mt-1">
-                Price: <span className="text-blue-600 font-bold">${product.Price}</span>
-              </p>
-              {/* Add to Cart & Wishlist Buttons */}
-              <div className="mt-4 flex justify-between items-center">
-                <button className="bg-blue-600 text-white text-sm py-1 px-3 rounded hover:bg-blue-700 transition">
+              <h2 className="font-medium text-gray-800 truncate">{product.Name}</h2>
+              <p className="text-blue-600 text-lg font-bold mt-2">${product.Price}</p>
+              <div className="mt-4 flex justify-between">
+                <button className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
                   Add to Cart
                 </button>
-                <button className="text-blue-600 text-sm hover:underline">
-                  Wishlist
-                </button>
+                <button className="text-blue-600 hover:underline">Wishlist</button>
               </div>
             </div>
           </div>
@@ -96,6 +86,7 @@ const CompanyProduct = ({ email, userName, onLogout }) => {
     )}
   </div>
 </div>
+
 
   );
 };
