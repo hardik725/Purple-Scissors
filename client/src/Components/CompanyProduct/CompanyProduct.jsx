@@ -58,9 +58,9 @@ const CompanyProduct = ({ email, userName, onLogout }) => {
       <Navbar email={email} userName={userName} onLogout={onLogout} />
 
       {/* Banner Section */}
-      <div className="bg-white">
+      <div className="bg-slate-800">
         <div className="container mx-auto flex justify-center w-2/3">
-          <div className="bg-white rounded-xl p-6">
+          <div className="bg-white rounded-sm m-1">
             <img
               src={companyImage}
               alt={`${company} logo`}
@@ -108,25 +108,22 @@ const CompanyProduct = ({ email, userName, onLogout }) => {
 
 
                 {/* Product Info */}
-                <div className="p-4">
-                  <h2 className="font-medium text-gray-800 truncate">
-                    {product.Name}
-                  </h2>
+                <div className="p-2 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+  <h2 className="font-semibold text-gray-800 truncate">{product.Name}</h2>
 
-                  {/* Price Section */}
-                  <div className="mt-2">
-                    <p className="text-gray-500">
-                    ₹{product.Price}
-                    </p>
-                  </div>
+  {/* Price Section */}
+  <div className="mt-[2px]">
+    <p className="text-lg font-semibold text-gray-600">₹{product.Price}</p>
+  </div>
 
-                  {/* Actions */}
-                  <div className="mt-4">
-                    <button className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 text-xs sm:text-md">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
+  {/* Actions */}
+  <div className="mt-2">
+    <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300 text-xs sm:text-sm">
+      Add to Cart
+    </button>
+  </div>
+</div>
+
               </div>
             ))}
           </div>
