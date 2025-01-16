@@ -28,7 +28,7 @@ export const getAvailableSlots = async (req, res) => {
 
 // Book an appointment
 export const bookAppointment = async (req, res) => {
-  const { Date, Time, Email } = req.body;
+  const { Date, Time, Email , Name, Services } = req.body;
 
   try {
     // Check if the slot is already booked
@@ -38,7 +38,7 @@ export const bookAppointment = async (req, res) => {
     }
 
     // Create a new appointment
-    const newAppointment = new Appointment({ Date, Time, Email });
+    const newAppointment = new Appointment({ Date, Time, Email, Name, Services });
     await newAppointment.save();
 
     res.status(201).json({ message: "Appointment booked successfully." });
