@@ -2,6 +2,7 @@ import React from 'react';
 import { useState,useEffect } from 'react';
 import Navbar from "../Navbar/Navbar";
 import { Link } from 'react-router';
+import ProductNavbar from '../ProductNavbar/ProductNavbar';
 
 const ProductHome = ({ email, userName, onLogout }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -23,6 +24,7 @@ const ProductHome = ({ email, userName, onLogout }) => {
     <div className="salon-homepage bg-white">
       {/* Navbar */}
       <Navbar email={email} userName={userName} onLogout={onLogout} />
+      <ProductNavbar/>
 
       {/* Category Section */}
       <section className="categories bg-gray-200 py-6">
