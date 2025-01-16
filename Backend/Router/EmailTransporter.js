@@ -47,16 +47,6 @@ const transporter = nodemailer.createTransport({
     }
   
     try {
-      // Save appointment details in the database
-      const newAppointment = new Appointment({
-        Name,
-        Services,
-        Date,
-        Time,
-        Email,
-      });
-  
-      await newAppointment.save();
   
       const mailOptions = {
         from: process.env.EMAIL_USER, // Your email
