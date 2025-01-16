@@ -236,3 +236,25 @@ export const removeFromWishlist = async (req, res) => {
   }
 };
 
+// get all the carts
+export const getAllCart = async (req, res) => {
+  try {
+    const user = await User.findOne({Email});
+    res.status(200).json(user.Cart);
+  } catch (error) {
+    console.error('Error fetching all cart items:', error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+};
+
+// get all the wishlist items
+export const getAllWish = async (req, res) => {
+  try {
+    const user = await User.findOne({Email});
+    res.status(200).json(user.Wishlist);
+  } catch (error) {
+    console.error('Error fetching all cart items:', error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+};
+
