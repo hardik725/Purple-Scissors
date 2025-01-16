@@ -85,16 +85,29 @@ export const username = async (req,res) => {
 //
 // add to cart wishlist and ordr 
 // Add item to Cart
+// Add item to Cart
 export const addToCart = async (req, res) => {
   const { Email, Product } = req.body;
 
   try {
-    const user = await User.findOne({Email});
+    const user = await User.findOne({ Email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.Cart.push(Product); // Add product to Cart
+    // Check if the product already exists in the cart
+    const existingProduct = user.Cart.find(
+      (item) => item.ProductName === Product.ProductName
+    );
+
+    if (existingProduct) {
+      // Increase the quantity of the existing product
+      existingProduct.Quantity += Product.Quantity;
+    } else {
+      // Add the product as a new entry in the cart
+      user.Cart.push(Product);
+    }
+
     await user.save();
     return res.status(201).json({ message: "Product added to cart", user });
   } catch (error) {
@@ -103,17 +116,37 @@ export const addToCart = async (req, res) => {
   }
 };
 
+
+// Add item to Orders
 // Add item to Orders
 export const addToOrders = async (req, res) => {
   const { Email, Product } = req.body;
 
   try {
-    const user = await User.findOne({Email});
+    const user = await User.findOne({ Email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.Orders.push(Product); // Add product to Orders
+    // Check if the product already exists in orders
+    const existingProduct = user.Orders.find(
+      (item) => item.Name === Product.ProductName
+    );
+
+    if (existingProduct) {
+      // Increase the quantity of the existing product
+      existingProduct.Quantity += Product.Quantity;
+    } else {
+      // Add the product as a new entry in orders
+      user.Orders.push({
+        Name: Product.ProductName,
+        Price: Product.Price,
+        Quantity: Product.Quantity,
+        ImageUrl: Product.ImageUrl,
+        OrderDate: new Date(),
+      });
+    }
+
     await user.save();
     return res.status(201).json({ message: "Product added to orders", user });
   } catch (error) {
