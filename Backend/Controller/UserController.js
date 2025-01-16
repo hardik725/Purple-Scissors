@@ -186,7 +186,7 @@ export const removeFromWishlist = async (req, res) => {
   const { Email, ProductId } = req.body;
 
   try {
-    const user = await User.findById(userId);
+    const user = await User.findById(Email);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
