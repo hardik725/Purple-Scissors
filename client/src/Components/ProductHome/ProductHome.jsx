@@ -126,7 +126,7 @@ const ProductHome = ({ email, userName, onLogout }) => {
       { name: "Lakme", image: "https://i.pinimg.com/736x/55/90/0b/55900beeff90476e34df8f7303a060e3.jpg" },
       { name: "Jeannot", image: "https://media.licdn.com/dms/image/v2/C4D0BAQF7gCNqsydsBA/company-logo_200_200/company-logo_200_200/0/1642568688292/jeannotceuticals_logo?e=2147483647&v=beta&t=94KAZceQfOd3DmNXD9N23FL4go_HCxLedwQgaxUjxgI" },
       { name: "VLCC", image: "https://images.seeklogo.com/logo-png/52/2/vlcc-personal-care-logo-png_seeklogo-521769.png?v=1958556243998270512" },
-      { name: "Matrix", image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg..." },
+      { name: "Matrix", image: "https://e7.pngegg.com/pngimages/119/404/png-clipart-hair-matrix-logo-brand-font-product-matrix-logo-text-logo.png" },
     ].map((brand, index) => (
       <Link
       key={index}
