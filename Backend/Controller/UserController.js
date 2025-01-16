@@ -160,12 +160,14 @@ export const addToWishlist = async (req, res) => {
   const { Email, Product } = req.body;
 
   try {
-    const user = await User.findOne({Email});
+    const user = await User.findOne({ Email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.Wishlist.push(Product); // Add product to Wishlist
+    console.log("Product to add to wishlist:", Product);  // Log product to check its structure
+
+    user.Wishlist.push(Product);  // Add product to Wishlist
     await user.save();
     return res.status(201).json({ message: "Product added to wishlist", user });
   } catch (error) {
@@ -173,6 +175,7 @@ export const addToWishlist = async (req, res) => {
     return res.status(500).json({ message: "Error adding to wishlist", error: error.message });
   }
 };
+
 
 // NOW FROM HERE REMOVING FROM CART WISHLIST IS THERE 
 
