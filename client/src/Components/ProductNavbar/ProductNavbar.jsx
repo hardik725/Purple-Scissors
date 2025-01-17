@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faHeart, faBoxOpen, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router";
 
 const ProductNavbar = () => {
   return (
@@ -31,10 +32,12 @@ const ProductNavbar = () => {
           </div>
 
           {/* Cart */}
+          <Link to="/allcart">
           <div className="flex items-center space-x-2 cursor-pointer hover:text-pink-600">
             <FontAwesomeIcon icon={faShoppingCart} className="text-gray-700 text-xl" />
             <span className="hidden sm:inline-block text-sm">Cart</span>
           </div>
+          </Link>
         </div>
       </div>
     </div>
