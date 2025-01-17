@@ -238,6 +238,7 @@ export const removeFromWishlist = async (req, res) => {
 
 // get all the carts
 export const getAllCart = async (req, res) => {
+  const {Email} = req.body();
   try {
     const user = await User.findOne({Email});
     res.status(200).json(user.Cart);
@@ -249,6 +250,7 @@ export const getAllCart = async (req, res) => {
 
 // get all the wishlist items
 export const getAllWish = async (req, res) => {
+  const {Email} = req.body();
   try {
     const user = await User.findOne({Email});
     res.status(200).json(user.Wishlist);
