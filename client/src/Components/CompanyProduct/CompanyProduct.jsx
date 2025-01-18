@@ -4,6 +4,7 @@ import Navbar from "../Navbar/Navbar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import ProductNavbar from "../ProductNavbar/ProductNavbar";
+import Swal from "sweetalert2";
 
 
 const CompanyProduct = ({ email,userName,onLogout }) => {
@@ -90,7 +91,7 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
       ImageUrl: product.Images[0]?.url,
     };
     const selectedQuantity = quantity[product._id] || 1;
-
+  
     try {
       const response = await fetch(
         "https://purple-scissors.onrender.com/user/addcart",
@@ -103,23 +104,39 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
           }),
         }
       );
-
+  
       if (!response.ok) {
         throw new Error("Failed to add to cart");
       }
-      alert("Product added to cart");
+  
+      // SweetAlert2 Success Notification
+      Swal.fire({
+        icon: "success",
+        title: "Added to Cart!",
+        text: `${product.Name} has been successfully added to your cart.`,
+        showConfirmButton: false,
+        timer: 2000,
+        toast: true,
+        position: "top-end",
+      });
     } catch (error) {
-      alert("Error adding to cart: " + error.message);
+      // SweetAlert2 Error Notification
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Error adding to cart: " + error.message,
+        confirmButtonText: "OK",
+      });
     }
   };
-
+  
   const handleAddToWishlist = async (product) => {
     const productData = {
       Name: product.Name,
       Price: product.Price,
       ImageUrl: product.Images[0]?.url,
     };
-
+  
     try {
       const response = await fetch(
         "https://purple-scissors.onrender.com/user/addwish",
@@ -129,22 +146,37 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
           body: JSON.stringify({ Email: email, Product: productData }),
         }
       );
-
+  
       if (!response.ok) {
         throw new Error("Failed to add to wishlist");
       }
-
+  
       setProductStatus((prevStatus) => ({
         ...prevStatus,
         [product.Name]: true,
       }));
-
-      alert("Product added to wishlist");
+  
+      // SweetAlert2 Success Notification
+      Swal.fire({
+        icon: "info",
+        title: "Added to Wishlist!",
+        text: `${product.Name} has been added to your wishlist.`,
+        showConfirmButton: false,
+        timer: 2000,
+        toast: true,
+        position: "top-end",
+      });
     } catch (error) {
-      alert("Error adding to wishlist: " + error.message);
+      // SweetAlert2 Error Notification
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Error adding to wishlist: " + error.message,
+        confirmButtonText: "OK",
+      });
     }
   };
-
+  
   const handleRemoveFromWishlist = async (product) => {
     try {
       const response = await fetch(
@@ -155,19 +187,34 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
           body: JSON.stringify({ Email: email, ProductId: product._id }),
         }
       );
-
+  
       if (!response.ok) {
         throw new Error("Failed to remove from wishlist");
       }
-
+  
       setProductStatus((prevStatus) => ({
         ...prevStatus,
         [product.Name]: false,
       }));
-
-      alert("Product removed from wishlist");
+  
+      // SweetAlert2 Success Notification
+      Swal.fire({
+        icon: "warning",
+        title: "Removed from Wishlist",
+        text: `${product.Name} has been removed from your wishlist.`,
+        showConfirmButton: false,
+        timer: 2000,
+        toast: true,
+        position: "top-end",
+      });
     } catch (error) {
-      alert("Error removing from wishlist: " + error.message);
+      // SweetAlert2 Error Notification
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Error removing from wishlist: " + error.message,
+        confirmButtonText: "OK",
+      });
     }
   };
 
