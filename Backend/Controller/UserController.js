@@ -193,7 +193,7 @@ export const addToWishlist = async (req, res) => {
 
 // Remove item from Cart
 export const removeFromCart = async (req, res) => {
-  const { Email, ProductId } = req.body;
+  const { Email, Name } = req.body;
 
   try {
     const user = await User.findOne({Email});
@@ -201,7 +201,7 @@ export const removeFromCart = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.Cart.pull({ _id: ProductId }); // Remove product from Cart
+    user.Cart.pull({ Name: Name }); // Remove product from Cart
     await user.save();
     return res.status(200).json({ message: "Product removed from cart", user });
   } catch (error) {
@@ -212,7 +212,7 @@ export const removeFromCart = async (req, res) => {
 
 // Remove item from Orders
 export const removeFromOrders = async (req, res) => {
-  const { Email, ProductId } = req.body;
+  const { Email, Name } = req.body;
 
   try {
     const user = await User.findOne({Email});
@@ -220,7 +220,7 @@ export const removeFromOrders = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.Orders.pull({ _id: ProductId }); // Remove product from Orders
+    user.Orders.pull({ Name: Name }); // Remove product from Orders
     await user.save();
     return res.status(200).json({ message: "Product removed from orders", user });
   } catch (error) {
@@ -231,7 +231,7 @@ export const removeFromOrders = async (req, res) => {
 
 // Remove item from Wishlist
 export const removeFromWishlist = async (req, res) => {
-  const { Email, ProductId } = req.body;
+  const { Email, Name } = req.body;
 
   try {
     const user = await User.findOne({Email});
@@ -239,7 +239,7 @@ export const removeFromWishlist = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.Wishlist.pull({ _id: ProductId }); // Remove product from Wishlist
+    user.Wishlist.pull({ Name: Name }); // Remove product from Wishlist
     await user.save();
     return res.status(200).json({ message: "Product removed from wishlist", user });
   } catch (error) {
