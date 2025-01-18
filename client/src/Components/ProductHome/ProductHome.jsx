@@ -6,11 +6,42 @@ import ProductNavbar from '../ProductNavbar/ProductNavbar';
 
 const ProductHome = ({ email, userName, onLogout }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [nord,setNord] = useState(0);
+  const [nwish,setNwish] = useState(0);
+  const [ncart,setNcart] = useState(0);
 
   const heroImages = [
     "https://beautypalace.s3.amazonaws.com/images/Beauty-Palace/bpkertainwebbanner.jpg",
     "https://beautypalace.s3.amazonaws.com/images/Beauty-Palace/bpwebskintreatmentbanner.jpg"
   ];
+    useEffect(() => {
+      const fetchNumbers = async () => {
+        try {
+          const response = await fetch("https://purple-scissors.onrender.com/user/allnum", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              Email: email,
+            }),
+          });
+          if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+          }
+          const data = await response.json();
+          setNord(data[0]);
+          setNwish(data[1]);
+          setNcart(data[2]);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchNumbers();
+    }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,7 +55,7 @@ const ProductHome = ({ email, userName, onLogout }) => {
     <div className="salon-homepage bg-white">
       {/* Navbar */}
       <Navbar email={email} userName={userName} onLogout={onLogout} />
-      <ProductNavbar/>
+      <ProductNavbar norder={nord} ncart={ncart} nwish={nwish}/>
 
       {/* Category Section */}
       <section className="categories bg-gray-200 py-6">

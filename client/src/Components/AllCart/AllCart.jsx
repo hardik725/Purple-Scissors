@@ -3,13 +3,48 @@ import Navbar from "../Navbar/Navbar";
 import ProductNavbar from '../ProductNavbar/ProductNavbar';
 import Loader from '../Loader/Loader';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
 
 const AllCart = ({ email, userName, onLogout }) => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [nord,setNord] = useState(0);
+  const [nwish,setNwish] = useState(0);
+  const [ncart,setNcart] = useState(0);
+
 
   // Fetch cart items when the component mounts
+  const navigate = useNavigate();
+
+    useEffect(() => {
+      const fetchNumbers = async () => {
+        try {
+          const response = await fetch("https://purple-scissors.onrender.com/user/allnum", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              Email: email,
+            }),
+          });
+          if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+          }
+          const data = await response.json();
+          setNord(data[0]);
+          setNwish(data[1]);
+          setNcart(data[2]);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchNumbers();
+    }, []);
 
   const handleorder = async () => {
     try {
@@ -28,6 +63,8 @@ const AllCart = ({ email, userName, onLogout }) => {
       if (!response.ok) {
         throw new Error("Failed to place the order");
       }else{
+        setNord(nord+cartItems.length);
+        setNcart(0);
         setCartItems([]);
       }
   
@@ -49,8 +86,8 @@ const AllCart = ({ email, userName, onLogout }) => {
         cancelButtonText: "Continue Shopping",
       }).then((result) => {
         if (result.isConfirmed) {
-          // Redirect to orders page or handle action
           console.log("Navigating to orders page...");
+          navigate("/orderpage");
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           // Continue shopping action
           console.log("User chose to continue shopping.");
@@ -111,7 +148,7 @@ const AllCart = ({ email, userName, onLogout }) => {
   return (
     <>
 <Navbar email={email} userName={userName} onLogout={onLogout} />
-<ProductNavbar />
+<ProductNavbar norder={nord} ncart={ncart} nwish={nwish}/>
 <div className="container mx-auto p-6">
   <h1 className="text-3xl font-extrabold text-gray-800 mb-6">Your Cart</h1>
   {cartItems.length === 0 ? (

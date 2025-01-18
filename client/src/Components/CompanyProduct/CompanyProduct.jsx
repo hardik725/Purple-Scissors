@@ -14,6 +14,38 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [quantity, setQuantity] = useState({});
   const [productStatus, setProductStatus] = useState({});
+    const [nord,setNord] = useState(0);
+    const [nwish,setNwish] = useState(0);
+    const [ncart,setNcart] = useState(0);
+
+      useEffect(() => {
+        const fetchNumbers = async () => {
+          try {
+            const response = await fetch("https://purple-scissors.onrender.com/user/allnum", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                Email: email,
+              }),
+            });
+            if (!response.ok) {
+              throw new Error('Failed to fetch orders');
+            }
+            const data = await response.json();
+            setNord(data[0]);
+            setNwish(data[1]);
+            setNcart(data[2]);
+          } catch (error) {
+            setError(error.message);
+          } finally {
+            setLoading(false);
+          }
+        };
+    
+        fetchNumbers();
+      }, []);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -107,6 +139,8 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
   
       if (!response.ok) {
         throw new Error("Failed to add to cart");
+      }else{
+        setNcart(ncart+1);
       }
   
       // SweetAlert2 Success Notification
@@ -149,6 +183,8 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
   
       if (!response.ok) {
         throw new Error("Failed to add to wishlist");
+      }else{
+        setNwish(nwish+1);
       }
   
       setProductStatus((prevStatus) => ({
@@ -190,6 +226,8 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
   
       if (!response.ok) {
         throw new Error("Failed to remove from wishlist");
+      }else{
+        setNwish(nwish-1);
       }
   
       setProductStatus((prevStatus) => ({
@@ -221,7 +259,7 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar email={email} userName={userName} onLogout={onLogout} />
-      <ProductNavbar />
+      <ProductNavbar norder={nord} ncart={ncart} nwish={nwish}/>
 
       <div className="bg-slate-800">
         <div className="container mx-auto flex justify-center w-2/3">
