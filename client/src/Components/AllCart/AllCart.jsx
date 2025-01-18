@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from "../Navbar/Navbar";
 import ProductNavbar from '../ProductNavbar/ProductNavbar';
 import Loader from '../Loader/Loader';
+import Swal from 'sweetalert2';
 
 const AllCart = ({ email, userName, onLogout }) => {
   const [cartItems, setCartItems] = useState([]);
@@ -10,7 +11,7 @@ const AllCart = ({ email, userName, onLogout }) => {
 
   // Fetch cart items when the component mounts
 
-  const handleorder = async() => {
+  const handleorder = async () => {
     try {
       const response = await fetch(
         "https://purple-scissors.onrender.com/user/addorder",
@@ -23,15 +24,52 @@ const AllCart = ({ email, userName, onLogout }) => {
           }),
         }
       );
-
+  
       if (!response.ok) {
-        throw new Error("Failed to order the product");
+        throw new Error("Failed to place the order");
       }
-      alert("Product Ordered");
+  
+      // SweetAlert2 Success Notification
+      Swal.fire({
+        icon: "success",
+        title: "🎉 Order Confirmed!",
+        html: `
+          <p>Your order has been successfully placed! 🎁</p>
+          <p class="text-sm text-gray-500">We’re preparing your items for shipping.</p>
+        `,
+        imageUrl: "https://cdn-icons-png.flaticon.com/512/1452/1452135.png",
+        imageWidth: 100,
+        imageHeight: 100,
+        imageAlt: "Order Confirmed",
+        showConfirmButton: true,
+        confirmButtonText: "View Orders",
+        showCancelButton: true,
+        cancelButtonText: "Continue Shopping",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Redirect to orders page or handle action
+          console.log("Navigating to orders page...");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // Continue shopping action
+          console.log("User chose to continue shopping.");
+        }
+      });
+  
+      // Optionally, clear the cart or perform additional actions after ordering
     } catch (error) {
-      alert("Error adding to cart: " + error.message);
-    }    
-  }
+      // SweetAlert2 Error Notification
+      Swal.fire({
+        icon: "error",
+        title: "⚠️ Order Failed",
+        html: `
+          <p>Something went wrong while placing your order.</p>
+          <p class="text-sm text-gray-500">${error.message}</p>
+        `,
+        showConfirmButton: true,
+        confirmButtonText: "Retry",
+      });
+    }
+  };
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
