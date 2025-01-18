@@ -120,7 +120,7 @@ export const addToCart = async (req, res) => {
 // Add item to Orders
 // Add item to Orders
 export const addToOrders = async (req, res) => {
-  const { Email, Product } = req.body;
+  const { Email, Products } = req.body;
 
   try {
     const user = await User.findOne({ Email });
@@ -128,32 +128,44 @@ export const addToOrders = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Check if the product already exists in orders
-    const existingProduct = user.Orders.find(
-      (item) => item.Name === Product.ProductName
-    );
+    for (const product of Products) {
+      // Add product to orders
+      const existingProduct = user.Orders.find(
+        (item) => item.Name === product.ProductName
+      );
 
-    if (existingProduct) {
-      // Increase the quantity of the existing product
-      existingProduct.Quantity += Product.Quantity;
-    } else {
-      // Add the product as a new entry in orders
-      user.Orders.push({
-        Name: Product.ProductName,
-        Price: Product.Price,
-        Quantity: Product.Quantity,
-        ImageUrl: Product.ImageUrl,
-        OrderDate: new Date(),
-      });
+      if (existingProduct) {
+        // Update quantity if the product already exists
+        existingProduct.Quantity += product.Quantity;
+      } else {
+        // Add new product to the orders
+        user.Orders.push({
+          Name: product.ProductName,
+          Price: product.Price,
+          Quantity: product.Quantity,
+          ImageUrl: product.ImageUrl,
+          OrderDate: new Date(),
+        });
+      }
+
+      // Remove the product from the cart using Product.Name
+      user.Cart = user.Cart.filter(
+        (cartItem) => cartItem.ProductName !== product.ProductName
+      );
     }
 
+    // Save the user after updating orders and cart
     await user.save();
-    return res.status(201).json({ message: "Product added to orders", user });
+    return res.status(201).json({
+      message: "Products added to orders and removed from cart",
+      user,
+    });
   } catch (error) {
-    console.error("Error adding to orders", error);
-    return res.status(500).json({ message: "Error adding to orders", error: error.message });
+    console.error("Error processing orders:", error);
+    return res.status(500).json({ message: "Failed to process orders", error });
   }
 };
+
 
 // Add item to Wishlist
 export const addToWishlist = async (req, res) => {
