@@ -27,6 +27,8 @@ const AllCart = ({ email, userName, onLogout }) => {
   
       if (!response.ok) {
         throw new Error("Failed to place the order");
+      }else{
+        setCartItems([]);
       }
   
       // SweetAlert2 Success Notification
