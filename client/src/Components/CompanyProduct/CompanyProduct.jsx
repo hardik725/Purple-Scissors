@@ -220,7 +220,7 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ Email: email, ProductId: product._id }),
+          body: JSON.stringify({ Email: email, Name: product.Name }),
         }
       );
   

@@ -109,6 +109,49 @@ const AllCart = ({ email, userName, onLogout }) => {
       });
     }
   };
+  const handleRemoveFromCart = async (product) => {
+    try {
+      const response = await fetch(
+        "https://purple-scissors.onrender.com/user/removecart",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ Email: email, Name: product.ProductName }),
+        }
+      );
+  
+      if (!response.ok) {
+        throw new Error("Failed to remove from cart");
+      }
+  
+      // Update cart count
+      setNcart(ncart - 1);
+  
+      // Update cart items state
+      setCartItems((prevItems) => prevItems.filter((item) => item.ProductName !== product.ProductName));
+  
+      // SweetAlert2 Success Notification
+      Swal.fire({
+        icon: "warning",
+        title: "Removed from Cart",
+        text: `${product.ProductName} has been removed from your Cart.`,
+        showConfirmButton: false,
+        timer: 2000,
+        toast: true,
+        position: "top-end",
+      });
+    } catch (error) {
+      // SweetAlert2 Error Notification
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Error removing from cart: " + error.message,
+        confirmButtonText: "OK",
+      });
+    }
+  };
+  
+  
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -176,7 +219,7 @@ const AllCart = ({ email, userName, onLogout }) => {
             <button
               className="text-red-500 hover:text-red-700 font-semibold transition-colors duration-200"
               onClick={() => {
-                // Add remove functionality
+                handleRemoveFromCart(item);
               }}
             >
               Remove
@@ -195,6 +238,7 @@ const AllCart = ({ email, userName, onLogout }) => {
           </p>
         </div>
         {/* Order Now Button */}
+        
         <button
           className="bg-blue-600 text-white py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300 text-lg font-semibold"
           onClick={() => {

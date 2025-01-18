@@ -2,13 +2,87 @@ import React, { useState, useEffect } from 'react';
 import Navbar from "../Navbar/Navbar";
 import ProductNavbar from '../ProductNavbar/ProductNavbar';
 import Loader from '../Loader/Loader';
+import Swal from 'sweetalert2';
 
 const AllWish = ({ email, userName, onLogout }) => {
   const [wishItems, setWishItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [nord,setNord] = useState(0);
+  const [nwish,setNwish] = useState(0);
+  const [ncart,setNcart] = useState(0);
+
+    useEffect(() => {
+      const fetchNumbers = async () => {
+        try {
+          const response = await fetch("https://purple-scissors.onrender.com/user/allnum", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              Email: email,
+            }),
+          });
+          if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+          }
+          const data = await response.json();
+          setNord(data[0]);
+          setNwish(data[1]);
+          setNcart(data[2]);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchNumbers();
+    }, []);
 
   // Fetch wishlist items when the component mounts
+  const handleRemoveFromWishlist = async (product) => {
+    try {
+      const response = await fetch(
+        "https://purple-scissors.onrender.com/user/removewish",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ Email: email, Name: product.Name }),
+        }
+      );
+  
+      if (!response.ok) {
+        throw new Error("Failed to remove from Wishlist");
+      }
+  
+      // Update cart count
+      setNwish(nwish - 1);
+  
+      // Update cart items state
+      setWishItems((prevItems) => prevItems.filter((item) => item.Name !== product.Name));
+  
+      // SweetAlert2 Success Notification
+      Swal.fire({
+        icon: "warning",
+        title: "Removed from Wishlist",
+        text: `${product.Name} has been removed from your Wishlist.`,
+        showConfirmButton: false,
+        timer: 2000,
+        toast: true,
+        position: "top-end",
+      });
+    } catch (error) {
+      // SweetAlert2 Error Notification
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Error removing from wishlist: " + error.message,
+        confirmButtonText: "OK",
+      });
+    }
+  };
   useEffect(() => {
     const fetchWishItems = async () => {
       try {
@@ -48,7 +122,7 @@ const AllWish = ({ email, userName, onLogout }) => {
   return (
     <>
       <Navbar email={email} userName={userName} onLogout={onLogout} />
-      <ProductNavbar />
+      <ProductNavbar norder={nord} ncart={ncart} nwish={nwish}/>
       <div className="container mx-auto p-6">
         <h1 className="text-3xl font-extrabold text-gray-800 mb-6">Your WishList</h1>
         {wishItems.length === 0 ? (
@@ -73,7 +147,7 @@ const AllWish = ({ email, userName, onLogout }) => {
                 </div>
                 <button
                   className="text-red-500 hover:text-red-700 font-semibold transition-colors duration-200"
-                  onClick={() => {/* Add remove functionality */}}
+                  onClick={() => {handleRemoveFromWishlist(item)}}
                 >
                   Remove
                 </button>
