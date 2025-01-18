@@ -26,10 +26,12 @@ const ProductNavbar = () => {
           </div>
 
           {/* Wishlist */}
+          <Link to="/allwish">
           <div className="flex items-center space-x-2 cursor-pointer hover:text-pink-600">
             <FontAwesomeIcon icon={faHeart} className="text-gray-700 text-xl" />
             <span className="hidden sm:inline-block text-sm">Wishlist</span>
           </div>
+          </Link>
 
           {/* Cart */}
           <Link to="/allcart">

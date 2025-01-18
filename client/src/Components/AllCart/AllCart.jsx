@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from "../Navbar/Navbar";
+import ProductNavbar from '../ProductNavbar/ProductNavbar';
 
 const AllCart = ({email,userName, onLogout}) => {
   const [cartItems, setCartItems] = useState([]);
@@ -46,6 +47,7 @@ const AllCart = ({email,userName, onLogout}) => {
   return (
     <>
     <Navbar email={email} userName={userName} onLogout={onLogout} />
+    <ProductNavbar/>
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
       {cartItems.length === 0 ? (

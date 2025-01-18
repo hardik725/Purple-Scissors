@@ -13,6 +13,7 @@ import CompanyProduct from "./Components/CompanyProduct/CompanyProduct";
 import FacePage from "./Components/FacePage/FacePage";
 import Essentials from "./Components/Essentials/Essentials";
 import AllCart from "./Components/AllCart/AllCart";
+import AllWish from "./Components/AllWish/AllWish";
 
 function App() {
   const [email, setEmail] = useState(""); // State to store the user's email
@@ -173,7 +174,17 @@ function App() {
               <Navigate to="/" />
             )
           }
-        />                
+        />  
+        <Route
+          path="/allwish"
+          element={
+            email ? (
+              <AllWish email={email} userName={userName} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />                       
         <Route
         path="/product"
         element={
