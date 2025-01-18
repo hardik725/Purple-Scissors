@@ -172,99 +172,95 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
   };
 
   return (
-<div className="bg-gray-50 min-h-screen">
-  <Navbar email={email} userName={userName} onLogout={onLogout} />
-  <ProductNavbar/>
+    <div className="bg-gray-50 min-h-screen">
+      <Navbar email={email} userName={userName} onLogout={onLogout} />
+      <ProductNavbar />
 
-  <div className="bg-slate-800">
-    <div className="container mx-auto flex justify-center w-2/3">
-      <div className="bg-white rounded-sm m-1">
-        <img
-          src={companyImage}
-          alt={`${company} logo`}
-          className="w-1/2 h-auto object-contain mx-auto"
-        />
-      </div>
-    </div>
-  </div>
-
-  <div className="container mx-auto px-4">
-    <div className="flex justify-between items-center mb-6">
-      <button className="bg-gray-100 px-4 py-2 rounded">Filters</button>
-    </div>
-
-    {error ? (
-      <div className="text-center text-red-600 bg-red-100 py-2 rounded">
-        {error}
-      </div>
-    ) : (
-      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {products.map((product) => (
-          <div
-            key={product._id}
-            className="product-card bg-white rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-1 relative"
-          >
-            {/* Wishlist Button */}
-            <button
-  className="absolute top-1 right-1 rounded-full p-2 z-30"
-  onClick={() =>
-    productStatus[product.Name]
-      ? handleRemoveFromWishlist(product)
-      : handleAddToWishlist(product)
-  }
->
-  <FontAwesomeIcon
-    icon={faHeart}
-    className={`h-6 w-6 ${
-      productStatus[product.Name] ? "text-red-500" : "text-gray-300"
-    }`}
-  />
-</button>
-
-            <div className="relative bg-gradient-to-r from-blue-50 to-gray-50 rounded-t-lg">
-              <img
-                src={product.Images[0].url}
-                alt={product.Name}
-                className="w-full h-40 sm:h-56 object-contain p-2 sm:p-4"
-              />
-            </div>
-
-            <div className="p-2">
-              <h2 className="font-semibold text-gray-800 truncate">
-                {product.Name}
-              </h2>
-              <p className="text-lg font-semibold text-gray-600">₹{product.Price}</p>
-
-              <div className="mt-2 flex items-center space-x-2">
-                <label className="text-sm text-gray-700">Quantity:</label>
-                <input
-                  type="number"
-                  min="1"
-                  value={quantity[product._id] || 1}
-                  onChange={(e) =>
-                    handleQuantityChange(product._id, parseInt(e.target.value))
-                  }
-                  className="w-12 border rounded px-2 py-1 text-sm"
-                />
-              </div>
-
-              <div className="mt-2 flex space-x-2">
-                <button
-                  onClick={() => handleAddToCart(product)}
-                  className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300 text-xs sm:text-sm"
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </div>
+      <div className="bg-slate-800">
+        <div className="container mx-auto flex justify-center w-2/3">
+          <div className="bg-white rounded-sm m-1">
+            <img
+              src={companyImage}
+              alt={`${company} logo`}
+              className="w-1/2 h-auto object-contain mx-auto"
+            />
           </div>
-        ))}
+        </div>
       </div>
-    )}
-  </div>
-</div>
 
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center mb-6">
+          <button className="bg-gray-100 px-4 py-2 rounded">Filters</button>
+        </div>
 
+        {error ? (
+          <div className="text-center text-red-600 bg-red-100 py-2 rounded">
+            {error}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {products.map((product) => (
+              <div
+                key={product._id}
+                className="product-card bg-white rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-1 relative"
+              >
+                {/* Wishlist Button */}
+                <button
+                  className="absolute top-1 right-1 rounded-full p-2 z-30 transition-transform transform hover:scale-110"
+                  onClick={() =>
+                    productStatus[product.Name]
+                      ? handleRemoveFromWishlist(product)
+                      : handleAddToWishlist(product)
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    className={`h-6 w-6 transition-all duration-300 ${
+                      productStatus[product.Name] ? 'text-red-500 scale-125' : 'text-gray-300'
+                    }`}
+                  />
+                </button>
+
+                <div className="relative bg-gradient-to-r from-blue-50 to-gray-50 rounded-t-lg">
+                  <img
+                    src={product.Images[0].url}
+                    alt={product.Name}
+                    className="w-full h-40 sm:h-56 object-contain p-2 sm:p-4"
+                  />
+                </div>
+
+                <div className="p-2">
+                  <h2 className="font-semibold text-gray-800 truncate">{product.Name}</h2>
+                  <p className="text-lg font-semibold text-gray-600">₹{product.Price}</p>
+
+                  <div className="mt-2 flex items-center space-x-2">
+                    <label className="text-sm text-gray-700">Quantity:</label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={quantity[product._id] || 1}
+                      onChange={(e) =>
+                        handleQuantityChange(product._id, parseInt(e.target.value))
+                      }
+                      className="w-12 border rounded px-2 py-1 text-sm"
+                    />
+                  </div>
+
+                  <div className="mt-2 flex space-x-2">
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300 text-xs sm:text-sm transform hover:scale-105"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
