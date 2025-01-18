@@ -285,3 +285,13 @@ export const getAllOrder = async (req, res) => {
   }
 };
 
+export const getNumbers = async(req,res) => {
+  const {Email} = req.body;
+  try{
+    const user = await User.findOne({Email});
+    res.status(200).json([user.Orders.length , user.Wishlist.length , user.Cart.length]);
+  }catch(error){
+    console.status(500).json({message: 'Internal server error.'});
+  }
+};
+
