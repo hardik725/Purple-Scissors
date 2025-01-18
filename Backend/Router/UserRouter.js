@@ -21,7 +21,7 @@ router.post("/addorder",addToOrders);
 
 // now the path for remove from them
 
-router.post("removecart",removeFromCart);
+router.post("/removecart",removeFromCart);
 router.post("/removewish",removeFromWishlist);
 router.post("/removeorder",removeFromOrders);
 
