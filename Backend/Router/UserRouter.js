@@ -2,7 +2,7 @@ import express from "express";
 import { signUp, login,username} from "../Controller/UserController.js";
 import { addToCart,addToWishlist,addToOrders } from "../Controller/UserController.js";
 import { removeFromCart,removeFromWishlist,removeFromOrders } from "../Controller/UserController.js";
-import { getAllCart,getAllWish } from "../Controller/UserController.js";
+import { getAllCart,getAllWish,getAllOrder } from "../Controller/UserController.js";
 
 const router = express.Router();
 
@@ -28,5 +28,6 @@ router.post("/removeorder",removeFromOrders);
 //get all the items
 router.post("/allcart",getAllCart);
 router.post("/allwish",getAllWish);
+router.post("/allorder",getAllOrder);
 
 export default router;

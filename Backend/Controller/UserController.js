@@ -272,3 +272,16 @@ export const getAllWish = async (req, res) => {
   }
 };
 
+// get all the orders from user order list
+
+export const getAllOrder = async (req, res) => {
+  const {Email} = req.body;
+  try {
+    const user = await User.findOne({Email});
+    res.status(200).json(user.Orders);
+  } catch (error) {
+    console.error('Error fetching all cart items:', error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+};
+
