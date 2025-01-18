@@ -220,7 +220,7 @@ export const removeFromOrders = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.Orders.pull({ Name: Name }); // Remove product from Orders
+    user.Orders.pull({ ProductName: Name }); // Remove product from Orders
     await user.save();
     return res.status(200).json({ message: "Product removed from orders", user });
   } catch (error) {
