@@ -189,70 +189,79 @@ const AllCart = ({ email, userName, onLogout }) => {
   }
 
   return (
-    <>
-<Navbar email={email} userName={userName} onLogout={onLogout} />
-<ProductNavbar norder={nord} ncart={ncart} nwish={nwish}/>
-<div className="container mx-auto p-6">
-  <h1 className="text-3xl font-extrabold text-gray-800 mb-6">Your Cart</h1>
-  {cartItems.length === 0 ? (
-    <p className="text-xl text-gray-600">Your cart is empty.</p>
-  ) : (
-    <>
-      <div className="space-y-6">
-        {cartItems.map((item, index) => (
-          <div
-            key={index}
-            className="flex justify-between items-center p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            <div className="flex items-center space-x-4">
-              <img
-                src={item.ImageUrl}
-                alt={item.ProductName}
-                className="w-24 h-24 object-cover rounded-lg shadow-md"
-              />
-              <div>
-                <h2 className="text-xl font-semibold text-gray-800">{item.ProductName}</h2>
-                <p className="text-lg text-gray-600">Price: ₹{item.Price}</p>
-                <p className="text-sm text-gray-500">Quantity: {item.Quantity}</p>
+<>
+  <Navbar email={email} userName={userName} onLogout={onLogout} />
+  <ProductNavbar norder={nord} ncart={ncart} nwish={nwish} />
+  <div className="container mx-auto p-4 md:p-8">
+    <h1 className="text-2xl md:text-3xl font-extrabold text-gray-800 mb-6 text-center">
+      Your Cart
+    </h1>
+    {cartItems.length === 0 ? (
+      <p className="text-lg text-gray-600 text-center">
+        Your cart is empty. Add some products!
+      </p>
+    ) : (
+      <>
+        <div className="space-y-6">
+          {cartItems.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col md:flex-row justify-between items-center p-4 md:p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              {/* Product Details */}
+              <div className="flex items-center space-x-4 w-full md:w-2/3">
+                <img
+                  src={item.ImageUrl}
+                  alt={item.ProductName}
+                  className="w-24 h-24 object-cover rounded-lg shadow-md"
+                />
+                <div>
+                  <h2 className="text-lg md:text-xl font-semibold text-gray-800">
+                    {item.ProductName}
+                  </h2>
+                  <p className="text-gray-600 text-sm md:text-base">
+                    Price: ₹{item.Price}
+                  </p>
+                  <p className="text-gray-500 text-sm md:text-base">
+                    Quantity: {item.Quantity}
+                  </p>
+                </div>
+              </div>
+              {/* Buttons Section */}
+              <div className="flex flex-col md:flex-row md:items-center md:space-x-4 w-full md:w-1/3 justify-end mt-4 md:mt-0">
+                <button
+                  className="bg-[#FC819E] text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200 mt-2 md:mt-0 mx-12"
+                  onClick={() => handleRemoveFromCart(item)}
+                >
+                  Remove
+                </button>
               </div>
             </div>
-            <button
-              className="text-red-500 hover:text-red-700 font-semibold transition-colors duration-200"
-              onClick={() => {
-                handleRemoveFromCart(item);
-              }}
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {/* Total and Order Section */}
-      <div className="mt-8 p-6 bg-gray-100 rounded-lg shadow-md flex justify-between items-center">
-        {/* Total Cost */}
-        <div>
-          <h2 className="text-xl font-bold text-gray-800">Total Cost:</h2>
-          <p className="text-2xl font-extrabold text-blue-600">
-            ₹{cartItems.reduce((total, item) => total + item.Price * item.Quantity, 0)}
-          </p>
+          ))}
         </div>
-        {/* Order Now Button */}
-        
-        <button
-          className="bg-blue-600 text-white py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300 text-lg font-semibold"
-          onClick={() => {
-            handleorder();
-          }}
-        >
-          Order Now
-        </button>
-      </div>
-    </>
-  )}
-</div>
 
-    </>
+        {/* Total and Order Section */}
+        <div className="mt-8 p-6 bg-gray-100 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-center">
+          {/* Total Cost */}
+          <div className="mb-4 md:mb-0">
+            <h2 className="text-lg md:text-xl font-bold text-gray-800">Total Cost:</h2>
+            <p className="text-2xl font-extrabold text-blue-600">
+              ₹{cartItems.reduce((total, item) => total + item.Price * item.Quantity, 0)}
+            </p>
+          </div>
+          {/* Order Now Button */}
+          <button
+            className="bg-[#59D5E0] text-white py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300 text-lg font-semibold"
+            onClick={handleorder}
+          >
+            Order Now
+          </button>
+        </div>
+      </>
+    )}
+  </div>
+</>
+
   );
 };
 
