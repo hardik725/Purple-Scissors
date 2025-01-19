@@ -90,59 +90,49 @@ const Dashboard = ({ email, userName, onLogout }) => {
       <div className="bg-white bg-opacity-10 backdrop-blur-xl min-h-screen overflow-x-hidden">
         {/* Navbar */}
         <Navbar email={email} userName={userName} onLogout={onLogout} />
-        
-        {/* Horizontal Scrollable Menu */}
-        {/* <div className="flex justify-center px-2 py-6 z-20">
-          <div
-            className={`flex overflow-x-auto bg-purple-500 bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg w-full max-w-full p-1 justify-center`}
-          >
-            <div className={`flex items-center ${isMobile ? "gap-3" : "gap-5"}`}>
-              {[ 
-                { label: "Face", icon: "https://images.pexels.com/photos/5069412/pexels-photo-5069412.jpeg?auto=compress&cs=tinysrgb&w=600" , id:"facepage" },
-                { label: "Hair", icon: "https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=600", id:"hairpage" },
-                { label: "Skin", icon: "https://images.pexels.com/photos/6724414/pexels-photo-6724414.jpeg?auto=compress&cs=tinysrgb&w=600",id:"skinpage" },
-                { label: "Nails", icon: "https://images.pexels.com/photos/3997389/pexels-photo-3997389.jpeg?auto=compress&cs=tinysrgb&w=600",id:"nailspage" },
-              ].map((item, index) => (
-                <Link
-                to={`/${item.id}`}
-                key={index}
-                className="flex flex-col items-center rounded-lg transform hover:scale-105 transition-all duration-300"
-              >
-                <img
-                  src={item.icon}
-                  alt={item.label}
-                  className="w-16 h-16 md:w-[128px] md:h-[128px] rounded-full border-2 border-[#FFC2C2] shadow-md"
-                />
-                <p className="mt-2 text-xs md:text-sm font-medium text-white hover:text-[#D96161] transition-colors">
-                  {item.label}
-                </p>
-              </Link>
-              ))}
-            </div>
-          </div>
-        </div> */}
 
         {/* Hero Section */}
-        <section className="flex flex-col md:flex-row items-center justify-center px-2 py-6 bg-opacity-90 w-full max-w-full">
-  <div className="w-full md:w-1/2 flex justify-center">
-    <img
-      src="https://images.pexels.com/photos/6724383/pexels-photo-6724383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-      alt="Inner Beauty"
-      className="rounded-md shadow-lg transform transition-all hover:scale-105 hover:rotate-1 duration-300 ease-in-out max-w-full"
-    />
-  </div>
-  <div className="w-full md:w-1/2 mt-10 md:mt-0 md:pl-10 text-center md:text-left">
-    <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white hover:text-[#D96161] transition-colors duration-300 leading-tight">
-      Timeless <span className="text-[#F28E8E]">Beauty</span> Unveiled
+        <section
+  className="relative flex items-center justify-center bg-cover bg-center bg-opacity-90 w-full h-[500px] md:h-[750px]"
+  style={{
+    backgroundImage: `url('https://images.pexels.com/photos/6724383/pexels-photo-6724383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
+  }}
+>
+  {/* Darker Overlay */}
+  <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+
+  {/* Background effect for text */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-100 z-0"></div>
+
+  <div className="relative w-full md:w-1/2 ml-auto pl-4 pr-4 md:pl-10 text-center md:text-left z-10">
+    <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white hover:text-[#9B59B6] transition-colors duration-300 leading-tight">
+      <span className="bg-gradient-to-r from-[#9B59B6] to-[#8E44AD] text-transparent bg-clip-text">
+        Timeless Beauty
+      </span>{" "}
+      Unveiled
     </h1>
-    <p className="text-[#E5E5E5] mt-6 text-base md:text-lg leading-relaxed font-serif">
-      Step into a world of elegance and pampering at Purple Scissors, where beauty meets artistry. 
-      From flawless hairstyles to radiant skin treatments, we bring out the best version of you. 
-      Let your confidence bloom with every visit!
+    <p className="text-[#E5E5E5] mt-6 text-base md:text-lg leading-relaxed font-serif shadow-lg">
+      Step into a world of{" "}
+      <span className="text-[#8E44AD] font-bold">elegance</span> and
+      pampering at{" "}
+      <span className="text-[#9B59B6] underline decoration-[#8E44AD]">
+        Purple Scissors
+      </span>
+      , where <span className="italic text-[#9B59B6]">beauty</span> meets
+      artistry. From flawless{" "}
+      <span className="font-semibold text-[#8E44AD]">hairstyles</span> to
+      radiant{" "}
+      <span className="font-semibold text-[#9B59B6]">skin treatments</span>, we
+      bring out the{" "}
+      <span className="text-[#8E44AD] font-bold">best version</span> of you.
+      Let your <span className="text-[#9B59B6] font-bold">confidence</span>{" "}
+      bloom with every visit!
     </p>
-    <button className="mt-8 bg-[#F28E8E] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-[#D96161] transition-all duration-300">
-      Learn More
-    </button>
+    <Link to="/appointment">
+      <button className="mt-8 bg-[#9B59B6] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-xl hover:bg-[#8E44AD] transition-all duration-300">
+        Book an Appointment
+      </button>
+    </Link>
   </div>
 </section>
 

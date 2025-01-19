@@ -1,29 +1,45 @@
-// Updated Navbar Component
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faScissors, faBars, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router";
 
-const Navbar = ({ email, userName,onLogout }) => {
+const Navbar = ({ email, userName, onLogout }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [pagewidth, setPageWidth] = useState(window.innerWidth);
+  const [navbarHeight, setNavbarHeight] = useState(0);
+
+  const navbarRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
+      setPageWidth(window.innerWidth);
     };
 
-    // Add event listener for window resize
-    window.addEventListener("resize", handleResize);
+    const updateNavbarHeight = () => {
+      if (navbarRef.current) {
+        setNavbarHeight(navbarRef.current.offsetHeight);
+      }
+    };
 
-    // Cleanup the event listener
+    // Set initial navbar height and add resize listener
+    updateNavbarHeight();
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", updateNavbarHeight);
+
+    // Cleanup the event listeners
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", updateNavbarHeight);
     };
   }, []);
 
   return (
-    <nav className="bg-transparent backdrop-blur-md shadow-lg relative z-30">
+    <nav
+      ref={navbarRef}
+      className="bg-transparent backdrop-blur-md shadow-lg relative z-30"
+    >
       <div className="container mx-auto flex justify-between items-center py-4">
         {/* Logo Section */}
         <div className="flex items-center space-x-2 ml-6">
@@ -32,11 +48,10 @@ const Navbar = ({ email, userName,onLogout }) => {
             className="text-purple-400 text-5xl"
           />
           <Link to="/dashboard">
-<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9F8170] via-[#D9A687] to-[#B27B6E] text-4xl font-serif font-extrabold tracking-wider">
-  Purple Scissors
-</span>
-</Link>
-
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9F8170] via-[#D9A687] to-[#B27B6E] text-4xl font-serif font-extrabold tracking-wider">
+              Purple Scissors
+            </span>
+          </Link>
         </div>
 
         {/* Links Section */}
@@ -49,9 +64,11 @@ const Navbar = ({ email, userName,onLogout }) => {
               <Link to="/product">Products</Link>
             </li>
             <li className="hover:underline cursor-pointer flex items-center">
-            <Link to="/appointment">Appointment</Link>
+              <Link to="/appointment">Appointment</Link>
             </li>
-            <li className="hover:underline cursor-pointer flex items-center"><Link to="/contactus">Contact Us</Link></li>
+            <li className="hover:underline cursor-pointer flex items-center">
+              <Link to="/contactus">Contact Us</Link>
+            </li>
             {email && (
               <button
                 onClick={onLogout}
@@ -75,30 +92,44 @@ const Navbar = ({ email, userName,onLogout }) => {
                 }`}
               />
             </button>
+
+            {/* Dropdown Container */}
             <div
-              className={`absolute top-[72px] right-0 mt-2 bg-gradient-to-b from-purple-700 to-gray-700 shadow-xl rounded-md py-4 text-white w-52 transform transition-transform duration-300 ease-out ${
+              className={`absolute right-0 bg-gradient-to-b from-[#D7BBF5] to-[#C1E1DC] shadow-xl rounded-lg text-gray-800 transform transition-transform duration-300 ease-out ${
                 isDropdownOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
               }`}
+              style={{
+                width: `${pagewidth}px`,
+                top: `${navbarHeight}px`, // Use the calculated navbar height
+              }}
             >
-              <ul className="flex flex-col">
-                <li className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer rounded-t-xl transition">
-                <Link to="/">Home</Link>
+              <ul className="flex flex-col divide-y divide-gray-300">
+                <li className="group relative px-4 py-3 cursor-pointer rounded-t-lg transition duration-300 ease-in-out">
+                  <Link to="/" className="flex items-center space-x-2">
+                    <span>Home</span>
+                  </Link>
                 </li>
-                <li className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer transition">
-                  <Link to="/product">Product</Link>
+                <li className="group relative px-4 py-3 cursor-pointer transition duration-300 ease-in-out">
+                  <Link to="/product" className="flex items-center space-x-2">
+                    <span>Product</span>
+                  </Link>
                 </li>
-                <li className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer transition">
-                <Link to="/appointment">Appointment</Link>
+                <li className="group relative px-4 py-3 cursor-pointer transition duration-300 ease-in-out">
+                  <Link to="/appointment" className="flex items-center space-x-2">
+                    <span>Appointment</span>
+                  </Link>
                 </li>
-                <li className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer transition">
-                <Link to="/contactus">Contact Us</Link>
+                <li className="group relative px-4 py-3 cursor-pointer transition duration-300 ease-in-out">
+                  <Link to="/contactus" className="flex items-center space-x-2">
+                    <span>Contact Us</span>
+                  </Link>
                 </li>
                 {email && (
                   <li
                     onClick={onLogout}
-                    className="hover:bg-opacity-75 hover:bg-[#1D4ED8] px-4 py-3 cursor-pointer rounded-b-xl transition"
+                    className="group relative px-4 py-3 cursor-pointer rounded-b-lg transition duration-300 ease-in-out"
                   >
-                    Logout
+                    <span>Logout</span>
                   </li>
                 )}
               </ul>
@@ -111,10 +142,8 @@ const Navbar = ({ email, userName,onLogout }) => {
           <div className="flex items-center space-x-4">
             {email ? (
               <span className="hidden sm:block text-xl font-semibold text-gray-800">
-              Welcome, <b className="text-teal-600">{userName}</b>
-            </span>
-            
-
+                Welcome, <b className="text-teal-600">{userName}</b>
+              </span>
             ) : (
               <button className="bg-[#E6E9F0] text-[#6A737B] px-4 py-2 rounded-lg font-semibold hover:bg-[#F5F5F5] transition">
                 Login
