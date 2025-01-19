@@ -152,8 +152,9 @@ const Appointment = ({ email,userName, onLogout }) => {
   
 
   return (
-<>
+<><div className="bg-black">
   <Navbar email={email} userName={userName} onLogout={onLogout} />
+  </div>
   <section className="py-5 md:py-20 bg-gradient-to-r from-[#FDE2E4] via-[#FAD4D8] to-[#FFE2E2]">
     <div className="text-center mb-12">
       <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-[#4A4A4A] tracking-wide">

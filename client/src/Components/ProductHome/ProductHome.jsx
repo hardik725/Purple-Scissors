@@ -54,7 +54,9 @@ const ProductHome = ({ email, userName, onLogout }) => {
   return (
     <div className="salon-homepage bg-white">
       {/* Navbar */}
+      <div className='bg-black'>
       <Navbar email={email} userName={userName} onLogout={onLogout} />
+      </div>
       <ProductNavbar norder={nord} ncart={ncart} nwish={nwish}/>
 
       {/* Category Section */}

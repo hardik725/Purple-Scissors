@@ -184,7 +184,9 @@ const AllWish = ({ email, userName, onLogout }) => {
 
   return (
     <>
+    <div className='bg-black'>
     <Navbar email={email} userName={userName} onLogout={onLogout} />
+    </div>
     <ProductNavbar norder={nord} ncart={ncart} nwish={nwish} />
     <div className="container mx-auto p-4 md:p-8">
       <h1 className="text-2xl md:text-3xl font-extrabold text-gray-800 mb-6 text-center">

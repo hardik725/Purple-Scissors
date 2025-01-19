@@ -89,8 +89,9 @@ const HairPage = ({ email, userName, onLogout }) => {
   return (
 <div className="bg-[#EDEDFD] text-black font-kugile relative">
   {/* Navbar */}
+  <div className="bg-black">
   <Navbar email={email} userName={userName} onLogout={onLogout} />
-
+  </div>
   {/* Hair Section Header */}
   <div className="bg-gradient-to-r from-gray-800 via-black to-gray-800 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-gray-400 transition duration-300">
     Hair Section

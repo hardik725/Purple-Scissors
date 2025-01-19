@@ -83,8 +83,9 @@ const MakeupPage = ({ email, userName, onLogout }) => {
   if (!isMobile) {
     return (
       <div className="bg-[#FBEAEF] text-black font-kugile relative">
+        <div className="bg-black">
         <Navbar email={email} userName={userName} onLogout={onLogout} />
-
+        </div>
         <div className="bg-gradient-to-r from-pink-600 via-red-400 to-pink-600 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-pink-400 transition duration-300">
           Makeup Section
         </div>
@@ -148,7 +149,7 @@ const MakeupPage = ({ email, userName, onLogout }) => {
     );
   } else {
     return (
-      <div className="bg-gray-100 text-black font-kugile">
+      <div className="bg-black text-black font-kugile">
         <Navbar email={email} userName={userName} onLogout={onLogout} />
         <div className="bg-gradient-to-r from-pink-600 via-red-400 to-pink-600 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-pink-400 transition duration-300">
           Makeup Section

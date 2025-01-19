@@ -258,7 +258,9 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
+      <div className="bg-black">
       <Navbar email={email} userName={userName} onLogout={onLogout} />
+      </div>
       <ProductNavbar norder={nord} ncart={ncart} nwish={nwish}/>
 
       <div className="bg-slate-800">

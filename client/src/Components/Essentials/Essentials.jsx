@@ -75,8 +75,9 @@ const Essentials = ({ email, userName, onLogout }) => {
   if (!isMobile) {
     return (
       <div className="bg-white text-black font-kugile relative">
+        <div className="bg-black">
         <Navbar email={email} userName={userName} onLogout={onLogout} />
-
+        </div>
         <div className="bg-gradient-to-r from-purple-300 via-gray-400 to-gray-300 text-center text-6xl font-extrabold text-black p-8 shadow-lg flex justify-center items-center hover:border-gray-500 transition duration-300">
   Essentials Section
 </div>
@@ -141,7 +142,7 @@ const Essentials = ({ email, userName, onLogout }) => {
     );
   } else {
     return (
-      <div className="bg-gray-100 text-black font-kugile">
+      <div className="bg-black text-black font-kugile">
         <Navbar email={email} userName={userName} onLogout={onLogout} />
         <div className="bg-gradient-to-r from-purple-300 via-gray-400 to-gray-300 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-green-400 transition duration-300">
           Essentials Section
