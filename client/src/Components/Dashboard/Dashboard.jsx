@@ -113,28 +113,31 @@ const Dashboard = ({ email, userName, onLogout }) => {
       </span>{" "}
       Unveiled
     </h1>
-    <p className="text-[#E5E5E5] mt-6 text-base md:text-lg leading-relaxed font-serif shadow-lg">
-      Step into a world of{" "}
-      <span className="text-[#8E44AD] font-bold">elegance</span> and pampering
-      at{" "}
-      <span className="text-[#9B59B6] underline decoration-[#8E44AD]">
-        Purple Scissors
-      </span>
-      , where <span className="italic text-[#9B59B6]">beauty</span> meets
-      artistry. From flawless{" "}
-      <span className="font-semibold text-[#8E44AD]">hairstyles</span> to
-      radiant{" "}
-      <span className="font-semibold text-[#9B59B6]">skin treatments</span>, we
-      bring out the{" "}
-      <span className="text-[#8E44AD] font-bold">best version</span> of you.
-      Let your <span className="text-[#9B59B6] font-bold">confidence</span>{" "}
-      bloom with every visit!
-    </p>
+    <p className="text-[#E5E5E5] mt-6 text-[20px] md:text-3xl leading-relaxed shadow-lg md:mx-[80px] font-parisienne-regular">
+  Step into a world of{" "}
+  <span className="text-[#8E44AD] font-bold">elegance</span> and pampering
+  at{" "}
+  <span className="text-[#9B59B6] underline decoration-[#8E44AD]">
+    Purple Scissors
+  </span>
+  , where <span className="italic text-[#9B59B6]">beauty</span> meets
+  artistry. From flawless{" "}
+  <span className="font-semibold text-[#8E44AD]">hairstyles</span> to
+  radiant{" "}
+  <span className="font-semibold text-[#9B59B6]">skin treatments</span>, we
+  bring out the{" "}
+  <span className="text-[#8E44AD] font-bold">best version</span> of you.
+  Let your <span className="text-[#9B59B6] font-bold">confidence</span>{" "}
+  bloom with every visit!
+</p>
+
+    <div className="flex justify-center">
     <Link to="/appointment">
       <button className="mt-8 bg-[#9B59B6] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-xl hover:bg-[#8E44AD] transition-all duration-300">
         Book an Appointment
       </button>
     </Link>
+    </div>
   </div>
 </section>
 

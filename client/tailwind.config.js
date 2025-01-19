@@ -15,6 +15,7 @@ export default {
         poppins: ['"Poppins"', "sans-serif"],
         kugile: ['Kugile', 'sans-serif'],
         forum: ["'Forum'", "serif"],
+        'parisienne-regular': ['Parisienne', 'serif'],
       },
     },
   },
