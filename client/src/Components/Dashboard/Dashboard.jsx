@@ -88,12 +88,8 @@ const Dashboard = ({ email, userName, onLogout }) => {
     >
       {/* Overlay for better readability */}
       <div className="bg-white bg-opacity-10 backdrop-blur-xl min-h-screen overflow-x-hidden">
-        {/* Navbar */}
-        <Navbar email={email} userName={userName} onLogout={onLogout} />
-
-        {/* Hero Section */}
-        <section
-  className="relative flex items-center justify-center bg-cover bg-center bg-opacity-90 w-full h-[500px] md:h-[750px]"
+      <section
+  className="relative bg-cover bg-center w-full h-[600px] md:h-[700px]"
   style={{
     backgroundImage: `url('https://images.pexels.com/photos/6724383/pexels-photo-6724383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
   }}
@@ -104,7 +100,13 @@ const Dashboard = ({ email, userName, onLogout }) => {
   {/* Background effect for text */}
   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-100 z-0"></div>
 
-  <div className="relative w-full md:w-1/2 ml-auto pl-4 pr-4 md:pl-10 text-center md:text-left z-10">
+  {/* Navbar */}
+  <div className="relative z-20">
+    <Navbar email={email} userName={userName} onLogout={onLogout} />
+  </div>
+
+  {/* Hero Content */}
+  <div className="relative w-full md:w-1/2 ml-auto pl-4 pr-4 md:pl-10 text-center md:text-left z-10 pt-16 md:pt-20">
     <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white hover:text-[#9B59B6] transition-colors duration-300 leading-tight">
       <span className="bg-gradient-to-r from-[#9B59B6] to-[#8E44AD] text-transparent bg-clip-text">
         Timeless Beauty
@@ -113,8 +115,8 @@ const Dashboard = ({ email, userName, onLogout }) => {
     </h1>
     <p className="text-[#E5E5E5] mt-6 text-base md:text-lg leading-relaxed font-serif shadow-lg">
       Step into a world of{" "}
-      <span className="text-[#8E44AD] font-bold">elegance</span> and
-      pampering at{" "}
+      <span className="text-[#8E44AD] font-bold">elegance</span> and pampering
+      at{" "}
       <span className="text-[#9B59B6] underline decoration-[#8E44AD]">
         Purple Scissors
       </span>
@@ -135,6 +137,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
     </Link>
   </div>
 </section>
+
 
 
         {/* Services Section */}

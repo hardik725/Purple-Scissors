@@ -38,7 +38,7 @@ const Navbar = ({ email, userName, onLogout }) => {
   return (
     <nav
       ref={navbarRef}
-      className="bg-transparent backdrop-blur-md shadow-lg relative z-30"
+      className="bg-transparent relative z-30" 
     >
       <div className="container mx-auto flex justify-between items-center py-4">
         {/* Logo Section */}
@@ -56,28 +56,29 @@ const Navbar = ({ email, userName, onLogout }) => {
 
         {/* Links Section */}
         {!isMobile ? (
-          <ul className="hidden md:flex space-x-6 text-[#0a0f13] text-lg font-medium items-center">
-            <li className="hover:underline cursor-pointer flex items-center">
-              <Link to="/">Home</Link>
-            </li>
-            <li className="hover:underline cursor-pointer flex items-center">
-              <Link to="/product">Products</Link>
-            </li>
-            <li className="hover:underline cursor-pointer flex items-center">
-              <Link to="/appointment">Appointment</Link>
-            </li>
-            <li className="hover:underline cursor-pointer flex items-center">
-              <Link to="/contactus">Contact Us</Link>
-            </li>
-            {email && (
-              <button
-                onClick={onLogout}
-                className="bg-[#E6E9F0] text-[#6A737B] px-4 py-2 rounded-lg font-semibold hover:bg-[#F5F5F5] transition flex items-center"
-              >
-                Logout
-              </button>
-            )}
-          </ul>
+          <ul className="hidden md:flex space-x-6 text-white text-lg font-bold font-kugile items-center">
+  <li className="hover:underline cursor-pointer flex items-center">
+    <Link to="/">Home</Link>
+  </li>
+  <li className="hover:underline cursor-pointer flex items-center">
+    <Link to="/product">Products</Link>
+  </li>
+  <li className="hover:underline cursor-pointer flex items-center">
+    <Link to="/appointment">Appointment</Link>
+  </li>
+  <li className="hover:underline cursor-pointer flex items-center">
+    <Link to="/contactus">Contact Us</Link>
+  </li>
+  {email && (
+    <button
+      onClick={onLogout}
+      className="bg-transparent text-red-700 px-4 py-2 rounded-lg font-bold hover:bg-gray-100 transition flex items-center"
+    >
+      Logout
+    </button>
+  )}
+</ul>
+
         ) : (
           <div className="relative z-40">
             <button
@@ -95,7 +96,7 @@ const Navbar = ({ email, userName, onLogout }) => {
 
             {/* Dropdown Container */}
             <div
-              className={`absolute right-0 bg-gradient-to-b from-[#D7BBF5] to-[#C1E1DC] shadow-xl rounded-lg text-gray-800 transform transition-transform duration-300 ease-out ${
+              className={`absolute right-0 bg-gradient-to-b from-[#D7BBF5] to-[#C1E1DC] shadow-xl rounded-lg py-4 text-gray-800 transform transition-transform duration-300 ease-out ${
                 isDropdownOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
               }`}
               style={{
@@ -141,7 +142,7 @@ const Navbar = ({ email, userName, onLogout }) => {
         {!isMobile && (
           <div className="flex items-center space-x-4">
             {email ? (
-              <span className="hidden sm:block text-xl font-semibold text-gray-800">
+              <span className="hidden sm:block text-xl font-semibold text-white">
                 Welcome, <b className="text-teal-600">{userName}</b>
               </span>
             ) : (
