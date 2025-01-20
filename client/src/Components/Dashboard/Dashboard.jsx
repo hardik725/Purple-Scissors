@@ -297,7 +297,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
   <Link to="/product">
     <button className="relative px-6 py-4 md:py-5 bg-gradient-to-r from-black  to-gray-700 text-white font-bold text-sm md:text-lg rounded-full shadow-md hover:shadow-lg hover:from-black hover:to-gray-600 transition-all duration-300">
       <span className="absolute inset-0 bg-white bg-opacity-10 blur-lg rounded-full"></span>
-      <span className="relative">✨ Explore Marketplace ✨</span>
+      <span className="relative">Explore More</span>
     </button>
   </Link>
 </div>
