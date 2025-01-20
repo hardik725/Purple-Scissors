@@ -234,10 +234,10 @@ const Dashboard = ({ email, userName, onLogout }) => {
 <section className="relative w-full bg-gray-50 shadow-lg">
   {/* Background Section */}
   <div
-    className="w-full h-[300px] md:h-[400px] bg-cover bg-center relative overflow-hidden"
+    className="w-full h-[300px] md:h-[500px] bg-cover bg-center relative overflow-hidden"
     style={{
       backgroundImage:
-        "url('https://i.ibb.co/z4zpWZw/wmremove-transformed.jpg')",
+        "url('https://img.freepik.com/premium-photo/cosmetic-products_551707-6705.jpg?uid=R156822350&ga=GA1.1.1729476715.1720013001&semt=ais_hybrid')",
     }}
   >
     <div className="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -255,7 +255,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
   {/* Categories Section */}
   <div className="grid grid-cols-3 gap-2 md:gap-6 px-4 md:px-10 mt-2">
     {[{ name: "Hair Care", imageUrl: "https://images.pexels.com/photos/8467976/pexels-photo-8467976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" },
-      { name: "Skin Care", imageUrl: "https://images.pexels.com/photos/8467976/pexels-photo-8467976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" },
+      { name: "Skin Care", imageUrl: "https://img.freepik.com/premium-photo/copy-space-organic-cosmetics_926199-3790091.jpg?uid=R156822350&ga=GA1.1.1729476715.1720013001&semt=ais_incoming" },
       { name: "Make Up", imageUrl: "https://media.istockphoto.com/id/487770577/photo/makeup-set-on-table-front-view.jpg?s=612x612&w=0&k=20&c=IS_ZuHCF3N66jhDMwt2s7J_PGWABlpv2ISEAwpJ4JKU=" }].map((category, index) => (
       <div
         key={index}
@@ -275,7 +275,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
   </div>
 
   {/* Premium Brands Section */}
-  <div className="grid grid-cols-3 gap-2 md:gap-6 px-4 sm:px-8 max-w-5xl mx-auto mt-2 pb-10">
+  <div className="grid grid-cols-3 gap-2 md:gap-6 px-4 sm:px-8 max-w-5xl mx-auto mt-2 pb-2">
     {[
       { name: "Lakme", image: "https://i.pinimg.com/736x/55/90/0b/55900beeff90476e34df8f7303a060e3.jpg" },
       { name: "Jeannot", image: "https://media.licdn.com/dms/image/v2/C4D0BAQF7gCNqsydsBA/company-logo_200_200/company-logo_200_200/0/1642568688292/jeannotceuticals_logo?e=2147483647&v=beta&t=94KAZceQfOd3DmNXD9N23FL4go_HCxLedwQgaxUjxgI" },
@@ -293,6 +293,15 @@ const Dashboard = ({ email, userName, onLogout }) => {
       </div>
     ))}
   </div>
+  <div className="mt-6 flex justify-center pb-5">
+  <Link to="/marketplace">
+    <button className="relative px-6 py-4 md:py-5 bg-gradient-to-r from-black  to-gray-700 text-white font-bold text-sm md:text-lg rounded-full shadow-md hover:shadow-lg hover:from-black hover:to-gray-600 transition-all duration-300">
+      <span className="absolute inset-0 bg-white bg-opacity-10 blur-lg rounded-full"></span>
+      <span className="relative">✨ Explore Marketplace ✨</span>
+    </button>
+  </Link>
+</div>
+
 </section>
 
 
