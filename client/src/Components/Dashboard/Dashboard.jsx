@@ -144,17 +144,17 @@ const Dashboard = ({ email, userName, onLogout }) => {
 
 
         {/* Services Section */}
-        <section className="py-16 bg-[#F3F4F6] bg-opacity-0 backdrop-blur-md">
-  <div className="text-center mb-12">
-    <h2 className="text-4xl font-serif font-bold text-black uppercase tracking-wide">Our Services</h2>
+        <section className="py-8 bg-[#F3F4F6] bg-opacity-0 backdrop-blur-md">
+  <div className="text-center mb-10">
+    <h2 className="text-4xl font-kugile font-bold text-black uppercase tracking-wide">Our Services</h2>
     <div className="mt-2 w-16 h-1 bg-black mx-auto rounded"></div>
   </div>
   <div className="flex flex-wrap justify-center gap-8">
   {[
-    { label: "Body & Beauty Essentials", icon: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", id: "essentialspage" },
-    { label: "Hair Styling Services", icon: "https://cdn.pixabay.com/photo/2018/02/14/21/45/woman-3153999_1280.jpg", id: "hairpage" },
-    { label: "Facial Services", icon: "https://images.pexels.com/photos/5069401/pexels-photo-5069401.jpeg", id: "facepage" },
-    { label: "Make-Up Services", icon: "https://img.freepik.com/free-photo/team-bride-celebrating-before-wedding_23-2149329143.jpg?t=st=1736522338~exp=1736525938~hmac=023df7c8a0a861bc1b929f645c279ad4b967d271e10e0471c4b969c8ccefeeb7&w=740", id: "makeuppage" },
+    { label: "Body & Beauty Essentials", icon: "https://static.vecteezy.com/system/resources/previews/003/746/221/non_2x/female-hands-with-nail-file-vector.jpg", id: "essentialspage" },
+    { label: "Hair Styling Services", icon: "https://static.vecteezy.com/system/resources/previews/024/653/219/large_2x/beautiful-art-nouveau-lady-with-nice-hair-and-flower-illustration-vector.jpg", id: "hairpage" },
+    { label: "Facial Services", icon: "https://static.vecteezy.com/system/resources/previews/007/008/729/non_2x/a-professional-beautician-applying-the-clay-mask-to-the-client-s-face-concept-free-vector.jpg", id: "facepage" },
+    { label: "Make-Up Services", icon: "https://static.vecteezy.com/system/resources/previews/052/255/383/non_2x/elegant-woman-with-bun-hairstyle-in-line-art-surrounded-by-pastel-leaves-and-abstract-shapes-evoking-a-feeling-of-peace-and-tranquility-free-vector.jpg", id: "makeuppage" },
   ].map((service, index) => (
     <Link 
       to={`/${service.id}`} 
