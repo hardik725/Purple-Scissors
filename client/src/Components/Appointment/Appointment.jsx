@@ -155,30 +155,30 @@ const Appointment = ({ email,userName, onLogout }) => {
 <><div className="bg-black">
   <Navbar email={email} userName={userName} onLogout={onLogout} />
   </div>
-  <section className="py-5 md:py-20 bg-gradient-to-r from-[#FDE2E4] via-[#FAD4D8] to-[#FFE2E2]">
-    <div className="text-center mb-12">
+  <section className="py-2 md:py-10 bg-gradient-to-r from-[#FDE2E4] via-[#FAD4D8] to-[#FFE2E2]">
+    <div className="text-center mb-4 md:mb-8">
       <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-[#4A4A4A] tracking-wide">
         Book Your <span className="text-[#D96161]">Appointment</span>
       </h2>
-      <p className="mt-4 text-lg sm:text-xl text-[#555] font-serif max-w-2xl mx-auto">
+      <p className="mt-2 md:mt-4 text-md sm:text-lg text-[#555] font-serif max-w-2xl mx-auto">
         Your journey to relaxation and rejuvenation begins here. Fill out the form below to secure your personalized session with us.
       </p>
     </div>
-    <div className="flex flex-col sm:flex-row items-center justify-center gap-12 px-4 sm:px-0">
-      {/* Image Section */}
-      <div className="w-full sm:w-1/2 flex justify-center">
-        <img
-          src="https://images.pexels.com/photos/3993433/pexels-photo-3993433.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt="Relaxation"
-          className="rounded-2xl shadow-xl transform transition-all hover:scale-105 hover:rotate-1 duration-300 ease-in-out"
-        />
-      </div>
-      {/* Form Section */}
-      <div className="w-full sm:w-1/2 bg-white p-6 sm:p-10 rounded-2xl shadow-2xl">
-                    {/* Services Section */}
-    <div className="mb-6">
-      <h5 className="text-md font-medium text-gray-800 mb-3">Select Services</h5>
-      <div className="grid grid-cols-3 gap-4">
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-12 px-4 sm:px-8">
+  {/* Image Section */}
+  <div className="w-full sm:w-1/2 flex justify-center mb-6 sm:mb-0">
+    <img
+      src="https://images.pexels.com/photos/3993433/pexels-photo-3993433.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      alt="Relaxation"
+      className="rounded-2xl shadow-xl transform transition-all hover:scale-105 hover:rotate-1 duration-300 ease-in-out"
+    />
+  </div>
+  {/* Form Section */}
+  <div className="w-full sm:w-1/2 bg-white p-6 sm:p-10 rounded-md shadow-2xl">
+    {/* Services Section */}
+    <div className="mb-4 sm:mb-6">
+      <h5 className="text-md font-medium text-gray-800 mb-2 sm:mb-3">Select Services:</h5>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
         {["Hair", "Face", "Makeup", "Nails", "Grooming"].map((service, index) => (
           <button
             key={index}
@@ -201,31 +201,29 @@ const Appointment = ({ email,userName, onLogout }) => {
         ))}
       </div>
     </div>
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          {/* Input Fields */}
-          <div className="flex flex-col sm:flex-row gap-6">
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
-            />
-          </div>
-          <div className="flex flex-col sm:flex-row gap-6">
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone Number"
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
-            />
-          </div>
-      <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">
-      Select Date
-      </label>
+    <form className="space-y-6" onSubmit={handleSubmit}>
+      {/* Input Fields */}
+      <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={formData.name}
+          onChange={handleChange}
+          className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
+        />
+      </div>
+      <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone Number"
+          value={formData.phone}
+          onChange={handleChange}
+          className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
+        />
+      </div>
+      <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">Select Date</label>
       <DatePicker
         selected={formData.date ? new Date(formData.date) : null}
         onChange={(date) => {
@@ -234,83 +232,81 @@ const Appointment = ({ email,userName, onLogout }) => {
         }}
         minDate={new Date()}
         dateFormat="yyyy-MM-dd"
-        className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
+        className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
         placeholderText="Select a date"
       />
-  {availableSlots.length > 0 && (
-  <div className="mt-6">
-    <h4 className="text-lg font-semibold text-purple-700 mb-4">Available Slots</h4>
-    {/* Slots Section */}
-    <div>
-      <h5 className="text-md font-medium text-gray-800 mb-3">Morning Slots</h5>
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        {availableSlots
-          .filter((slot) => slot.includes("AM"))
-          .map((slot, index) => (
-            <button
-              key={`morning-${index}`}
-              type="button"
-              className={`p-3 text-sm rounded-lg font-medium transition-all duration-300 border border-pink-300 ${
-                selectedSlot === slot
-                  ? "border-purple-500 bg-gradient-to-r from-pink-400 to-purple-400 text-white shadow-md scale-105"
-                  : "bg-gray-100 text-gray-700 hover:bg-gradient-to-r hover:from-pink-100 hover:to-purple-100 hover:text-purple-700"
-              }`}
-              onClick={() => setSelectedSlot(slot)}
-            >
-              {slot}
-            </button>
-          ))}
-      </div>
+      {availableSlots.length > 0 && (
+        <div className="mt-6">
+          <h4 className="text-lg font-semibold text-purple-700 mb-4">Available Slots</h4>
+          {/* Slots Section */}
+          <div>
+            <h5 className="text-md font-medium text-gray-800 mb-3">Morning Slots</h5>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
+              {availableSlots
+                .filter((slot) => slot.includes("AM"))
+                .map((slot, index) => (
+                  <button
+                    key={`morning-${index}`}
+                    type="button"
+                    className={`p-3 text-sm rounded-lg font-medium transition-all duration-300 border border-pink-300 ${
+                      selectedSlot === slot
+                        ? "border-purple-500 bg-gradient-to-r from-pink-400 to-purple-400 text-white shadow-md scale-105"
+                        : "bg-gray-100 text-gray-700 hover:bg-gradient-to-r hover:from-pink-100 hover:to-purple-100 hover:text-purple-700"
+                    }`}
+                    onClick={() => setSelectedSlot(slot)}
+                  >
+                    {slot}
+                  </button>
+                ))}
+            </div>
 
-      <h5 className="text-md font-medium text-gray-800 mb-3">Evening Slots</h5>
-      <div className="grid grid-cols-3 gap-4">
-        {availableSlots
-          .filter((slot) => slot.includes("PM"))
-          .map((slot, index) => (
-            <button
-              key={`evening-${index}`}
-              type="button"
-              className={`p-3 text-sm rounded-lg font-medium transition-all duration-300 border border-pink-300 ${
-                selectedSlot === slot
-                  ? "border-purple-500 bg-gradient-to-r from-pink-400 to-purple-400 text-white shadow-md scale-105"
-                  : "bg-gray-100 text-gray-700 hover:bg-gradient-to-r hover:from-pink-100 hover:to-purple-100 hover:text-purple-700"
-              }`}
-              onClick={() => setSelectedSlot(slot)}
-            >
-              {slot}
-            </button>
-          ))}
-      </div>
-    </div>
+            <h5 className="text-md font-medium text-gray-800 mb-3">Evening Slots</h5>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+              {availableSlots
+                .filter((slot) => slot.includes("PM"))
+                .map((slot, index) => (
+                  <button
+                    key={`evening-${index}`}
+                    type="button"
+                    className={`p-3 text-sm rounded-lg font-medium transition-all duration-300 border border-pink-300 ${
+                      selectedSlot === slot
+                        ? "border-purple-500 bg-gradient-to-r from-pink-400 to-purple-400 text-white shadow-md scale-105"
+                        : "bg-gray-100 text-gray-700 hover:bg-gradient-to-r hover:from-pink-100 hover:to-purple-100 hover:text-purple-700"
+                    }`}
+                    onClick={() => setSelectedSlot(slot)}
+                  >
+                    {slot}
+                  </button>
+                ))}
+            </div>
+          </div>
+        </div>
+      )}
+      <textarea
+        name="notes"
+        placeholder="Additional Notes"
+        value={formData.notes}
+        onChange={handleChange}
+        className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
+        rows="4"
+      ></textarea>
+      {/* Button */}
+      <button
+        type="submit"
+        className="w-full bg-gradient-to-r from-[#F28E8E] to-[#D96161] text-white px-6 py-4 rounded-full text-lg font-bold shadow-lg hover:opacity-90 transition-all duration-300"
+      >
+        Confirm Appointment
+      </button>
+    </form>
+    {successMessage && (
+      <p className="mt-4 text-green-600 font-semibold">{successMessage}</p>
+    )}
+    {errorMessage && (
+      <p className="mt-4 text-red-600 font-semibold">{errorMessage}</p>
+    )}
   </div>
-)}
+</div>
 
-
-
-          <textarea
-            name="notes"
-            placeholder="Additional Notes"
-            value={formData.notes}
-            onChange={handleChange}
-            className="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg focus:ring-4 focus:ring-[#F28E8E] focus:outline-none font-serif"
-            rows="4"
-          ></textarea>
-          {/* Button */}
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-[#F28E8E] to-[#D96161] text-white px-6 py-4 rounded-full text-lg font-bold shadow-lg hover:opacity-90 transition-all duration-300"
-          >
-            Confirm Appointment
-          </button>
-        </form>
-        {successMessage && (
-          <p className="mt-4 text-green-600 font-semibold">{successMessage}</p>
-        )}
-        {errorMessage && (
-          <p className="mt-4 text-red-600 font-semibold">{errorMessage}</p>
-        )}
-      </div>
-    </div>
     {/* User's Appointments */}
     <div className="mt-12 bg-white p-10 rounded-2xl shadow-xl max-w-4xl md:mx-auto mx-2">
       <h3 className="text-3xl font-bold mb-6 text-[#4A4A4A]">Your Appointments</h3>
