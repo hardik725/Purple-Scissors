@@ -231,6 +231,72 @@ const Dashboard = ({ email, userName, onLogout }) => {
   </div>
 </section>
 
+<section className="relative w-full bg-gray-50 shadow-lg">
+  {/* Background Section */}
+  <div
+    className="w-full h-[300px] md:h-[400px] bg-cover bg-center relative overflow-hidden"
+    style={{
+      backgroundImage:
+        "url('https://i.ibb.co/z4zpWZw/wmremove-transformed.jpg')",
+    }}
+  >
+    <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+    <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-6 md:px-10">
+      <h1 className="text-3xl md:text-5xl font-bold leading-tight">
+        Welcome to Your Ultimate Shopping Destination
+      </h1>
+      <p className="mt-3 text-sm md:text-lg text-gray-200">
+        Discover categories tailored to your style and premium brands you'll
+        love.
+      </p>
+    </div>
+  </div>
+
+  {/* Categories Section */}
+  <div className="grid grid-cols-3 gap-2 md:gap-6 px-4 md:px-10 mt-2">
+    {[{ name: "Hair Care", imageUrl: "https://images.pexels.com/photos/8467976/pexels-photo-8467976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" },
+      { name: "Skin Care", imageUrl: "https://images.pexels.com/photos/8467976/pexels-photo-8467976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" },
+      { name: "Make Up", imageUrl: "https://media.istockphoto.com/id/487770577/photo/makeup-set-on-table-front-view.jpg?s=612x612&w=0&k=20&c=IS_ZuHCF3N66jhDMwt2s7J_PGWABlpv2ISEAwpJ4JKU=" }].map((category, index) => (
+      <div
+        key={index}
+        className="relative bg-white shadow-lg rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300"
+      >
+        <div
+          className="h-[150px] md:h-[220px] bg-cover bg-center"
+          style={{ backgroundImage: `url('${category.imageUrl}')` }}
+        ></div>
+        <div className="absolute inset-0 bg-black bg-opacity-30 flex justify-center items-center">
+          <h3 className="text-white text-sm  md:text-2xl font-bold">
+            {category.name}
+          </h3>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {/* Premium Brands Section */}
+  <div className="grid grid-cols-3 gap-2 md:gap-6 px-4 sm:px-8 max-w-5xl mx-auto mt-2 pb-10">
+    {[
+      { name: "Lakme", image: "https://i.pinimg.com/736x/55/90/0b/55900beeff90476e34df8f7303a060e3.jpg" },
+      { name: "Jeannot", image: "https://media.licdn.com/dms/image/v2/C4D0BAQF7gCNqsydsBA/company-logo_200_200/company-logo_200_200/0/1642568688292/jeannotceuticals_logo?e=2147483647&v=beta&t=94KAZceQfOd3DmNXD9N23FL4go_HCxLedwQgaxUjxgI" },
+      { name: "VLCC", image: "https://images.seeklogo.com/logo-png/52/2/vlcc-personal-care-logo-png_seeklogo-521769.png?v=1958556243998270512" },
+    ].map((brand, index) => (
+      <div
+        key={index}
+        className="relative bg-white shadow-lg rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300"
+      >
+<div
+  className="h-[150px] md:h-[220px] w-full bg-contain bg-center bg-no-repeat"
+  style={{ backgroundImage: `url('${brand.image}')` }}
+></div>
+
+      </div>
+    ))}
+  </div>
+</section>
+
+
+
 
 {/* Write a Review Section */}
 <section className="py-16 bg-gradient-to-r from-[#E8F6F3] via-[#D1EEE7] to-[#BDE4DD]">
