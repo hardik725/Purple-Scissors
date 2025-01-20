@@ -16,6 +16,7 @@ export default {
         kugile: ['Kugile', 'sans-serif'],
         forum: ["'Forum'", "serif"],
         'parisienne-regular': ['Parisienne', 'serif'],
+        'bodoni': ['"Bodoni Moda"', 'serif'],
       },
     },
   },

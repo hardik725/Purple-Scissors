@@ -113,7 +113,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
       </span>{" "}
       Unveiled
     </h1>
-    <p className="text-[#E5E5E5] mt-6 text-[20px] md:text-3xl leading-relaxed shadow-lg md:mx-[80px] font-parisienne-regular">
+    <p className="text-[#E5E5E5] mt-6 text-[16px] md:text-2xl leading-relaxed shadow-lg md:mx-[80px] font-bodoni-italic">
   Step into a world of{" "}
   <span className="text-[#8E44AD] font-bold">elegance</span> and pampering
   at{" "}
