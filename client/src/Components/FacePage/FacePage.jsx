@@ -95,9 +95,31 @@ const FacePage = ({ email, userName, onLogout }) => {
         <Navbar email={email} userName={userName} onLogout={onLogout} />
         </div>
         {/* Face Section Header */}
-        <div className="bg-gradient-to-r from-gray-800 via-black to-gray-800 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-gray-400 transition duration-300">
-          Face Services
-        </div>
+        <div
+  className="relative flex items-center p-8"
+  style={{
+    backgroundImage: `url('https://static.vecteezy.com/system/resources/previews/053/394/041/non_2x/a-set-of-flat-illustrations-in-a-simple-style-woman-dressed-in-towel-are-engaged-in-cosmetic-procedures-face-masks-and-patches-self-care-and-self-love-concept-vector.jpg')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    width: '100%',
+    height: '500px', // Increased height for better design
+  }}
+>
+  <div className="absolute inset-0 bg-white bg-opacity-40"></div> {/* Semi-transparent overlay */}
+  
+  <div className="relative w-full lg:w-1/2 text-left p-6 lg:pl-16">
+    <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-800">
+      Face Care & Beauty
+    </h1>
+    <p className="mt-4 text-lg lg:text-xl text-gray-700 leading-relaxed">
+    "Glow is the essence of beauty—let your face radiate."
+    </p>
+    <p className="mt-2 text-lg lg:text-xl text-gray-700 leading-relaxed">
+    "Enhancing your natural beauty, one face at a time."
+    </p>
+  </div>
+</div>
 
         {/* Categories Section */}
         <div className="space-y-12 relative z-10 mt-2">
@@ -164,11 +186,36 @@ const FacePage = ({ email, userName, onLogout }) => {
     return (
       <div className="bg-black text-black font-kugile">
         {/* Navbar */}
+        <div className="bg-black">
         <Navbar email={email} userName={userName} onLogout={onLogout} />
-        {/* Header */}
-        <div className="bg-gradient-to-r from-gray-800 via-black to-gray-800 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-gray-400 transition duration-300">
-          Face Services
         </div>
+        <div
+  className="relative flex flex-col items-center justify-center p-6"
+  style={{
+    backgroundImage: `url('https://static.vecteezy.com/system/resources/previews/053/394/041/non_2x/a-set-of-flat-illustrations-in-a-simple-style-woman-dressed-in-towel-are-engaged-in-cosmetic-procedures-face-masks-and-patches-self-care-and-self-love-concept-vector.jpg')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    width: '100%',
+    height: '450px', // Adjusted for mobile-friendly height
+  }}
+>
+  {/* Semi-transparent overlay */}
+  <div className="absolute inset-0 bg-white bg-opacity-80"></div>
+
+  {/* Content Section */}
+  <div className="relative text-center max-w-xs sm:max-w-md">
+    <h1 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
+      Face Care & Beauty
+    </h1>
+    <p className="mt-4 text-base text-gray-700 sm:text-lg">
+    "Glow is the essence of beauty—let your face radiate."
+    </p>
+    <p className="mt-2 text-base text-gray-700 sm:text-lg">
+    "Enhancing your natural beauty, one face at a time."
+    </p>
+  </div>
+</div>
 
         {/* Categories */}
         <div>

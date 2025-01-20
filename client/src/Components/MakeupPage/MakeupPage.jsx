@@ -86,9 +86,32 @@ const MakeupPage = ({ email, userName, onLogout }) => {
         <div className="bg-black">
         <Navbar email={email} userName={userName} onLogout={onLogout} />
         </div>
-        <div className="bg-gradient-to-r from-pink-600 via-red-400 to-pink-600 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-pink-400 transition duration-300">
-          Makeup Section
-        </div>
+        {/* Face Section Header */}
+        <div
+  className="relative flex items-center p-8"
+  style={{
+    backgroundImage: `url('https://static.vecteezy.com/system/resources/previews/016/733/342/non_2x/big-set-of-elements-and-icons-for-beauty-salon-black-and-white-cosmetics-silhouettes-set-nail-polish-beautiful-woman-face-eyelash-extension-makeup-hairdressing-illustrations-vector.jpg')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    width: '100%',
+    height: '500px', // Increased height for better design
+  }}
+>
+  <div className="absolute inset-0 bg-white bg-opacity-40"></div> {/* Semi-transparent overlay */}
+  
+  <div className="relative w-full lg:w-1/2 text-left p-6 lg:pl-16 text-pink-700">
+    <h1 className="text-4xl lg:text-6xl font-extrabold">
+      Make Up Services
+    </h1>
+    <p className="mt-4 text-lg lg:text-xl text-pink-600 leading-relaxed">
+    "Where beauty meets artistry—your perfect makeup awaits."
+    </p>
+    <p className="mt-2 text-lg lg:text-xl text-pink-600 leading-relaxed">
+    "Transforming your look, one brushstroke at a time."
+    </p>
+  </div>
+</div>
 
         <div className="space-y-12 relative z-10 mt-2">
           {categories.map((category, index) => {
@@ -150,10 +173,36 @@ const MakeupPage = ({ email, userName, onLogout }) => {
   } else {
     return (
       <div className="bg-black text-black font-kugile">
+        <div className="bg-black">
         <Navbar email={email} userName={userName} onLogout={onLogout} />
-        <div className="bg-gradient-to-r from-pink-600 via-red-400 to-pink-600 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-pink-400 transition duration-300">
-          Makeup Section
         </div>
+        <div
+  className="relative flex flex-col items-center justify-center p-6"
+  style={{
+    backgroundImage: `url('https://static.vecteezy.com/system/resources/previews/053/394/041/non_2x/a-set-of-flat-illustrations-in-a-simple-style-woman-dressed-in-towel-are-engaged-in-cosmetic-procedures-face-masks-and-patches-self-care-and-self-love-concept-vector.jpg')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    width: '100%',
+    height: '450px', // Adjusted for mobile-friendly height
+  }}
+>
+  {/* Semi-transparent overlay */}
+  <div className="absolute inset-0 bg-white bg-opacity-80"></div>
+
+  {/* Content Section */}
+  <div className="relative text-center max-w-xs sm:max-w-md">
+    <h1 className="text-3xl font-extrabold text-pink-800 sm:text-4xl">
+      Make Up Services
+    </h1>
+    <p className="mt-4 text-base text-pink-700 sm:text-lg">
+    "Where beauty meets artistry—your perfect makeup awaits."
+    </p>
+    <p className="mt-2 text-base text-pink-700 sm:text-lg">
+    "Transforming your look, one brushstroke at a time."
+    </p>
+  </div>
+</div>
 
         <div>
           {categories.map((category, index) => (

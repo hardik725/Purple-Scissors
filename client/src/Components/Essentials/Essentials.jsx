@@ -75,14 +75,36 @@ const Essentials = ({ email, userName, onLogout }) => {
   if (!isMobile) {
     return (
       <div className="bg-white text-black font-kugile relative">
-        <div className="bg-black">
-        <Navbar email={email} userName={userName} onLogout={onLogout} />
-        </div>
-        <div className="bg-gradient-to-r from-purple-300 via-gray-400 to-gray-300 text-center text-6xl font-extrabold text-black p-8 shadow-lg flex justify-center items-center hover:border-gray-500 transition duration-300">
-  Essentials Section
+
+<div className="bg-black">
+  <Navbar email={email} userName={userName} onLogout={onLogout} />
+  </div>
+  {/* Hair Section Header */}
+  <div
+  className="relative flex items-center p-8"
+  style={{
+    backgroundImage: `url('https://static.vecteezy.com/system/resources/previews/049/851/257/non_2x/nail-master-make-manicure-for-female-client-vector.jpg')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    width: '100%',
+    height: '500px', // Increased height for better design
+  }}
+>
+  <div className="absolute inset-0 bg-white bg-opacity-40"></div> {/* Semi-transparent overlay */}
+  
+  <div className="relative w-full lg:w-1/2 text-left p-6 lg:pl-16">
+    <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-800">
+      Essential Services
+    </h1>
+    <p className="mt-4 text-lg lg:text-xl text-gray-700 leading-relaxed">
+    "Indulge in self-care—where nails, skin, and body rejuvenate."
+    </p>
+    <p className="mt-2 text-lg lg:text-xl text-gray-700 leading-relaxed">
+    "Pampering you from head to toe, because you deserve it."
+    </p>
+  </div>
 </div>
-
-
         <div className="space-y-12 relative z-10 mt-2">
           {categories.map((category, index) => {
             const marginTop = category.services.length * 31;
@@ -143,10 +165,36 @@ const Essentials = ({ email, userName, onLogout }) => {
   } else {
     return (
       <div className="bg-black text-black font-kugile">
+        <div className="bg-black">
         <Navbar email={email} userName={userName} onLogout={onLogout} />
-        <div className="bg-gradient-to-r from-purple-300 via-gray-400 to-gray-300 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-green-400 transition duration-300">
-          Essentials Section
         </div>
+        <div
+  className="relative flex flex-col items-center justify-center p-6"
+  style={{
+    backgroundImage: `url('https://static.vecteezy.com/system/resources/previews/049/851/257/non_2x/nail-master-make-manicure-for-female-client-vector.jpg')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    width: '100%',
+    height: '450px', // Adjusted for mobile-friendly height
+  }}
+>
+  {/* Semi-transparent overlay */}
+  <div className="absolute inset-0 bg-white bg-opacity-80"></div>
+
+  {/* Content Section */}
+  <div className="relative text-center max-w-xs sm:max-w-md">
+    <h1 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
+      Essential Services
+    </h1>
+    <p className="mt-4 text-base text-gray-700 sm:text-lg">
+    "Indulge in self-care—where nails, skin, and body rejuvenate."
+    </p>
+    <p className="mt-2 text-base text-gray-700 sm:text-lg">
+    "Pampering you from head to toe, because you deserve it."
+    </p>
+  </div>
+</div>
 
         <div>
           {categories.map((category, index) => (

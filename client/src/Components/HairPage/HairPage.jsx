@@ -93,9 +93,33 @@ const HairPage = ({ email, userName, onLogout }) => {
   <Navbar email={email} userName={userName} onLogout={onLogout} />
   </div>
   {/* Hair Section Header */}
-  <div className="bg-gradient-to-r from-gray-800 via-black to-gray-800 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-gray-400 transition duration-300">
-    Hair Section
+  <div
+  className="relative flex items-center p-8"
+  style={{
+    backgroundImage: `url('https://static.vecteezy.com/system/resources/previews/052/255/396/non_2x/three-female-fashion-models-with-different-hairstyles-and-make-up-are-posing-in-profile-showcasing-beauty-and-style-trends-free-vector.jpg')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    width: '100%',
+    height: '500px', // Increased height for better design
+  }}
+>
+  <div className="absolute inset-0 bg-white bg-opacity-40"></div> {/* Semi-transparent overlay */}
+  
+  <div className="relative w-full lg:w-1/2 text-left p-6 lg:pl-16">
+    <h1 className="text-4xl lg:text-6xl font-extrabold text-gray-800">
+      Hair Care & Beauty
+    </h1>
+    <p className="mt-4 text-lg lg:text-xl text-gray-700 leading-relaxed">
+      "Invest in your hair, it’s the crown you never take off."
+    </p>
+    <p className="mt-2 text-lg lg:text-xl text-gray-700 leading-relaxed">
+      "Good hair speaks louder than words."
+    </p>
   </div>
+</div>
+
+
 
   {/* Decorative Background */}
   <div className="absolute inset-0 -z-10">
@@ -185,10 +209,37 @@ const HairPage = ({ email, userName, onLogout }) => {
     return( 
         <div className="bg-gray-100 text-black font-kugile">
         {/* Navbar */}
+        <div className="bg-black">
         <Navbar email={email} userName={userName} onLogout={onLogout} />
-        <div className="bg-gradient-to-r from-gray-800 via-black to-gray-800 text-center text-6xl font-extrabold text-white p-8 shadow-lg flex justify-center items-center hover:border-gray-400 transition duration-300">
-    Hair Section
+        </div>
+        <div
+  className="relative flex flex-col items-center justify-center p-6"
+  style={{
+    backgroundImage: `url('https://static.vecteezy.com/system/resources/previews/052/255/396/non_2x/three-female-fashion-models-with-different-hairstyles-and-make-up-are-posing-in-profile-showcasing-beauty-and-style-trends-free-vector.jpg')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    width: '100%',
+    height: '450px', // Adjusted for mobile-friendly height
+  }}
+>
+  {/* Semi-transparent overlay */}
+  <div className="absolute inset-0 bg-white bg-opacity-80"></div>
+
+  {/* Content Section */}
+  <div className="relative text-center max-w-xs sm:max-w-md">
+    <h1 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
+      Hair Care & Beauty
+    </h1>
+    <p className="mt-4 text-base text-gray-700 sm:text-lg">
+    "Invest in your hair, it’s the crown you never take off."
+    </p>
+    <p className="mt-2 text-base text-gray-700 sm:text-lg">
+    "Good hair speaks louder than words."
+    </p>
   </div>
+</div>
+
   
         {/* Categories */}
         <div >
