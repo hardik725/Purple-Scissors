@@ -202,73 +202,75 @@ const Dashboard = ({ email, userName, onLogout }) => {
 
         {/* Testimonials Section */}
         <section className="py-16 bg-gradient-to-b from-[#fef9f9] to-[#f6f1f1]">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-display font-bold text-[#2A2A2A] tracking-wide">
-          What Our Clients Say
-        </h2>
-        <p className="text-[#707070] mt-4 text-lg font-serif">
-          Discover how our clients feel about their transformation journeys with us.
-        </p>
-      </div>
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={30}
-        breakpoints={{
-          768: {
-            slidesPerView: 2, // Show 2 reviews for devices wider than 768px
-          },
-        }}
-        loop={true} // Enables infinite looping
-        freeMode={true} // Enables free movement for smooth scrolling
-        autoplay={{
-          delay: 0, // No delay, continuous movement
-          disableOnInteraction: false, // Keeps autoplay running even after interaction
-        }}
-        speed={3000} // Adjust speed of continuous motion
-        modules={[Autoplay, FreeMode]} // Include FreeMode and Autoplay
-        className="px-6"
-      >
-        {reviews.map((review, index) => (
-          <SwiperSlide key={index}>
-            <div className="text-center bg-white p-8 rounded-2xl shadow-xl transition-transform transform hover:scale-105">
-              <div className="relative mb-6">
-                <img
-                  src="https://static.vecteezy.com/system/resources/previews/001/993/889/non_2x/beautiful-latin-woman-avatar-character-icon-free-vector.jpg"
-                  alt={review.name}
-                  className="w-20 h-20 rounded-full mx-auto shadow-lg border-4 border-[#F28E8E]"
-                />
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-[#F28E8E] bg-opacity-20 rounded-full">
-                  <span className="text-white font-bold text-sm tracking-wide">
-                    Loved it!
-                  </span>
-                </div>
-              </div>
-              <p className="text-lg font-serif text-[#555] italic leading-relaxed">
-                "{review.Review}"
-              </p>
-              <div className="flex justify-center">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <svg
-                    key={i}
-                    xmlns="http://www.w3.org/2000/svg"
-                    className={`h-6 w-6 ${
-                      i < review.Rating ? "text-yellow-500" : "text-gray-300"
-                    }`}
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                  </svg>
-                ))}
-              </div>              
-              <p className="mt-6 font-semibold text-[#333] text-xl">
-                {review.Name}
-              </p>
+  <div className="text-center mb-12">
+    <h2 className="text-4xl font-display font-bold text-[#2A2A2A] tracking-wide">
+      What Our Clients Say
+    </h2>
+    <p className="text-[#707070] mt-4 text-lg font-serif">
+      Discover how our clients feel about their transformation journeys with us.
+    </p>
+  </div>
+  <Swiper
+    slidesPerView={1}
+    spaceBetween={30}
+    breakpoints={{
+      768: {
+        slidesPerView: 2, // Show 2 reviews for devices wider than 768px
+      },
+    }}
+    loop={true} // Enables infinite looping
+    autoplay={{
+      delay: 0, // No delay, continuous movement
+      disableOnInteraction: true, // Prevent user interaction from pausing autoplay
+    }}
+    speed={3000} // Adjust speed of continuous motion
+    allowTouchMove={false} // Disable user swiping/interaction
+    modules={[Autoplay]} // Only Autoplay module is included
+    className="px-6"
+  >
+    {reviews.map((review, index) => (
+      <SwiperSlide key={index}>
+        <div className="text-center bg-white p-8 rounded-2xl shadow-xl transition-transform transform hover:scale-105">
+          <div className="relative mb-6">
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/001/993/889/non_2x/beautiful-latin-woman-avatar-character-icon-free-vector.jpg"
+              alt={review.name}
+              className="w-20 h-20 rounded-full mx-auto shadow-lg border-4 border-[#F28E8E]"
+            />
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-[#F28E8E] bg-opacity-20 rounded-full">
+              <span className="text-white font-bold text-sm tracking-wide">
+                Loved it!
+              </span>
             </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </section>
+          </div>
+          <p className="text-lg font-serif text-[#555] italic leading-relaxed">
+            "{review.Review}"
+          </p>
+          <div className="flex justify-center">
+            {Array.from({ length: 5 }, (_, i) => (
+              <svg
+                key={i}
+                xmlns="http://www.w3.org/2000/svg"
+                className={`h-6 w-6 ${
+                  i < review.Rating ? "text-yellow-500" : "text-gray-300"
+                }`}
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+              </svg>
+            ))}
+          </div>              
+          <p className="mt-6 font-semibold text-[#333] text-xl">
+            {review.Name}
+          </p>
+        </div>
+      </SwiperSlide>
+    ))}
+  </Swiper>
+</section>
+
+
 
 <section className="relative w-full bg-gray-50 shadow-lg">
   {/* Background Section */}
