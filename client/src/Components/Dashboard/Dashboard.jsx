@@ -8,6 +8,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay"; // Import autoplay styles
 import { Navigation, Pagination, Autoplay, FreeMode } from "swiper/modules";
+import Loader from "../Loader/Loader";
 
 const Dashboard = ({ email, userName, onLogout }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -15,20 +16,24 @@ const Dashboard = ({ email, userName, onLogout }) => {
   const [review, setReview] = useState("");
   const [rating, setRating] = useState("");
   const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-      const fetchReviews = async () => {
-        try {
-          const response = await fetch("https://purple-scissors.onrender.com/review/allreviews");
-          const data = await response.json(); // Extract JSON from the response
-          setReviews(data); // Assuming the response is the array of reviews
-          console.log(reviews);
-        } catch (err) {
-        }
-      };
-  
-      fetchReviews();
-    }, []);
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(
+          "https://purple-scissors.onrender.com/review/allreviews"
+        );
+        const data = await response.json();
+        setReviews(data); // Set fetched reviews
+        setLoading(false); // Indicate loading completion
+      } catch (err) {
+        console.error("Failed to fetch reviews", err);
+      }
+    };
+
+    fetchReviews();
+  }, [email]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,7 +106,10 @@ const Dashboard = ({ email, userName, onLogout }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
+  
+  if(!reviews){
+    return (<div><Loader/></div>);
+  }else{
   return (
     <div
       className="min-h-screen bg-cover bg-center bg-fixed -z-20 font-kugile"
@@ -208,75 +216,81 @@ const Dashboard = ({ email, userName, onLogout }) => {
 
         {/* Testimonials Section */}
         <section className="py-10 bg-gradient-to-b from-[#fef9f9] to-[#f6f1f1]">
-  <div className="text-center mb-12">
-    <h2 className="text-4xl font-display font-bold text-[#2A2A2A] tracking-wide">
-      What Our Clients Say
-    </h2>
-    <p className="text-[#707070] mt-4 text-lg font-serif">
-      Discover how our clients feel about their transformation journeys with us.
-    </p>
-  </div>
-  <Swiper
-    slidesPerView={1}
-    spaceBetween={30}
-    breakpoints={{
-      768: {
-        slidesPerView: 2, // Show 2 reviews for devices wider than 768px
-      },
-    }}
-    loop={true} // Enables infinite looping
-    autoplay={{
-      delay: 0, // No delay, continuous movement
-      disableOnInteraction: true, // Prevent user interaction from pausing autoplay
-    }}
-    speed={3000} // Adjust speed of continuous motion
-    allowTouchMove={false} // Disable user swiping/interaction
-    modules={[Autoplay]} // Only Autoplay module is included
-    className="px-6"
-  >
-    {reviews.map((review, index) => (
-      <SwiperSlide key={index}>
-        <div className="text-center bg-white p-6 m-2 rounded-2xl shadow-xl transition-transform transform hover:scale-105 h-[302px]">
-          <div className="relative mb-6">
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/001/993/889/non_2x/beautiful-latin-woman-avatar-character-icon-free-vector.jpg"
-              alt={review.name}
-              className="w-20 h-20 rounded-full mx-auto shadow-lg border-4 border-[#F28E8E]"
-            />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-[#F28E8E] bg-opacity-20 rounded-full">
-              <span className="text-white font-bold text-sm tracking-wide">
-                Loved it!
-              </span>
-            </div>
-          </div>
-          <p className="text-lg font-serif text-[#555] italic leading-relaxed">
-            "{review.Review}"
-          </p>
-          <div className="flex justify-center">
-            {Array.from({ length: 5 }, (_, i) => (
-              <svg
-                key={i}
-                xmlns="http://www.w3.org/2000/svg"
-                className={`h-6 w-6 ${
-                  i < review.Rating ? "text-yellow-500" : "text-gray-300"
-                }`}
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-            ))}
-          </div>              
-          <p className="mt-6 font-semibold text-[#333] text-xl">
-            {review.Name}
-          </p>
-        </div>
-      </SwiperSlide>
-    ))}
-  </Swiper>
-</section>
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-display font-bold text-[#2A2A2A] tracking-wide">
+          What Our Clients Say
+        </h2>
+        <p className="text-[#707070] mt-4 text-lg font-serif">
+          Discover how our clients feel about their transformation journeys with
+          us.
+        </p>
+      </div>
 
-
+      {loading ? (
+        <div className="text-center text-lg text-gray-500">Loading reviews...</div>
+      ) : reviews.length > 0 ? (
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={30}
+          breakpoints={{
+            768: {
+              slidesPerView: 2, // Show 2 reviews for devices wider than 768px
+            },
+          }}
+          loop={reviews.length >= 3} // Enable loop only if there are at least 3 reviews
+          autoplay={{
+            delay: 0, // No delay, continuous movement
+            disableOnInteraction: true, // Prevent user interaction from pausing autoplay
+          }}
+          speed={3000} // Adjust speed of continuous motion
+          allowTouchMove={false} // Disable user swiping/interaction
+          modules={[Autoplay]} // Include Autoplay module
+          className="px-6"
+        >
+          {reviews.map((review, index) => (
+            <SwiperSlide key={index}>
+              <div className="text-center bg-white p-6 m-2 rounded-2xl shadow-xl transition-transform transform hover:scale-105 h-[302px]">
+                <div className="relative mb-6">
+                  <img
+                    src="https://static.vecteezy.com/system/resources/previews/001/993/889/non_2x/beautiful-latin-woman-avatar-character-icon-free-vector.jpg"
+                    alt={review.name}
+                    className="w-20 h-20 rounded-full mx-auto shadow-lg border-4 border-[#F28E8E]"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-[#F28E8E] bg-opacity-20 rounded-full">
+                    <span className="text-white font-bold text-sm tracking-wide">
+                      Loved it!
+                    </span>
+                  </div>
+                </div>
+                <p className="text-lg font-serif text-[#555] italic leading-relaxed">
+                  "{review.Review}"
+                </p>
+                <div className="flex justify-center">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <svg
+                      key={i}
+                      xmlns="http://www.w3.org/2000/svg"
+                      className={`h-6 w-6 ${
+                        i < review.Rating ? "text-yellow-500" : "text-gray-300"
+                      }`}
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                  ))}
+                </div>
+                <p className="mt-6 font-semibold text-[#333] text-xl">
+                  {review.Name}
+                </p>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      ) : (
+        <div className="text-center text-lg text-gray-500">No reviews available</div>
+      )}
+    </section>
 
 <section className="relative w-full bg-gradient-radial-next shadow-lg ">
   {/* Background Section */}
@@ -430,6 +444,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
       </div>
     </div>
   );
+}
 };
 
 export default Dashboard;
