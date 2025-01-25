@@ -275,15 +275,30 @@ export const getAllWish = async (req, res) => {
 // get all the orders from user order list
 
 export const getAllOrder = async (req, res) => {
-  const {Email} = req.body;
+  const { Email } = req.body;
+
   try {
-    const user = await User.findOne({Email});
-    res.status(200).json(user.Orders);
+    if (Email) {
+      // Fetch orders for the specified email
+      const user = await User.findOne({ Email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+      }
+      return res.status(200).json(user.Orders);
+    } else {
+      // Fetch all orders across all users
+      const allUsers = await User.find();
+      const allOrders = allUsers.reduce((orders, user) => {
+        return orders.concat(user.Orders || []);
+      }, []);
+      return res.status(200).json(allOrders);
+    }
   } catch (error) {
-    console.error('Error fetching all cart items:', error);
+    console.error('Error fetching orders:', error);
     res.status(500).json({ message: 'Internal server error.' });
   }
 };
+
 
 export const getNumbers = async(req,res) => {
   const {Email} = req.body;
