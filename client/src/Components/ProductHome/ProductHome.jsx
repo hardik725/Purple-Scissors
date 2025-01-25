@@ -21,11 +21,12 @@ const ProductHome = ({ email, userName, onLogout }) => {
     };
 
     window.addEventListener("resize", handleResize);
+    setHeroImages(isMobile ? mobilepic : deskpic); // Set initial images based on screen size
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);  
+  }, [isMobile]); // Re-run effect if `isMobile` changes
 
   const deskpic = [
     "https://beautypalace.s3.amazonaws.com/images/Beauty-Palace/bpkertainwebbanner.jpg",
@@ -54,11 +55,6 @@ const ProductHome = ({ email, userName, onLogout }) => {
           setNord(data[0]);
           setNwish(data[1]);
           setNcart(data[2]);
-          if(isMobile){
-            setHeroImages(mobilepic);
-          }else{
-            setHeroImages(deskpic);
-          }
         } catch (error) {
           setError(error.message);
         } finally {
@@ -86,15 +82,22 @@ const ProductHome = ({ email, userName, onLogout }) => {
       <ProductNavbar norder={nord} ncart={ncart} nwish={nwish}/>
 
       {/* Category Section */}
-      <section className="categories bg-gray-200 pt-6">
+      <section className="categories pt-6 bg-black">
       <div className="text-center mb-4">
-  <h2 className="relative text-4xl font-kugile text-black inline-block after:content-[''] after:block after:w-3/4 after:h-[2px] after:bg-black after:mx-auto after:mt-2">
+  <h2 className="relative text-4xl font-kugile text-white inline-block after:content-[''] after:block after:w-3/4 after:h-[2px] after:bg-purple-800 after:mx-auto after:mt-2
+  
+  ">
     Categories
   </h2>
 </div>
 
   
-<div className="py-8 bg-gradient-to-b from-[#fef9f9] to-[#f6f1f1] font-kugile">
+<div className="py-8 font-kugile bg-center bg-cover backdrop-blur-2xl"
+  style={{
+    backgroundImage:
+      'url(https://img.freepik.com/free-photo/floral-beauty-concept_23-2147817695.jpg?t=st=1737795804~exp=1737799404~hmac=fdf4159a9dc79a8f7517d5a6d0383522c328716d0795ae88b1ea84fa0ea3a2b5&w=900)',
+  }}
+>
   <Swiper
     slidesPerView={2}
     spaceBetween={20}
@@ -140,7 +143,7 @@ const ProductHome = ({ email, userName, onLogout }) => {
               backgroundImage: `url('${category.imageUrl}')`,
             }}
           >
-        <div className="absolute inset-0 bg-black bg-opacity-30 flex justify-center items-center">
+        <div className="absolute inset-0 bg-black bg-opacity-30 flex justify-center items-center border-2 border-purple-300 shadow-md">
           <h3 className="text-white text-[22px]  md:text-3xl font-bold">
             {category.name}
           </h3>
@@ -156,7 +159,7 @@ const ProductHome = ({ email, userName, onLogout }) => {
 
 
       {/* Sliding Offers Section */}
-      <section className="offers-section relative bg-gray-100 m-1">
+      <section className="offers-section relative bg-gray-100 mx-[1px]">
       <div
         className="hero-image w-full h-auto bg-cover bg-center rounded-lg shadow-md transition-transform duration-500"
         style={{
@@ -169,9 +172,16 @@ const ProductHome = ({ email, userName, onLogout }) => {
 
 
       {/* Top Categories Section */}
-      <section className="top-categories bg-gradient-to-b from-purple-50 to-purple-100 py-8">
+      <div
+  className="bg-center bg-cover bg-no-repeat min-h-screen backdrop-blur-2xl"
+  style={{
+    backgroundImage:
+      'url(https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)',
+  }}
+>
+      <section className="top-categories  py-8 bg-inherit">
   <div className="text-center mb-8 sm:mb-12">
-    <h2 className="relative text-3xl sm:text-4xl font-kugile text-gray-800 inline-block 
+    <h2 className="relative text-3xl sm:text-4xl font-kugile text-white inline-block 
         after:content-[''] after:block after:w-3/4 after:h-[2px] after:bg-purple-600 
         after:mx-auto after:mt-2">
       Top Products
@@ -203,9 +213,9 @@ const ProductHome = ({ email, userName, onLogout }) => {
 </section>
 
       {/* Companies Section */}
-      <section className="companies-section bg-gradient-to-b from-purple-50 to-indigo-100 py-8">
+      <section className="companies-section bg-inherit py-8 ">
   <div className="text-center mb-8">
-    <h2 className="relative text-3xl sm:text-4xl font-kugile text-gray-800 inline-block
+    <h2 className="relative text-3xl sm:text-4xl font-kugile text-white inline-block
         after:content-[''] after:block after:w-3/4 after:h-[2px] after:bg-indigo-600 
         after:mx-auto after:mt-2">
       Featured Brands
@@ -234,6 +244,7 @@ const ProductHome = ({ email, userName, onLogout }) => {
     ))}
   </div>
 </section>
+</div>
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-4 text-center">
