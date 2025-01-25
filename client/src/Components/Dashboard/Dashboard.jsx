@@ -22,10 +22,8 @@ const Dashboard = ({ email, userName, onLogout }) => {
           const response = await fetch("https://purple-scissors.onrender.com/review/allreviews");
           const data = await response.json(); // Extract JSON from the response
           setReviews(data); // Assuming the response is the array of reviews
-          setLoading(false);
+          console.log(reviews);
         } catch (err) {
-          setError("Failed to load reviews.");
-          setLoading(false);
         }
       };
   
