@@ -263,9 +263,12 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
       </div>
       <ProductNavbar norder={nord} ncart={ncart} nwish={nwish}/>
 
-      <div className="bg-slate-800">
+      <div className="bg-center bg-cover"
+      style={{backgroundImage: 
+        'url(https://images.pexels.com/photos/4004461/pexels-photo-4004461.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)'
+      }}>
         <div className="container mx-auto flex justify-center w-2/3">
-          <div className="bg-white rounded-sm m-1">
+          <div className="bg-white rounded-sm m-4">
             <img
               src={companyImage}
               alt={`${company} logo`}
@@ -274,7 +277,7 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
           </div>
         </div>
       </div>
-
+      <div className="bg-gradient-to-b from-purple-50 to-purple-100">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-6">
           <button className="bg-gray-100 px-4 py-2 rounded">Filters</button>
@@ -289,7 +292,7 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
             {products.map((product) => (
               <div
                 key={product._id}
-                className="product-card bg-white rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-1 relative"
+                className="product-card bg-white rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-1 relative border-2 border-[#B1C29E]"
               >
                 {/* Wishlist Button */}
                 <button
@@ -346,6 +349,7 @@ const CompanyProduct = ({ email,userName,onLogout }) => {
             ))}
           </div>
         )}
+      </div>
       </div>
     </div>
   );
