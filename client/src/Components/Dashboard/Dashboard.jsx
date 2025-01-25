@@ -209,7 +209,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
 
 
         {/* Testimonials Section */}
-        <section className="py-16 bg-gradient-to-b from-[#fef9f9] to-[#f6f1f1]">
+        <section className="py-10 bg-gradient-to-b from-[#fef9f9] to-[#f6f1f1]">
   <div className="text-center mb-12">
     <h2 className="text-4xl font-display font-bold text-[#2A2A2A] tracking-wide">
       What Our Clients Say
@@ -238,7 +238,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
   >
     {reviews.map((review, index) => (
       <SwiperSlide key={index}>
-        <div className="text-center bg-white p-8 rounded-2xl shadow-xl transition-transform transform hover:scale-105">
+        <div className="text-center bg-white p-6 m-2 rounded-2xl shadow-xl transition-transform transform hover:scale-105 h-[302px]">
           <div className="relative mb-6">
             <img
               src="https://static.vecteezy.com/system/resources/previews/001/993/889/non_2x/beautiful-latin-woman-avatar-character-icon-free-vector.jpg"
