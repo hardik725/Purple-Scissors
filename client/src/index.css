@@ -26,6 +26,13 @@
   }
 }
 
+@layer utilities {
+  .bg-gradient-radial-order {
+    background-image: radial-gradient(circle, #f4c7f2, #f9d0e3, #f1c1e4);
+  }
+}
+
+
 
 
 
@@ -53,6 +60,10 @@
     padding: 0;
     box-sizing: border-box;
   }
+  body {
+    background: radial-gradient(circle, #f4c7f2, #f9d0e3, #f1c1e4);
+    background-attachment: fixed; /* Makes the background fixed */
+}
 
   html,
 body {

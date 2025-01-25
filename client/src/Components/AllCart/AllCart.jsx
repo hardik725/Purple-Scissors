@@ -190,6 +190,7 @@ const AllCart = ({ email, userName, onLogout }) => {
 
   return (
 <>
+<div className='bg-gradient-radial-order'>
   <div className='bg-black'>
   <Navbar email={email} userName={userName} onLogout={onLogout} />
   </div>
@@ -261,6 +262,7 @@ const AllCart = ({ email, userName, onLogout }) => {
         </div>
       </>
     )}
+  </div>
   </div>
 </>
 

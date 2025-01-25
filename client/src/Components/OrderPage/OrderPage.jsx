@@ -83,7 +83,7 @@ const OrderPage = ({ email, userName, onLogout }) => {
       <Navbar email={email} userName={userName} onLogout={onLogout} />
       </div>
       <ProductNavbar norder={nord} ncart={ncart} nwish={nwish}/>
-      <div className="container mx-auto p-6">
+      <div className="container mx-auto p-6 bg-gradient-radial-order">
         <h1 className="text-3xl font-extrabold text-gray-800 mb-6">Your Orders</h1>
         {orders == [] ? (
           <p className="text-xl text-gray-600">You have no orders yet.</p>

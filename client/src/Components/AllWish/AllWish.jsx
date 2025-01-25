@@ -184,6 +184,7 @@ const AllWish = ({ email, userName, onLogout }) => {
 
   return (
     <>
+    <div className='bg-gradient-radial-order'>
     <div className='bg-black'>
     <Navbar email={email} userName={userName} onLogout={onLogout} />
     </div>
@@ -256,6 +257,7 @@ const AllWish = ({ email, userName, onLogout }) => {
           ))}
         </div>
       )}
+    </div>
     </div>
   </>
   
