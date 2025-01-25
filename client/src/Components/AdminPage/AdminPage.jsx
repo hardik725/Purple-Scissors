@@ -5,10 +5,12 @@ import ManageAppointments from "../../AdminPages/ManageAppointments/ManageAppoin
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const AdminPage = ({username,onLogout}) => {
+const AdminPage = ({email,userName,onLogout}) => {
   const [activeSection, setActiveSection] = useState("dashboard"); // State to track the active section
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [allreviews,setAllReviews] = useState([]);
+  
 
     useEffect(() => {
       const handleResize = () => {
@@ -27,7 +29,7 @@ const AdminPage = ({username,onLogout}) => {
   const renderContent = () => {
     switch (activeSection) {
       case "dashboard":
-        return <AdminDashboard />;
+        return <AdminDashboard email={email}/>;
       case "appointments":
         return <ManageAppointments />;
       case "reviews":

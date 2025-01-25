@@ -1,6 +1,204 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-const AdminDashboard = () => {
+// Register Chart.js modules
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+const AdminDashboard = ({ email }) => {
+  const [reviews, setReviews] = useState([]); // Correct initialization
+  const [loading, setLoading] = useState(true); // Correct initialization
+  const [ratingsFrequency, setRatingsFrequency] = useState([0, 0, 0, 0, 0]); // Initialize ratingsFrequency
+  const [orders, setOrders] = useState([]);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [topProducts, setTopProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch("https://purple-scissors.onrender.com/user/allorder", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch orders");
+        }
+
+        const data = await response.json();
+        setOrders(data);
+
+        let revenue = 0;
+        const productMap = new Map();
+
+        // Calculate total revenue and product quantities
+        data.forEach((order) => {
+          const { Name, Quantity = 0, Price = 0 } = order;
+
+          // Accumulate revenue
+          revenue += Quantity * Price;
+
+          // Accumulate quantities for top products
+          if (productMap.has(Name)) {
+            productMap.set(Name, productMap.get(Name) + Quantity);
+          } else {
+            productMap.set(Name, Quantity);
+          }
+        });
+
+        // Set total revenue
+        setTotalRevenue(revenue);
+
+        // Get top 5 products by quantity
+        const sortedProducts = Array.from(productMap.entries())
+          .sort((a, b) => b[1] - a[1]) // Sort by quantity in descending order
+          .slice(0, 5); // Get the top 5
+
+        setTopProducts(sortedProducts);
+        console.log(topProducts);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(
+          "https://purple-scissors.onrender.com/review/allreviews"
+        );
+        const data = await response.json(); // Extract JSON from the response
+        setReviews(data || []); // Fallback to an empty array if data is undefined
+        setLoading(false);
+      } catch (err) {
+        console.error("Failed to load reviews.", err);
+        setReviews([]); // Ensure state is always an array
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, [email]); // Dependency on email ensures it fetches data when email changes
+
+  useEffect(() => {
+    const calculateRatingFrequency = (reviews) => {
+      const frequencies = [0, 0, 0, 0, 0]; // For 1 to 5 stars
+      reviews.forEach((review) => {
+        if (review.Rating >= 1 && review.Rating <= 5) {
+          frequencies[review.Rating - 1] += 1; // Increment based on rating
+        }
+      });
+      return frequencies;
+    };
+
+    // Only recalculate when reviews are updated
+    const newRatingsFrequency = calculateRatingFrequency(reviews);
+    setRatingsFrequency(newRatingsFrequency);
+    console.log("Ratings Frequency:", newRatingsFrequency);
+  }, [reviews]); // Dependency on reviews ensures this runs after reviews are updated
+
+  // Prepare data for Chart.js
+  const data = {
+    labels: ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"],
+    datasets: [
+      {
+        label: "Number of Ratings",
+        data: ratingsFrequency,
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.8)", // Soft Pink
+          "rgba(54, 162, 235, 0.8)", // Cool Blue
+          "rgba(75, 192, 192, 0.8)", // Teal
+          "rgba(255, 206, 86, 0.8)", // Warm Yellow
+          "rgba(153, 102, 255, 0.8)", // Lavender
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)", // Deep Pink
+          "rgba(54, 162, 235, 1)", // Bold Blue
+          "rgba(75, 192, 192, 1)", // Vibrant Teal
+          "rgba(255, 206, 86, 1)", // Rich Yellow
+          "rgba(153, 102, 255, 1)", // Deep Lavender
+        ],
+        borderWidth: 2, // Slightly thicker border for a cleaner look
+        hoverBackgroundColor: [
+          "rgba(255, 99, 132, 1)", // Stronger hover effect
+          "rgba(54, 162, 235, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(153, 102, 255, 1)",
+        ],
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false, // Allows the chart to adapt to container size
+    plugins: {
+      legend: {
+        display: true,
+        position: "top",
+        labels: {
+          font: {
+            size: window.innerWidth < 768 ? 10 : 14, // Smaller font on mobile
+          },
+          padding: 10,
+        },
+      },
+      title: {
+        display: true,
+        text: "Ratings Breakdown",
+        font: {
+          size: window.innerWidth < 768 ? 14 : 18, // Adjust title size for smaller screens
+        },
+        padding: {
+          top: 10,
+          bottom: 10,
+        },
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          font: {
+            size: window.innerWidth < 768 ? 10 : 12, // Smaller y-axis font for mobile
+          },
+        },
+      },
+      x: {
+        ticks: {
+          font: {
+            size: window.innerWidth < 768 ? 10 : 12, // Smaller x-axis font for mobile
+          },
+        },
+      },
+    },
+  };
+  
+
+  if (loading) {
+    return (
+      <div className="text-center mt-12 text-lg font-bold">
+        Loading Reviews...
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 p-6 lg:p-12">
       <header className="mb-8 flex justify-between items-center">
@@ -14,7 +212,7 @@ const AdminDashboard = () => {
         </div>
         <div className="p-6 bg-white rounded-lg shadow-md">
           <h3 className="text-lg font-bold text-gray-700">Monthly Revenue</h3>
-          <p className="mt-4 text-3xl font-extrabold text-gray-900">$8,450</p>
+          <p className="mt-4 text-3xl font-extrabold text-gray-900">₹{totalRevenue}</p>
         </div>
         <div className="p-6 bg-white rounded-lg shadow-md">
           <h3 className="text-lg font-bold text-gray-700">Gift Cards Sold</h3>
@@ -25,6 +223,22 @@ const AdminDashboard = () => {
           <p className="mt-4 text-3xl font-extrabold text-gray-900">85%</p>
         </div>
       </section>
+
+      <section id="charts" className="mb-12">
+  <h2 className="text-2xl font-bold text-[#204E4A] mb-6">Ratings Breakdown</h2>
+  <div
+    className="p-6 bg-white rounded-lg shadow-md"
+    style={{
+      height: window.innerWidth < 768 ? "300px" : "400px", // Longer height on mobile
+    }}
+  >
+    <Bar data={data} options={options} />
+  </div>
+</section>
+<section id="charts" className="mb-12">
+<h2 className="text-2xl font-bold text-[#204E4A] mb-6">Ratings Breakdown</h2>
+</section>
+
 
       <section id="charts" className="mb-12">
         <h2 className="text-2xl font-bold text-[#204E4A] mb-6">Revenue & Popular Services</h2>
