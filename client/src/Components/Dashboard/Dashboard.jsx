@@ -107,7 +107,6 @@ const Dashboard = ({ email, userName, onLogout }) => {
   return (
     <div
       className="min-h-screen bg-cover bg-center bg-fixed -z-20 font-kugile"
-      style={{ backgroundImage: "url('https://cdn.pixabay.com/photo/2016/11/18/13/10/female-1834381_1280.jpg')" }}
     >
       {/* Overlay for better readability */}
       <div className="bg-white bg-opacity-10 backdrop-blur-xl min-h-screen overflow-x-hidden">
@@ -167,9 +166,18 @@ const Dashboard = ({ email, userName, onLogout }) => {
 
 
         {/* Services Section */}
-        <section className="py-8 bg-[#F3F4F6] bg-opacity-0 backdrop-blur-md">
+        <section
+  className={`py-8 bg-opacity-50 backdrop-blur-sm ${
+    isMobile
+      ? "bg-gradient-radial from-[#B369D8] via-black to-black"
+      : "bg-gradient-to-tr from-[#B369D8] via-black to-black"
+  }`}
+>
   <div className="text-center mb-10">
-    <h2 className="text-4xl font-kugile font-bold text-black uppercase tracking-wide">Our Services</h2>
+  <h2 className="text-4xl font-kugile font-bold text-white uppercase tracking-wide relative after:content-[''] after:block after:w-24 after:h-[2px] after:bg-white after:mt-2 after:mx-auto">
+  Our Services
+</h2>
+
     <div className="mt-2 w-16 h-1 bg-black mx-auto rounded"></div>
   </div>
   <div className="flex flex-wrap justify-center gap-8">
@@ -272,7 +280,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
 
 
 
-<section className="relative w-full bg-gray-50 shadow-lg">
+<section className="relative w-full bg-gradient-radial-next shadow-lg ">
   {/* Background Section */}
   <div
     className="w-full h-[300px] md:h-[500px] bg-cover bg-center relative overflow-hidden"
@@ -292,6 +300,9 @@ const Dashboard = ({ email, userName, onLogout }) => {
       </p>
     </div>
   </div>
+
+  {/* Separation line to create distinction */}
+  <div className="relative w-full h-[3px] bg-gradient-to-r from-[#B5CFB7] via-[#B0E0C2] to-[#9BDB9C]"></div>
 
   {/* Categories Section */}
   <div className="grid grid-cols-3 gap-2 md:gap-6 px-4 md:px-10 mt-2">
@@ -317,8 +328,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
 
   {/* Premium Brands Section */}
   <div className="grid grid-cols-3 gap-2 md:gap-6 px-4 sm:px-8 max-w-5xl mx-auto mt-2 pb-2">
-    {[
-      { name: "Lakme", image: "https://i.pinimg.com/736x/55/90/0b/55900beeff90476e34df8f7303a060e3.jpg" },
+    {[{ name: "Lakme", image: "https://i.pinimg.com/736x/55/90/0b/55900beeff90476e34df8f7303a060e3.jpg" },
       { name: "Jeannot", image: "https://media.licdn.com/dms/image/v2/C4D0BAQF7gCNqsydsBA/company-logo_200_200/company-logo_200_200/0/1642568688292/jeannotceuticals_logo?e=2147483647&v=beta&t=94KAZceQfOd3DmNXD9N23FL4go_HCxLedwQgaxUjxgI" },
       { name: "VLCC", image: "https://images.seeklogo.com/logo-png/52/2/vlcc-personal-care-logo-png_seeklogo-521769.png?v=1958556243998270512" },
     ].map((brand, index) => (
@@ -326,30 +336,25 @@ const Dashboard = ({ email, userName, onLogout }) => {
         key={index}
         className="relative bg-white shadow-lg rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300"
       >
-<div
-  className="h-[150px] md:h-[220px] w-full bg-contain bg-center bg-no-repeat"
-  style={{ backgroundImage: `url('${brand.image}')` }}
-></div>
-
+        <div
+          className="h-[150px] md:h-[220px] w-full bg-contain bg-center bg-no-repeat"
+          style={{ backgroundImage: `url('${brand.image}')` }}
+        ></div>
       </div>
     ))}
   </div>
   <div className="mt-6 flex justify-center pb-5">
-  <Link to="/product">
-    <button className="relative px-6 py-4 md:py-5 bg-gradient-to-r from-black  to-gray-700 text-white font-bold text-sm md:text-lg rounded-full shadow-md hover:shadow-lg hover:from-black hover:to-gray-600 transition-all duration-300">
-      <span className="absolute inset-0 bg-white bg-opacity-10 blur-lg rounded-full"></span>
-      <span className="relative">Explore More</span>
-    </button>
-  </Link>
-</div>
-
+    <Link to="/product">
+      <button className="relative px-6 py-4 md:py-5 bg-gradient-to-r from-black  to-gray-700 text-white font-bold text-sm md:text-lg rounded-full shadow-md hover:shadow-lg hover:from-black hover:to-gray-600 transition-all duration-300">
+        <span className="absolute inset-0 bg-white bg-opacity-10 blur-lg rounded-full"></span>
+        <span className="relative">Explore More</span>
+      </button>
+    </Link>
+  </div>
 </section>
 
-
-
-
 {/* Write a Review Section */}
-<section className="py-16 bg-gradient-to-r from-[#E8F6F3] via-[#D1EEE7] to-[#BDE4DD]">
+<section className="py-16 bg-gradient-green-purple shadow-lg">
   <div className="container mx-auto px-6 lg:px-20">
     <div className="text-center mb-14">
       <h2 className="text-4xl md:text-5xl font-display font-bold text-[#204E4A] tracking-wider">
@@ -370,61 +375,60 @@ const Dashboard = ({ email, userName, onLogout }) => {
         />
       </div>
       {/* Form Section */}
-{/* Form Section */}
-<div className="bg-white p-8 md:p-12 rounded-3xl shadow-lg">
-  <form className="space-y-6" onSubmit={handleSubmit}>
-    {/* Input Fields */}
-    <div className="space-y-4">
-      <input
-        id="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        type="text"
-        placeholder="Full Name"
-        className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
-      />
-    </div>
-    <textarea
-      id="review"
-      value={review}
-      onChange={(e) => setReview(e.target.value)}
-      placeholder="Write your review here..."
-      className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
-      rows="5"
-      required
-    ></textarea>
-    {/* Rating Dropdown */}
-    <div className="flex items-center gap-4">
-      <label htmlFor="rating" className="font-serif text-lg text-[#204E4A]">
-        Rating:
-      </label>
-      <select
-        id="rating"
-        value={rating}
-        onChange={(e) => setRating(e.target.value)}
-        className="p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
-      >
-        <option value="">Select a rating</option>
-        {[...Array(5).keys()].map((num) => (
-          <option key={num + 1} value={num + 1}>
-            {num + 1} Star{num > 0 && "s"}
-          </option>
-        ))}
-      </select>
-    </div>
-    {/* Submit Button */}
-    <button
-      type="submit"
-      className="w-full bg-gradient-to-r from-[#84C8BF] to-[#2FA79B] text-white px-6 py-4 rounded-full text-lg font-bold shadow-md hover:opacity-90 transition-all duration-300"
-    >
-      Submit Review
-    </button>
-  </form>
-</div>
-
+      <div className="bg-white p-8 md:p-12 rounded-3xl shadow-lg">
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          {/* Input Fields */}
+          <div className="space-y-4">
+            <input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+              placeholder="Full Name"
+              className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
+            />
+          </div>
+          <textarea
+            id="review"
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            placeholder="Write your review here..."
+            className="w-full p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
+            rows="5"
+            required
+          ></textarea>
+          {/* Rating Dropdown */}
+          <div className="flex items-center gap-4">
+            <label htmlFor="rating" className="font-serif text-lg text-[#204E4A]">
+              Rating:
+            </label>
+            <select
+              id="rating"
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+              className="p-4 bg-[#F3FDFB] border border-[#A8DAD5] rounded-xl focus:ring-4 focus:ring-[#84C8BF] focus:outline-none font-serif"
+            >
+              <option value="">Select a rating</option>
+              {[...Array(5).keys()].map((num) => (
+                <option key={num + 1} value={num + 1}>
+                  {num + 1} Star{num > 0 && "s"}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-[#84C8BF] to-[#2FA79B] text-white px-6 py-4 rounded-full text-lg font-bold shadow-md hover:opacity-90 transition-all duration-300"
+          >
+            Submit Review
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </section>
+
       </div>
     </div>
   );

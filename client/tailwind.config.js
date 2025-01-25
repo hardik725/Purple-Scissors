@@ -17,8 +17,9 @@ export default {
         forum: ["'Forum'", "serif"],
         'parisienne-regular': ['Parisienne', 'serif'],
         'bodoni': ['"Bodoni Moda"', 'serif'],
-      },
+      }
     },
   },
-  plugins: [],
+  plugins: [
+  ],
 }

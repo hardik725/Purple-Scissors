@@ -8,6 +8,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400&display=swap');
 
 
+@layer utilities {
+  .bg-gradient-radial {
+    background-image: radial-gradient(circle, #B369D8, black);
+  }
+}
+
+@layer utilities {
+  .bg-gradient-radial-next {
+    background-image: radial-gradient(circle, #E3F4F0, #CCEAE2, #B8DED4);
+  }
+}
+
+@layer utilities {
+  .bg-gradient-green-purple {
+    background-image: linear-gradient(to right, #E8F6F3, #D1EEE7, #C7A9D1);
+  }
+}
+
+
+
 
 /* src/styles/fonts.css */
 @font-face {
