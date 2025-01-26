@@ -65,7 +65,7 @@ const AdminDashboard = ({ email }) => {
           .slice(0, 5); // Get the top 5
 
         setTopProducts(sortedProducts);
-        console.log(topProducts);
+        console.log(sortedProducts);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -154,6 +154,7 @@ const AdminDashboard = ({ email }) => {
         position: "top",
         labels: {
           font: {
+            family: "kugile",
             size: window.innerWidth < 768 ? 10 : 14, // Smaller font on mobile
           },
           padding: 10,
@@ -163,6 +164,7 @@ const AdminDashboard = ({ email }) => {
         display: true,
         text: "Ratings Breakdown",
         font: {
+          family: "kugile",
           size: window.innerWidth < 768 ? 14 : 18, // Adjust title size for smaller screens
         },
         padding: {
@@ -176,6 +178,7 @@ const AdminDashboard = ({ email }) => {
         beginAtZero: true,
         ticks: {
           font: {
+            family: "kugile",
             size: window.innerWidth < 768 ? 10 : 12, // Smaller y-axis font for mobile
           },
         },
@@ -183,9 +186,113 @@ const AdminDashboard = ({ email }) => {
       x: {
         ticks: {
           font: {
-            size: window.innerWidth < 768 ? 10 : 12, // Smaller x-axis font for mobile
+            family: "kugile",
+            size: window.innerWidth < 768 ? 8 : 12, // Smaller x-axis font for mobile
           },
         },
+      },
+    },
+  };
+  const topProductsData = {
+    labels: topProducts.map(([name]) => name), // Keep product names as labels
+    datasets: [
+      {
+        label: "Quantity Sold",
+        data: topProducts.map(([_, quantity]) => quantity),
+        backgroundColor: [
+          "rgba(75, 192, 192, 0.8)", // Teal
+          "rgba(54, 162, 235, 0.8)", // Blue
+          "rgba(255, 205, 86, 0.8)", // Yellow
+          "rgba(153, 102, 255, 0.8)", // Purple
+          "rgba(255, 99, 132, 0.8)", // Pink
+        ],
+        borderColor: [
+          "rgba(75, 192, 192, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 205, 86, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 99, 132, 1)",
+        ],
+        borderWidth: 2,
+        hoverBackgroundColor: [
+          "rgba(75, 192, 192, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 205, 86, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 99, 132, 1)",
+        ],
+      },
+    ],
+  };
+  
+  const topProductsOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false, // Disable default legend
+      },
+      title: {
+        display: true,
+
+        font: {
+          family: "kugile",
+          size: 18,
+          weight: "bold",
+        },
+        color: "#204E4A",
+        padding: { top: 10, bottom: 10 },
+      },
+      customLegend: {
+        afterDraw(chart) {
+          const { ctx, chartArea } = chart;
+          const colors = chart.data.datasets[0].backgroundColor;
+          const labels = chart.data.labels;
+  
+          // Start position for the custom legend
+          const legendX = chartArea.left;
+          const legendY = chartArea.bottom + 10;
+  
+          labels.forEach((label, index) => {
+            // Draw the color box
+            ctx.fillStyle = colors[index];
+            ctx.fillRect(legendX + index * 120, legendY, 15, 15);
+  
+            // Draw the product name
+            ctx.fillStyle = "#204E4A";
+            ctx.font = "12px Arial";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "middle";
+            ctx.fillText(label, legendX + index * 120 + 20, legendY + 7.5);
+          });
+        },
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          font: {
+            size: 12,
+          },
+          color: "#204E4A",
+        },
+        grid: {
+          color: "rgba(200, 200, 200, 0.3)", // Light gridlines
+        },
+      },
+      x: {
+        ticks: {
+          display: false, // Hide x-axis labels
+        },
+        grid: {
+          display: false, // No gridlines for x-axis
+        },
+      },
+    },
+    layout: {
+      padding: {
+        bottom: 50, // Add space for custom legend
       },
     },
   };
@@ -200,7 +307,7 @@ const AdminDashboard = ({ email }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 lg:p-12">
+    <div className="min-h-screen bg-gray-100 p-6 lg:p-12 font-kugile">
       <header className="mb-8 flex justify-between items-center">
         <h1 className="text-4xl font-bold text-[#204E4A]">Admin Dashboard</h1>
       </header>
@@ -236,9 +343,40 @@ const AdminDashboard = ({ email }) => {
   </div>
 </section>
 <section id="charts" className="mb-12">
-<h2 className="text-2xl font-bold text-[#204E4A] mb-6">Ratings Breakdown</h2>
+  <h2 className="text-2xl font-bold text-[#204E4A] mb-6">
+    Top Products
+  </h2>
+  <div
+    className="p-6 bg-white rounded-lg shadow-md"
+    style={{
+      height: window.innerWidth < 768 ? "350px" : "450px", // Adjust height dynamically
+    }}
+  >
+    <Bar data={topProductsData} options={topProductsOptions} />
+  </div>
+  <div className="mt-4">
+  {topProducts.map(([name, _], index) => (
+    <div key={index} className="flex items-center mb-2">
+      {/* Color Box */}
+      <div
+        className={`w-6 h-6 rounded-sm mr-4`}
+        style={{
+          backgroundColor: [
+            "rgba(75, 192, 192, 0.8)", // Teal
+            "rgba(54, 162, 235, 0.8)", // Blue
+            "rgba(255, 205, 86, 0.8)", // Yellow
+            "rgba(153, 102, 255, 0.8)", // Purple
+            "rgba(255, 99, 132, 0.8)", // Pink
+          ][index % 5], // Cycle through colors
+        }}
+      ></div>
+      {/* Product Name */}
+      <div className="text-sm text-[#204E4A] font-medium">{name}</div>
+    </div>
+  ))}
+</div>
 </section>
-
+    
 
       <section id="charts" className="mb-12">
         <h2 className="text-2xl font-bold text-[#204E4A] mb-6">Revenue & Popular Services</h2>
