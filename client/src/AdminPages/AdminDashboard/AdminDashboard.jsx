@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
+import CountUp from "react-countup"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,6 +24,7 @@ const AdminDashboard = ({ email }) => {
   const [appointments, setAppointments] = useState([]);
   const [totalCustomers, setTotalCustomers] = useState(0);
   const [topServices, setTopServices] = useState([]);
+  const [topService, setTopService] = useState("");
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -114,6 +116,7 @@ const AdminDashboard = ({ email }) => {
         // Optionally limit the number of services displayed
         const topServicesLimited = topServices.slice(0, 4);
         setTopServices(topServicesLimited);
+        setTopService(topServicesLimited[0].service);
         // Set the appointments and the top customers
         setAppointments(topCustomers);
         setTotalCustomers(appointments.length);
@@ -368,9 +371,10 @@ const AdminDashboard = ({ email }) => {
 
   <section
   id="quick-stats"
-  className="flex flex-wrap justify-between md:gap-6 mb-2 w-full mx-2"
+  className="flex flex-wrap justify-between md:gap-6 mb-2 w-full mx-1"
 >
   {/* Total Customers */}
+  <div></div>
   <div
     className="p-1 md:p-6 bg-white bg-opacity-75 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 w-1/5"
     style={{
@@ -409,48 +413,64 @@ const AdminDashboard = ({ email }) => {
     }}
   ></div>
 
-  {/* Employee Utilization */}
+  {/* Popular Services */}
   <div
     className="p-1 md:p-6 bg-white bg-opacity-75 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 w-1/5"
-  ></div>
+    style={{
+      height: "0",
+      paddingBottom: "20%", // To ensure the box remains square
+      backgroundImage:
+        "url('https://static.vecteezy.com/system/resources/previews/017/381/310/non_2x/woman-applies-a-white-moisturizing-mask-vector.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}
+  >
+  </div>
+  <div></div>
 </section>
 
 <section
   id="quick-stats" // from here on we will give data
-  className="flex flex-wrap justify-between md:gap-6 mb-8 md:mb-12 w-full mx-2"
+  className="flex flex-wrap justify-between md:gap-6 mb-8 md:mb-12 w-full mx-1"
 >
   {/* Total Customers */}
+  <div></div>
   <div
-    className="md:p-6 bg-transparent rounded-lg shadow-lg w-1/5"
+    className="md:p-4 bg-transparent rounded-lg shadow-lg w-1/5"
   >
-    <p className="text-[20px] md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 drop-shadow-lg text-center">
-  {totalCustomers}
+    <p className="text-[18px] md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 drop-shadow-lg text-center">
+  <CountUp end={totalCustomers} duration={2} />
 </p>
 
   </div>
 
   {/* Monthly Revenue */}
   <div
-    className="md:p-6 bg-transparent rounded-lg shadow-lg w-1/5"
+    className="md:p-4 bg-transparent rounded-lg shadow-lg w-1/5"
   >
-    <p className="text-[20px] md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 drop-shadow-lg text-center">
-    ₹{totalRevenue}
+    <p className="text-[18px] md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 drop-shadow-lg text-center">
+    ₹<CountUp end={totalRevenue} duration={2} />
 </p>
   </div>
 
-  {/* Gift Cards Sold */}
+  {/* Total number of review */}
   <div
-    className="md:p-6 bg-transparent rounded-lg shadow-lg w-1/5"
+    className="md:p-4 bg-transparent rounded-lg shadow-lg w-1/5"
   >
-    <p className="text-[20px] md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 drop-shadow-lg text-center">
-    {reviews.length}
+    <p className="text-[18px] md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 drop-shadow-lg text-center">
+    <CountUp end={reviews.length} duration={2} />
 </p>
   </div>
 
   {/* Employee Utilization */}
   <div
-    className="p-1 md:p-6 bg-white bg-opacity-75 rounded-lg shadow-lg  w-1/5"
-  ></div>
+    className="md:p-4 bg-transparent rounded-lg shadow-lg  w-1/5"
+  >
+    <p className="text-[18px] md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 drop-shadow-lg text-center">
+    {topService}
+</p>    
+  </div>
+  <div></div>
 </section>
 
 
