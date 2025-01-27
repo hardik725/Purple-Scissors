@@ -120,5 +120,20 @@ body {
   animation: pulse 2s infinite ease-in-out;
 }
 
+/* Add shimmer animation */
+@keyframes shine {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shine {
+  animation: shine 1.5s ease-in-out infinite;
+}
+
+
 
 

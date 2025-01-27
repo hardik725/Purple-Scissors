@@ -9,7 +9,8 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay"; // Import autoplay styles
 import { Navigation, Pagination, Autoplay, FreeMode } from "swiper/modules";
 import Loader from "../Loader/Loader";
-import Footer from "../Footer/Footer";
+import ShinyText from "../Animations/ShinyText";
+import SplitText from "../Animations/SplitText";
 
 const Dashboard = ({ email, userName, onLogout }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -181,13 +182,14 @@ const Dashboard = ({ email, userName, onLogout }) => {
       : "bg-gradient-to-tr from-[#B369D8] via-black to-black"
   }`}
 >
-  <div className="text-center mb-10">
-  <h2 className="text-4xl font-kugile font-bold text-white uppercase tracking-wide relative after:content-[''] after:block after:w-24 after:h-[2px] after:bg-white after:mt-2 after:mx-auto">
-  Our Services
-</h2>
+<div className="text-center mb-10">
+      <h2 className="relative text-4xl font-kugile font-bold uppercase tracking-wide">
+        <ShinyText text="Our Services" speed={3} className="inline-block" />
+        {/* Underline */}
+        <span className="block mt-2 w-24 h-[2px] bg-white mx-auto"></span>
+      </h2>
+    </div>
 
-    <div className="mt-2 w-16 h-1 bg-black mx-auto rounded"></div>
-  </div>
   <div className="flex flex-wrap justify-center gap-8">
   {[
     { label: "Body & Beauty Essentials", icon: "https://static.vecteezy.com/system/resources/previews/003/746/221/non_2x/female-hands-with-nail-file-vector.jpg", id: "essentialspage" },
@@ -219,9 +221,18 @@ const Dashboard = ({ email, userName, onLogout }) => {
         {/* Testimonials Section */}
         <section className="py-10 bg-gradient-to-b from-[#fef9f9] to-[#f6f1f1]">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-display font-bold text-[#2A2A2A] tracking-wide">
-          What Our Clients Say
-        </h2>
+      <div className="text-center mb-10">
+    <SplitText
+      text="What Our Clients Say"
+      className="text-4xl font-display font-bold text-[#2A2A2A] tracking-wide"
+      delay={150}
+      animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+      animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+      easing="easeOutCubic"
+      threshold={0.2}
+      rootMargin="-50px"
+    />
+  </div>
         <p className="text-[#707070] mt-4 text-lg font-serif">
           Discover how our clients feel about their transformation journeys with
           us.
