@@ -162,13 +162,17 @@ const Dashboard = ({ email, userName, onLogout }) => {
   bloom with every visit!
 </p>
 
-    <div className="flex justify-center">
-    <Link to="/appointment">
-      <button className="mt-8 bg-[#9B59B6] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-xl hover:bg-[#8E44AD] transition-all duration-300">
-        Book an Appointment
-      </button>
-    </Link>
-    </div>
+<div className="flex justify-center">
+  <Link to="/appointment">
+    <button
+      className="mt-8 relative overflow-hidden bg-gradient-to-r from-[#9B59B6] via-[#8E44AD] to-[#9B59B6] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-xl hover:bg-[#8E44AD] transition-all duration-300 animate-shimmer"
+    >
+      <span className="relative z-10">Book an Appointment</span>
+    </button>
+  </Link>
+</div>
+
+
   </div>
 </section>
 
