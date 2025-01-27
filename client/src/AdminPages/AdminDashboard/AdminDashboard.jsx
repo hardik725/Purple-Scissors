@@ -20,6 +20,9 @@ const AdminDashboard = ({ email }) => {
   const [orders, setOrders] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [topProducts, setTopProducts] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const [totalCustomers, setTotalCustomers] = useState(0);
+  const [topServices, setTopServices] = useState([]);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -75,6 +78,49 @@ const AdminDashboard = ({ email }) => {
 
     fetchOrders();
   }, []);
+
+  useEffect(() => {
+    fetch('https://purple-scissors.onrender.com/appointment/allappointments')
+      .then((response) => response.json())
+      .then((data) => {
+        const appointments = data.appointments || [];
+  
+        // Group appointments by customer name
+        const customerVisits = appointments.reduce((acc, appointment) => {
+          const { Name } = appointment;
+          acc[Name] = (acc[Name] || 0) + 1; // Count the number of visits
+          return acc;
+        }, {});
+  
+        // Convert to an array and sort by visit count
+        const topCustomers = Object.entries(customerVisits)
+          .map(([Name, visits]) => ({ Name, visits }))
+          .sort((a, b) => b.visits - a.visits) // Sort by visits in descending order
+          .slice(0, 4); // Get the top 4 customers
+        
+        // here we will set the frequency of top services 
+        const serviceFrequency = appointments.reduce((acc, appointment) => {
+          appointment.Services.forEach((service) => {
+            acc[service] = (acc[service] || 0) + 1; // Count the occurrences of each service
+          });
+          return acc;
+        }, {});
+  
+        // Convert to an array and sort by frequency
+        const topServices = Object.entries(serviceFrequency)
+          .map(([service, frequency]) => ({ service, frequency }))
+          .sort((a, b) => b.frequency - a.frequency); // Sort by frequency in descending order
+  
+        // Optionally limit the number of services displayed
+        const topServicesLimited = topServices.slice(0, 4);
+        setTopServices(topServicesLimited);
+        // Set the appointments and the top customers
+        setAppointments(topCustomers);
+        setTotalCustomers(appointments.length);
+      })
+      .catch((error) => console.error('Error fetching appointments:', error));
+  }, []);
+  
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -298,7 +344,7 @@ const AdminDashboard = ({ email }) => {
   };
   
 
-  if (loading) {
+  if (!reviews && !orders && !topProducts && !appointments) {
     return (
       <div className="text-center mt-12 text-lg font-bold">
         Loading Reviews...
@@ -307,41 +353,123 @@ const AdminDashboard = ({ email }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 lg:p-12 font-kugile">
-      <header className="mb-8 flex justify-between items-center">
-        <h1 className="text-4xl font-bold text-[#204E4A]">Admin Dashboard</h1>
-      </header>
+    <>
+    <section
+  id="admin-dashboard"
+  className="bg-cover bg-center"
+  style={{
+    backgroundImage:
+      'url(https://img.freepik.com/free-photo/beautiful-smiling-asian-woman-walking-along-road-city-talking-mobile-phone_171337-13324.jpg?t=st=1737985971~exp=1737989571~hmac=fca6c138ec831c97ea274c06c27e6082620a5d228c630d21acbd95ce3214322c&w=1380)',
+  }}
+>
+  <header className="mb-4 md:mb-8 pt-3 md:pt-6">
+    <h1 className="text-2xl md:text-4xl  font-bold text-black text-center bg-transparent font-kugile">Admin Dashboard</h1>
+  </header>
 
-      <section id="quick-stats" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <div className="p-6 bg-white rounded-lg shadow-md">
-          <h3 className="text-lg font-bold text-gray-700">Total Customers</h3>
-          <p className="mt-4 text-3xl font-extrabold text-gray-900">1,024</p>
-        </div>
-        <div className="p-6 bg-white rounded-lg shadow-md">
-          <h3 className="text-lg font-bold text-gray-700">Monthly Revenue</h3>
-          <p className="mt-4 text-3xl font-extrabold text-gray-900">₹{totalRevenue}</p>
-        </div>
-        <div className="p-6 bg-white rounded-lg shadow-md">
-          <h3 className="text-lg font-bold text-gray-700">Gift Cards Sold</h3>
-          <p className="mt-4 text-3xl font-extrabold text-gray-900">45</p>
-        </div>
-        <div className="p-6 bg-white rounded-lg shadow-md">
-          <h3 className="text-lg font-bold text-gray-700">Employee Utilization</h3>
-          <p className="mt-4 text-3xl font-extrabold text-gray-900">85%</p>
-        </div>
-      </section>
-
-      <section id="charts" className="mb-12">
-  <h2 className="text-2xl font-bold text-[#204E4A] mb-6">Ratings Breakdown</h2>
+  <section
+  id="quick-stats"
+  className="flex flex-wrap justify-between md:gap-6 mb-2 w-full mx-2"
+>
+  {/* Total Customers */}
   <div
-    className="p-6 bg-white rounded-lg shadow-md"
+    className="p-1 md:p-6 bg-white bg-opacity-75 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 w-1/5"
     style={{
-      height: window.innerWidth < 768 ? "300px" : "400px", // Longer height on mobile
+      height: "0",
+      paddingBottom: "20%", // To ensure the box remains square
+      backgroundImage:
+        "url('https://static.vecteezy.com/system/resources/previews/008/332/005/non_2x/hair-stylist-concept-free-vector.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
     }}
-  >
-    <Bar data={data} options={options} />
-  </div>
+  ></div>
+
+  {/* Monthly Revenue */}
+  <div
+    className="p-1 md:p-6 bg-white bg-opacity-75 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 w-1/5"
+    style={{
+      height: "0",
+      paddingBottom: "20%", // To ensure the box remains square
+      backgroundImage:
+        "url('https://static.vecteezy.com/system/resources/previews/006/591/168/non_2x/tablet-smartphone-screen-with-charts-return-on-investment-of-growth-and-fall-of-stocks-successful-investment-strategy-business-concept-capital-increase-revenue-growth-free-vector.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}
+  ></div>
+
+  {/* Total Reviews */}
+  <div
+    className="p-1 md:p-6 bg-white bg-opacity-75 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 w-1/5"
+    style={{
+      height: "0",
+      paddingBottom: "20%", // To ensure the box remains square
+      backgroundImage:
+        "url('https://static.vecteezy.com/system/resources/previews/010/925/376/non_2x/user-feedback-and-website-rating-customer-feedback-review-website-non-commercial-product-evaluation-rating-service-sharing-experience-flat-design-modern-illustration-vector.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}
+  ></div>
+
+  {/* Employee Utilization */}
+  <div
+    className="p-1 md:p-6 bg-white bg-opacity-75 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 w-1/5"
+  ></div>
 </section>
+
+<section
+  id="quick-stats" // from here on we will give data
+  className="flex flex-wrap justify-between md:gap-6 mb-8 md:mb-12 w-full mx-2"
+>
+  {/* Total Customers */}
+  <div
+    className="md:p-6 bg-transparent rounded-lg shadow-lg w-1/5"
+  >
+    <p className="text-[20px] md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 drop-shadow-lg text-center">
+  {totalCustomers}
+</p>
+
+  </div>
+
+  {/* Monthly Revenue */}
+  <div
+    className="md:p-6 bg-transparent rounded-lg shadow-lg w-1/5"
+  >
+    <p className="text-[20px] md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 drop-shadow-lg text-center">
+    ₹{totalRevenue}
+</p>
+  </div>
+
+  {/* Gift Cards Sold */}
+  <div
+    className="md:p-6 bg-transparent rounded-lg shadow-lg w-1/5"
+  >
+    <p className="text-[20px] md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 drop-shadow-lg text-center">
+    {reviews.length}
+</p>
+  </div>
+
+  {/* Employee Utilization */}
+  <div
+    className="p-1 md:p-6 bg-white bg-opacity-75 rounded-lg shadow-lg  w-1/5"
+  ></div>
+</section>
+
+
+
+  <section id="charts" className="mb-12 m-3">
+    <div
+      className="p-6 bg-white bg-opacity-90 rounded-md shadow-md"
+      style={{
+        height: window.innerWidth < 768 ? "300px" : "400px", // Adjust height dynamically
+      }}
+    >
+      <Bar data={data} options={options} />
+    </div>
+  </section>
+
+</section>
+
+    <div className="min-h-screen bg-gray-100 p-6 lg:p-12 font-kugile">
+
 <section id="charts" className="mb-12">
   <h2 className="text-2xl font-bold text-[#204E4A] mb-6">
     Top Products
@@ -378,46 +506,105 @@ const AdminDashboard = ({ email }) => {
 </section>
     
 
-      <section id="charts" className="mb-12">
-        <h2 className="text-2xl font-bold text-[#204E4A] mb-6">Revenue & Popular Services</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="p-6 bg-white rounded-lg shadow-md">
-            <h3 className="text-lg font-bold text-gray-700 mb-4">Monthly Revenue Trend</h3>
-            <p>Chart placeholder...</p>
-          </div>
-          <div className="p-6 bg-white rounded-lg shadow-md">
-            <h3 className="text-lg font-bold text-gray-700 mb-4">Most Popular Services</h3>
-            <p>Chart placeholder...</p>
-          </div>
-        </div>
-      </section>
+<section
+  id="top-insights"
+  className="mb-12 bg-center bg-cover bg-opacity-90"
+  style={{
+    backgroundImage: window.innerWidth < 640
+      ? 'url(https://img.freepik.com/free-photo/smiling-female-owner-hairdresser-salon-showing-ok-hand-sign_329181-1954.jpg?t=st=1737985244~exp=1737988844~hmac=76e082644bcb47765838126443df0d029b91ce4f07867e7335fda3530506615d&w=740)'
+      : 'url(https://img.freepik.com/free-photo/woman-laughing-pointing_1139-520.jpg?t=st=1737984536~exp=1737988136~hmac=5420488e2fa0f6dcb18f4f360684017bf8fb03263f4b440e4932d74372fd3377&w=1380)',
+  }}
+>
+  <h2 className="text-2xl md:text-3xl font-extrabold text-center text-teal-700 md:mb-4 p-2 md:p-4">
+    Top Insights
+  </h2>
 
-      <section id="top-customers" className="mb-12">
-        <h2 className="text-2xl font-bold text-[#204E4A] mb-6">Top Customers</h2>
-        <div className="p-6 bg-white rounded-lg shadow-md">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="text-gray-700 font-bold">
-                <th className="py-2 px-4">Name</th>
-                <th className="py-2 px-4">Visits</th>
-                <th className="py-2 px-4">Spent</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-t">
-                <td className="py-2 px-4">Jane Doe</td>
-                <td className="py-2 px-4">12</td>
-                <td className="py-2 px-4">$1,200</td>
-              </tr>
-              <tr className="border-t">
-                <td className="py-2 px-4">John Smith</td>
-                <td className="py-2 px-4">10</td>
-                <td className="py-2 px-4">$950</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+  {/* Responsive container */}
+  <div className="p-4 md:p-6 rounded-lg shadow-lg">
+    <div className="flex flex-col lg:flex-row flex-wrap gap-4 md:gap-8 justify-between items-stretch">
+      {/* Top Customers */}
+      <div className="flex-1 bg-white rounded-lg shadow-md p-3 md:p-4 bg-opacity-30">
+        <h3 className="text-lg md:text-2xl font-bold text-center text-teal-700 mb-3 md:mb-4">
+          Top Customers
+        </h3>
+        {appointments.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left rounded-sm overflow-hidden text-sm md:text-base">
+              <thead className="bg-black text-white">
+                <tr>
+                  <th className="py-2 px-3 md:py-4 md:px-6 font-semibold">Name</th>
+                  <th className="py-2 px-3 md:py-4 md:px-6 font-semibold">Visits</th>
+                </tr>
+              </thead>
+              <tbody>
+                {appointments.map((customer, index) => (
+                  <tr
+                    key={index}
+                    className={`border-b ${
+                      index % 2 === 0 ? 'bg-green-50' : 'bg-white'
+                    } hover:bg-green-100`}
+                  >
+                    <td className="py-2 px-3 md:py-4 md:px-6 text-gray-800 font-medium">
+                      {customer.Name}
+                    </td>
+                    <td className="py-2 px-3 md:py-4 md:px-6 text-gray-800 font-medium">
+                      {customer.visits}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-center text-gray-700 font-semibold">
+            No appointments data available.
+          </p>
+        )}
+      </div>
+
+      {/* Top Services */}
+      <div className="flex-1 bg-white rounded-lg shadow-md p-3 md:p-4 bg-opacity-30">
+        <h3 className="text-lg md:text-2xl font-bold text-center text-pink-600 mb-3 md:mb-4">
+          Top Services
+        </h3>
+        {topServices.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left rounded-sm overflow-hidden text-sm md:text-base">
+              <thead className="bg-black text-white">
+                <tr>
+                  <th className="py-2 px-3 md:py-4 md:px-6 font-semibold">Service</th>
+                  <th className="py-2 px-3 md:py-4 md:px-6 font-semibold">Frequency</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topServices.map((service, index) => (
+                  <tr
+                    key={index}
+                    className={`border-b ${
+                      index % 2 === 0 ? 'bg-pink-50' : 'bg-white'
+                    } hover:bg-pink-100`}
+                  >
+                    <td className="py-2 px-3 md:py-4 md:px-6 text-gray-800 font-medium">
+                      {service.service}
+                    </td>
+                    <td className="py-2 px-3 md:py-4 md:px-6 text-gray-800 font-medium">
+                      {service.frequency}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-center text-gray-700 font-semibold">
+            No services data available.
+          </p>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
 
       <section id="inventory" className="mb-12">
         <h2 className="text-2xl font-bold text-[#204E4A] mb-6">Inventory Overview</h2>
@@ -426,6 +613,7 @@ const AdminDashboard = ({ email }) => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

@@ -46,7 +46,7 @@ const AdminPage = ({email,userName,onLogout}) => {
   };
   if(!isMobile){
   return (
-    <div         style={{
+    <div style={{
       backgroundImage:
         "url('https://images.pexels.com/photos/5128267/pexels-photo-5128267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",
       backgroundSize: "cover",
@@ -138,7 +138,7 @@ const AdminPage = ({email,userName,onLogout}) => {
 
       {/* Main Content */}
       <main
-        className="flex-1 p-6 lg:p-12 bg-gray-50 bg-opacity-80 backdrop-blur-lg"
+        className="flex-1 bg-gray-50 bg-opacity-80 backdrop-blur-lg"
       >
         {renderContent()}
       </main>
@@ -279,7 +279,7 @@ const AdminPage = ({email,userName,onLogout}) => {
         </header>
 
         {/* Content Area */}
-        <main className="p-4">{renderContent()}</main>
+        <main className="">{renderContent()}</main>
       </div>
     </div>
   );
