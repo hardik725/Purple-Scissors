@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay"; // Import autoplay styles
 import { Navigation, Pagination, Autoplay, FreeMode } from "swiper/modules";
 import Loader from "../Loader/Loader";
+import Footer from "../Footer/Footer";
 
 const Dashboard = ({ email, userName, onLogout }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -111,6 +112,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
     return (<div><Loader/></div>);
   }else{
   return (
+    <>
     <div
       className="min-h-screen bg-cover bg-center bg-fixed -z-20 font-kugile"
     >
@@ -443,6 +445,7 @@ const Dashboard = ({ email, userName, onLogout }) => {
 
       </div>
     </div>
+    </>
   );
 }
 };
