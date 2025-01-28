@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import SignUp from "../SignUp/SignUp";
 import Swal from "sweetalert2"; // Import SweetAlert2
+import GradientText from "../Animations/GradientText";
 
 const Login = ({ onLogin }) => {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -165,7 +166,7 @@ const Login = ({ onLogin }) => {
 }else{
   return(
 <div
-  className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-purple-700 via-pink-500 to-red-400 px-6 py-10"
+  className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-purple-700 via-pink-500 to-red-400 px-6 "
   style={{
     backgroundImage:
       "url('https://images.pexels.com/photos/705255/pexels-photo-705255.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",
@@ -190,9 +191,14 @@ const Login = ({ onLogin }) => {
   </p> */}
 </div>
 
-    <h2 className="text-lg font-semibold font-kugile text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent mb-6">
+<GradientText
+      colors={["#a855f7", "#ec4899"]} // Matches Tailwind's purple-500 and pink-500
+      animationSpeed={3}
+      showBorder={false}
+      className="text-lg font-semibold font-kugile text-center mb-6"
+    >
       Login to Your Account
-    </h2>
+    </GradientText>
     <form onSubmit={handleLogin}>
       <div className="mb-4">
         <label
