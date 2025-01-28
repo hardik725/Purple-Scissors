@@ -121,6 +121,26 @@ body {
   }
 }
 
+.animate-shine { 
+  animation: shinetext 2s infinite linear;  
+}
+
+@layer utilities {
+  .animate-shine {
+    animation: shine 2s infinite linear;
+  }
+}
+
+@keyframes shinetext {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+
 @keyframes shine {
   0% {
     transform: translateX(-150%) rotate(45deg);
