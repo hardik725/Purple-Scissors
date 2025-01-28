@@ -1,3 +1,4 @@
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faScissors, faBars, faChevronDown } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +9,15 @@ const Navbar = ({ email, userName, onLogout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [pagewidth, setPageWidth] = useState(window.innerWidth);
   const [navbarHeight, setNavbarHeight] = useState(0);
+  const dropdownVariants = {
+    hidden: { opacity: 0, x: "100%" },
+    visible: {
+      opacity: 1,
+      x: "0%",
+      transition: { type: "spring", stiffness: 100, damping: 15 },
+    },
+    exit: { opacity: 0, x: "100%", transition: { duration: 0.3 } },
+  };
 
   const navbarRef = useRef(null);
 
@@ -81,61 +91,66 @@ const Navbar = ({ email, userName, onLogout }) => {
 
         ) : (
           <div className="relative z-40">
-            <button
-              className="flex mr-6 items-center space-x-2 bg-gradient-to-r from-[#7F7FD5] via-[#86A8E7] to-[#91EAE4] text-white px-4 py-4 rounded-lg font-semibold shadow-lg hover:from-[#6B6ECF] hover:via-[#7D9BE0] hover:to-[#7ADAE1] transition"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
-              <FontAwesomeIcon icon={faBars} className="text-xl" />
-              <FontAwesomeIcon
-                icon={faChevronDown}
-                className={`text-sm transition-transform ${
-                  isDropdownOpen ? "rotate-90" : "rotate-0"
-                }`}
-              />
-            </button>
-
-            {/* Dropdown Container */}
-            <div
-              className={`absolute right-0 bg-gradient-to-b from-[#D7BBF5] to-[#C1E1DC] shadow-xl rounded-lg py-4 text-gray-800 transform transition-transform duration-300 ease-out ${
-                isDropdownOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
+          <button
+            className="flex mr-6 items-center space-x-2 bg-gradient-to-r from-[#7F7FD5] via-[#86A8E7] to-[#91EAE4] text-white px-4 py-4 rounded-lg font-semibold shadow-lg hover:from-[#6B6ECF] hover:via-[#7D9BE0] hover:to-[#7ADAE1] transition"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            <FontAwesomeIcon icon={faBars} className="text-xl" />
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              className={`text-sm transition-transform ${
+                isDropdownOpen ? "rotate-90" : "rotate-0"
               }`}
-              style={{
-                width: `${pagewidth}px`,
-                top: `${navbarHeight}px`, // Use the calculated navbar height
-              }}
-            >
-              <ul className="flex flex-col divide-y divide-gray-300">
-                <li className="group relative px-4 py-3 cursor-pointer rounded-t-lg transition duration-300 ease-in-out">
-                  <Link to="/" className="flex items-center space-x-2">
-                    <span>Home</span>
-                  </Link>
-                </li>
-                <li className="group relative px-4 py-3 cursor-pointer transition duration-300 ease-in-out">
-                  <Link to="/product" className="flex items-center space-x-2">
-                    <span>Product</span>
-                  </Link>
-                </li>
-                <li className="group relative px-4 py-3 cursor-pointer transition duration-300 ease-in-out">
-                  <Link to="/appointment" className="flex items-center space-x-2">
-                    <span>Appointment</span>
-                  </Link>
-                </li>
-                <li className="group relative px-4 py-3 cursor-pointer transition duration-300 ease-in-out">
-                  <Link to="/contactus" className="flex items-center space-x-2">
-                    <span>Contact Us</span>
-                  </Link>
-                </li>
-                {email && (
-                  <li
-                    onClick={onLogout}
-                    className="group relative px-4 py-3 cursor-pointer rounded-b-lg transition duration-300 ease-in-out"
-                  >
-                    <span>Logout</span>
+            />
+          </button>
+    
+          <AnimatePresence>
+            {isDropdownOpen && (
+              <motion.div
+                variants={dropdownVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="absolute right-0 bg-gradient-to-b from-[#D7BBF5] to-[#C1E1DC] shadow-xl rounded-lg py-4 text-gray-800 transform transition-transform duration-300 ease-out"
+                style={{
+                  width: `${pagewidth}px`,
+                  top: `${navbarHeight}px`,
+                }}
+              >
+                <ul className="flex flex-col divide-y divide-gray-300">
+                  <li className="group relative px-4 py-3 cursor-pointer rounded-t-lg transition duration-300 ease-in-out">
+                    <Link to="/" className="flex items-center space-x-2">
+                      <span>Home</span>
+                    </Link>
                   </li>
-                )}
-              </ul>
-            </div>
-          </div>
+                  <li className="group relative px-4 py-3 cursor-pointer transition duration-300 ease-in-out">
+                    <Link to="/product" className="flex items-center space-x-2">
+                      <span>Product</span>
+                    </Link>
+                  </li>
+                  <li className="group relative px-4 py-3 cursor-pointer transition duration-300 ease-in-out">
+                    <Link to="/appointment" className="flex items-center space-x-2">
+                      <span>Appointment</span>
+                    </Link>
+                  </li>
+                  <li className="group relative px-4 py-3 cursor-pointer transition duration-300 ease-in-out">
+                    <Link to="/contactus" className="flex items-center space-x-2">
+                      <span>Contact Us</span>
+                    </Link>
+                  </li>
+                  {email && (
+                    <li
+                      onClick={onLogout}
+                      className="group relative px-4 py-3 cursor-pointer rounded-b-lg transition duration-300 ease-in-out"
+                    >
+                      <span>Logout</span>
+                    </li>
+                  )}
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
         )}
 
         {/* User Section */}
