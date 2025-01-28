@@ -159,6 +159,7 @@ const Appointment = ({ email,userName, onLogout }) => {
   <section className="py-2 md:py-10 bg-gradient-to-r from-[#FDE2E4] via-[#FAD4D8] to-[#FFE2E2]">
     <div className="text-center mb-4 md:mb-8">
       <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-wide text-center">
+        <div className="flex flex-col justify-center items-center mb-4">
         <BlurText 
           text="Book Your" 
           textColor="#4A4A4A" 
@@ -175,6 +176,7 @@ const Appointment = ({ email,userName, onLogout }) => {
             delay={200}
           />
         </span>
+        </div>
       </h2>
       <p className="mt-2 md:mt-4 text-md sm:text-lg text-[#555] font-serif max-w-2xl mx-auto">
         Your journey to relaxation and rejuvenation begins here. Fill out the form below to secure your personalized session with us.
