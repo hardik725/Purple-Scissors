@@ -137,13 +137,25 @@ const Dashboard = ({ email, userName, onLogout }) => {
   </div>
 
   {/* Hero Content */}
-  <div className="relative w-full md:w-1/2 ml-auto pl-4 pr-4 md:pl-10 text-center md:text-left z-10 pt-16 md:pt-20">
-    <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white hover:text-[#9B59B6] transition-colors duration-300 leading-tight">
-      <span className="bg-gradient-to-r from-[#9B59B6] to-[#8E44AD] text-transparent bg-clip-text">
-        Timeless Beauty
-      </span>{" "}
-      Unveiled
-    </h1>
+  <div className="relative w-full md:w-1/2 ml-auto md:pl-10  text-center md:text-left z-10 pt-16 md:pt-20">
+<h1 className="text-4xl md:text-5xl font-display font-extrabold text-white hover:text-[#9B59B6] transition-colors duration-300 leading-tight text-center">
+<div className="text-[#9B59B6] mb-3 md:mb-5"> 
+<SplitText
+  text="Timeless Beauty"
+  className="text-4xl md:text-5xl font-display font-bold tracking-wide w-full text-center"
+  delay={150}
+  animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+  easing="easeOutCubic"
+  threshold={0.2}
+  rootMargin="-50px"
+/>
+</div>
+
+
+  {" "}Unveiled
+</h1>
+
     <p className="text-[#E5E5E5] mt-6 text-[16px] md:text-2xl leading-relaxed shadow-lg md:mx-[80px] font-bodoni-italic">
   Step into a world of{" "}
   <span className="text-[#8E44AD] font-bold">elegance</span> and pampering
@@ -165,12 +177,14 @@ const Dashboard = ({ email, userName, onLogout }) => {
 <div className="flex justify-center">
   <Link to="/appointment">
     <button
-      className="mt-8 relative overflow-hidden bg-gradient-to-r from-[#9B59B6] via-[#8E44AD] to-[#9B59B6] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-xl hover:bg-[#8E44AD] transition-all duration-300 animate-shimmer"
+      className="mt-8 relative overflow-hidden bg-gradient-to-r from-[#9B59B6] via-[#8E44AD] to-[#9B59B6] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-xl hover:bg-[#8E44AD] transition-all duration-300"
     >
       <span className="relative z-10">Book an Appointment</span>
+      <span className="absolute inset-0 bg-gradient-to-r from-white to-transparent opacity-50 w-full h-full transform translate-x-[-150%] rotate-45 pointer-events-none shine-effect"></span>
     </button>
   </Link>
 </div>
+
 
 
   </div>
@@ -373,12 +387,13 @@ const Dashboard = ({ email, userName, onLogout }) => {
     ))}
   </div>
   <div className="mt-6 flex justify-center pb-5">
-    <Link to="/product">
-      <button className="relative px-6 py-4 md:py-5 bg-gradient-to-r from-black  to-gray-700 text-white font-bold text-sm md:text-lg rounded-full shadow-md hover:shadow-lg hover:from-black hover:to-gray-600 transition-all duration-300">
-        <span className="absolute inset-0 bg-white bg-opacity-10 blur-lg rounded-full"></span>
-        <span className="relative">Explore More</span>
-      </button>
-    </Link>
+  <Link to="/product">
+  <button className="relative px-6 py-4 md:py-5 bg-gradient-to-r from-black to-gray-700 text-white font-bold text-sm md:text-lg rounded-full shadow-md hover:shadow-lg hover:from-black hover:to-gray-600 transition-all duration-300 overflow-hidden">
+    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 blur-xl transform -translate-x-full animate-horizontal-shine"></span>
+    <span className="relative">Explore More</span>
+  </button>
+</Link>
+
   </div>
 </section>
 

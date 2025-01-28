@@ -68,7 +68,7 @@ const SplitText = ({
     <p
       key={animationKey} // The key change forces a re-render to reset the animation
       ref={ref}
-      className={`split-parent overflow-hidden inline ${className}`}
+      className={`split-parent overflow-hidden inline ${className} w-full`}
       style={{ textAlign, whiteSpace: 'normal', wordWrap: 'break-word' }}
     >
       {words.map((word, wordIndex) => (
@@ -82,7 +82,7 @@ const SplitText = ({
               <animated.span
                 key={index}
                 style={springs[index]}
-                className="inline-block transform transition-opacity will-change-transform"
+                className="inline-block transform transition-opacity will-change-transform text-center"
               >
                 {letter}
               </animated.span>

@@ -116,23 +116,33 @@ body {
   }
 }
 
-.animate-pulse {
-  animation: pulse 2s infinite ease-in-out;
-}
-
-/* Add shimmer animation */
 @keyframes shine {
   0% {
-    background-position: -200% 0;
+    transform: translateX(-150%) rotate(45deg);
   }
   100% {
-    background-position: 200% 0;
+    transform: translateX(150%) rotate(45deg);
   }
 }
 
-.animate-shine {
-  animation: shine 1.5s ease-in-out infinite;
+.shine-effect {
+  animation: shine 2s infinite;
 }
+
+@keyframes horizontal-shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-horizontal-shine {
+  animation: horizontal-shine 2.5s infinite;
+}
+
+
 
 
 
