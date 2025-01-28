@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
+import BlurText from "../Animations/BlurText";
 
 const Appointment = ({ email,userName, onLogout }) => {
   const [formData, setFormData] = useState({
@@ -157,8 +158,23 @@ const Appointment = ({ email,userName, onLogout }) => {
   </div>
   <section className="py-2 md:py-10 bg-gradient-to-r from-[#FDE2E4] via-[#FAD4D8] to-[#FFE2E2]">
     <div className="text-center mb-4 md:mb-8">
-      <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-[#4A4A4A] tracking-wide">
-        Book Your <span className="text-[#D96161]">Appointment</span>
+      <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-wide text-center">
+        <BlurText 
+          text="Book Your" 
+          textColor="#4A4A4A" 
+          animateBy="words" 
+          direction="top" 
+          delay={200}
+        />
+        <span className="text-[#D96161]">
+          <BlurText 
+            text="Appointment" 
+            textColor="#D96161"
+            animateBy="words" 
+            direction="top" 
+            delay={200}
+          />
+        </span>
       </h2>
       <p className="mt-2 md:mt-4 text-md sm:text-lg text-[#555] font-serif max-w-2xl mx-auto">
         Your journey to relaxation and rejuvenation begins here. Fill out the form below to secure your personalized session with us.
