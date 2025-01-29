@@ -119,23 +119,28 @@ const ProductHome = ({ email, userName, onLogout }) => {
       {
         name: "Hair Care",
         imageUrl: "https://images.pexels.com/photos/8467976/pexels-photo-8467976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        page: "Hair",
       },
       {
         name: "Skin Care",
         imageUrl: "https://img.freepik.com/premium-photo/copy-space-organic-cosmetics_926199-3790091.jpg?uid=R156822350&ga=GA1.1.1729476715.1720013001&semt=ais_incoming",
+        page: "Skin",
       },
       {
         name: "Face Care",
         imageUrl:
           "https://media.istockphoto.com/id/1400306506/photo/spa-natural-organic-cosmetics-packaging-design-set-of-transparent-glass-bottles-moisturizer.jpg?s=612x612&w=0&k=20&c=H0JF_ehdwFYTK2uJUrM-Ztf7r-DEa23jnpKboCA6L9c=",
+        page: "Face",
       },
       {
         name: "Make Up",
         imageUrl:
           "https://media.istockphoto.com/id/487770577/photo/makeup-set-on-table-front-view.jpg?s=612x612&w=0&k=20&c=IS_ZuHCF3N66jhDMwt2s7J_PGWABlpv2ISEAwpJ4JKU=",
+        page: "Makeup",
       },
     ].map((category, index) => (
       <SwiperSlide key={index}>
+        <Link to={`/productcategory/${category.page}`}>
         <div className="category-card bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transform hover:scale-105 transition-all duration-300 relative group">
           <div
             className="category-image h-48 sm:h-56 md:h-64 bg-cover bg-center relative"
@@ -150,6 +155,7 @@ const ProductHome = ({ email, userName, onLogout }) => {
         </div>
           </div>
         </div>
+        </Link>
       </SwiperSlide>
     ))}
   </Swiper>

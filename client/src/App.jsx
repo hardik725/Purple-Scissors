@@ -15,6 +15,7 @@ import Essentials from "./Components/Essentials/Essentials";
 import AllCart from "./Components/AllCart/AllCart";
 import AllWish from "./Components/AllWish/AllWish";
 import OrderPage from "./Components/OrderPage/OrderPage";
+import ProductCategory from "./Components/ProductCategory/ProductCategory";
 import Footer from "./Components/Footer/Footer"; // Import the Footer component
 
 function App() {
@@ -206,6 +207,16 @@ function App() {
             element={
               email ? (
                 <CompanyProduct email={email} userName={userName} onLogout={handleLogout} />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route
+            path="/productcategory/:category"
+            element={
+              email ? (
+                <ProductCategory email={email} userName={userName} onLogout={handleLogout} />
               ) : (
                 <Navigate to="/" />
               )
