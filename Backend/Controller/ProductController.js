@@ -2,9 +2,9 @@ import Product from "../Model/Product.js";
 
 // Function to get products by category
 export const getProductsByCategory = async (req, res) => {
-  const { mainCategory} = req.body;
+  const { Category} = req.body;
   try {
-    const query = { "Category.main": mainCategory };
+    const query = { "Category.main": Category };
 
     const products = await Product.find(query);
     res.status(200).json({ success: true, products });
