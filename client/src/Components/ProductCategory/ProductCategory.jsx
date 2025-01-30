@@ -305,16 +305,60 @@ const ProductCategory = ({ email,userName,onLogout }) => {
           <ProductNavbar norder={nord} ncart={ncart} nwish={nwish} />
         </div>
 
-        <div className="bg-center bg-cover" ref={categoryRef}
-          style={{
-            backgroundImage: 'url(https://images.pexels.com/photos/4004461/pexels-photo-4004461.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)'
-          }}>
-          <div className="container mx-auto flex justify-center w-2/3">
-            <div className="bg-white rounded-sm m-4 p-8">
-              <p className="text-center text-5xl">{category}</p>
-            </div>
-          </div>
-        </div>
+        <div className="relative bg-center bg-cover bg-no-repeat flex flex-col justify-center items-center text-center px-4"
+  ref={categoryRef}
+  style={{
+    backgroundImage: 'url(https://images.pexels.com/photos/4004461/pexels-photo-4004461.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)',
+    minHeight: "170px", // Fallback for very small screens
+    height: window.innerWidth < 740 ? "170px" : "260px"
+  }}>
+
+  {/* Dark Overlay */}
+  <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+
+  {/* Wrapper to center content */}
+  <div className="relative z-10 flex flex-col justify-center items-center text-center">
+    {/* Centered Heading */}
+    <div className="bg-white rounded-lg shadow-lg p-3 sm:p-5 md:p-6 w-full sm:w-2/3 bg-opacity-90">
+      <p className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text 
+        bg-gradient-to-r from-pink-500 to-red-500 drop-shadow-lg tracking-wide uppercase">
+        {category}
+      </p>
+    </div>
+
+    {/* Tips Section (Styled as Quotes) */}
+    {(category === "Hair" || category === "Skin" || category === "Makeup" || category === "Face") && (
+      <div className="mt-4 bg-white bg-opacity-80 p-3 sm:p-4 rounded-lg shadow-lg max-w-xs sm:max-w-sm border-l-4 border-pink-500">
+        <blockquote className="italic text-sm sm:text-md text-gray-700">
+          {category === "Hair" && (
+            <>
+              "A good hair day starts with care. Use a silk pillowcase to reduce breakage."
+            </>
+          )}
+          {category === "Skin" && (
+            <>
+              "Glowing skin is a reflection of inner health. Hydrate and protect with sunscreen."
+            </>
+          )}
+          {category === "Face" && (
+           <>
+              "Healthy skin is a lifelong commitment, not an overnight miracle. Cleanse, nourish, and glow."
+            </>
+          )}
+
+          {category === "Makeup" && (
+            <>
+              "Makeup enhances beauty, but confidence is the real glow. Blend and set for perfection."
+            </>
+          )}
+        </blockquote>
+      </div>
+    )}
+  </div>
+</div>
+
+
+
       </div>
 
       {/* Content Section with Dynamic Margin */}
