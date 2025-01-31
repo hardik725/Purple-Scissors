@@ -25,6 +25,16 @@ const AdminDashboard = ({ email }) => {
   const [totalCustomers, setTotalCustomers] = useState(0);
   const [topServices, setTopServices] = useState([]);
   const [topService, setTopService] = useState("");
+  const [todayappointment, setTodayAppointment] = useState([]);
+  const timeSlots = [
+    "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
+    "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM",
+    "05:00 PM", "06:00 PM"
+  ];
+
+  const getAppointment = (time) => {
+    return todayappointment.find((appt) => appt.Time === time);
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -86,6 +96,18 @@ const AdminDashboard = ({ email }) => {
       .then((response) => response.json())
       .then((data) => {
         const appointments = data.appointments || [];
+        
+        // Get today's date in YYYY-MM-DD format
+        const today = new Date().toISOString().split('T')[0];
+  
+        // Filter today's appointments
+        const todayAppointments = appointments.filter(appointment => 
+          appointment.Date === today
+        );
+  
+        setTodayAppointment(todayAppointments); // Store all today's appointments
+        console.log("Today Appointment:");
+        console.log(todayappointment);
   
         // Group appointments by customer name
         const customerVisits = appointments.reduce((acc, appointment) => {
@@ -100,7 +122,7 @@ const AdminDashboard = ({ email }) => {
           .sort((a, b) => b.visits - a.visits) // Sort by visits in descending order
           .slice(0, 4); // Get the top 4 customers
         
-        // here we will set the frequency of top services 
+        // Calculate service frequency
         const serviceFrequency = appointments.reduce((acc, appointment) => {
           appointment.Services.forEach((service) => {
             acc[service] = (acc[service] || 0) + 1; // Count the occurrences of each service
@@ -116,13 +138,18 @@ const AdminDashboard = ({ email }) => {
         // Optionally limit the number of services displayed
         const topServicesLimited = topServices.slice(0, 4);
         setTopServices(topServicesLimited);
-        setTopService(topServicesLimited[0].service);
+        setTopService(topServicesLimited[0]?.service || '');
+  
         // Set the appointments and the top customers
         setAppointments(topCustomers);
         setTotalCustomers(appointments.length);
       })
       .catch((error) => console.error('Error fetching appointments:', error));
   }, []);
+
+  useEffect(() => {
+    console.log("Today Appointments (after state update):", todayappointment);
+  }, [todayappointment]);
   
 
   useEffect(() => {
@@ -362,11 +389,11 @@ const AdminDashboard = ({ email }) => {
   className="bg-cover bg-center"
   style={{
     backgroundImage:
-      'url(https://img.freepik.com/free-photo/beautiful-smiling-asian-woman-walking-along-road-city-talking-mobile-phone_171337-13324.jpg?t=st=1737985971~exp=1737989571~hmac=fca6c138ec831c97ea274c06c27e6082620a5d228c630d21acbd95ce3214322c&w=1380)',
+      'url(https://images.unsplash.com/photo-1508898578281-774ac4893c0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGJhY2tncm91bmQlMjBncmFkaWVudHxlbnwwfHwwfHx8MA%3D%3D)',
   }}
 >
   <header className="mb-4 md:mb-8 pt-3 md:pt-6">
-    <h1 className="text-2xl md:text-4xl  font-bold text-black text-center bg-transparent font-kugile">Admin Dashboard</h1>
+    <h1 className="text-2xl md:text-4xl  font-bold text-white text-center bg-transparent font-kugile ">Admin Dashboard</h1>
   </header>
 
   <section
@@ -475,7 +502,7 @@ const AdminDashboard = ({ email }) => {
 
 
 
-  <section id="charts" className="mb-12 m-3">
+  <section id="charts" className="pb-6 p-3">
     <div
       className="p-6 bg-white bg-opacity-90 rounded-md shadow-md"
       style={{
@@ -487,6 +514,54 @@ const AdminDashboard = ({ email }) => {
   </section>
 
 </section>
+<div className="flex flex-col md:flex-row">
+  {/* Appointment Section - Leftmost on Desktop */}
+  <div className="p-6 bg-gradient-to-br from-purple-500 to-black shadow-xl border border-gray-700 max-w-4xl mx-auto w-full md:w-1/2">
+    <h2 className="text-4xl font-bold text-center text-pink-300 mb-6 font-bodoni tracking-wide">
+      Today's Appointments
+    </h2>
+
+    <div className="relative grid grid-cols-3 md:grid-cols-5 gap-4">
+      {/* Time Column */}
+      <div className="col-span-1 flex flex-col justify-center font-parisienne text-lg text-pink-200">
+        {timeSlots.map((time, index) => (
+          <div key={index} className="py-3 text-center md:text-right">
+            {time}
+          </div>
+        ))}
+      </div>
+
+      {/* Appointments Column */}
+      <div className="col-span-2 md:col-span-4 relative flex flex-col items-center">
+        {timeSlots.slice(0, 9).map((time, index) => {
+          const appointment = getAppointment(time);
+          return (
+            <div
+              key={index}
+              className={`
+                absolute flex flex-col justify-center items-center w-full md:w-2/3 transform -translate-y-1/2
+                rounded-xl p-3 text-sm md:text-base font-semibold transition-all duration-300 text-center shadow-lg
+                font-poppins
+                ${
+                  appointment
+                    ? "border-4 border-pink-500 bg-purple-700 shadow-lg text-white"
+                    : "border-4 border-gray-500 bg-gray-800 text-gray-300"
+                }
+              `}
+              style={{ top: `${index * 10.5 + 8}%` }}
+            >
+              <span className="italic">{appointment ? appointment.Services.join(", ") : "Vacant"}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 
     <div className="min-h-screen bg-gray-100 p-6 lg:p-12 font-kugile">
 
