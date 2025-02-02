@@ -67,7 +67,7 @@ const Inventory = () => {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       {Object.keys(companyCategories).map((company) => (
         <div key={company} className="product-card p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-1 relative border-2 border-[#B1C29E]">
-          <h3 className="text-2xl font-bold text-[#204E4A] mb-4 bg-gradient-to-r from-[#204E4A] to-[#6D7F7D] text-center text-white p-2 rounded-lg">
+          <h3 className="text-2xl font-bold text-[#204E4A] mb-4 bg-gradient-to-r from-[#204E4A] to-[#6D7F7D] text-center p-2 rounded-lg">
             {company}
           </h3>
           <div className="space-y-6 ">
@@ -97,7 +97,7 @@ const Inventory = () => {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       {Object.keys(categoryCategories).map((category) => (
         <div key={category} className="product-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-1 relative border-2 border-[#B1C29E]">
-          <h3 className="text-2xl font-bold text-[#204E4A] mb-4 bg-gradient-to-r from-[#204E4A] to-[#6D7F7D] text-center text-white p-2 rounded-lg">
+          <h3 className="text-2xl font-bold text-[#204E4A] mb-4 bg-gradient-to-r from-[#204E4A] to-[#6D7F7D] text-center p-2 rounded-lg">
             {category}
           </h3>
           <div className="space-y-6">
