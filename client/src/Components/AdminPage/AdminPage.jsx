@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import AdminDashboard from "../../AdminPages/AdminDashboard/AdminDashboard";
 import CustomerReviews from "../../AdminPages/CustomerReviews/CustomerReviews";
 import ManageAppointments from "../../AdminPages/ManageAppointments/ManageAppointments";
+import Inventory from "../../AdminPages/Inventory/Inventory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
@@ -36,8 +37,8 @@ const AdminPage = ({email,userName,onLogout}) => {
         return <CustomerReviews />;
       case "services":
         return <div>Services Management Component Placeholder</div>;
-      case "team":
-        return <div>Team Management Component Placeholder</div>;
+      case "inventory":
+        return <div><Inventory/></div>;
       case "settings":
         return <div>Settings Component Placeholder</div>;
       default:
@@ -110,12 +111,12 @@ const AdminPage = ({email,userName,onLogout}) => {
             </li>
             <li>
               <button
-                onClick={() => setActiveSection("team")}
+                onClick={() => setActiveSection("inventory")}
                 className={`block w-full px-6 py-2 text-left hover:bg-[#2FA79B] rounded-md transition duration-300 ease-in-out transform hover:scale-105 ${
                   activeSection === "team" ? "bg-[#2FA79B]" : ""
                 }`}
               >
-                Team
+                Inventory
               </button>
             </li>
             <li>
@@ -227,14 +228,14 @@ const AdminPage = ({email,userName,onLogout}) => {
             <li>
               <button
                 onClick={() => {
-                  setActiveSection("team");
+                  setActiveSection("inventory");
                   setIsSidebarOpen(false);
                 }}
                 className={`block w-full px-4 py-2 text-left hover:bg-[#2FA79B] rounded-md ${
-                  activeSection === "team" ? "bg-[#2FA79B]" : ""
+                  activeSection === "inventory" ? "bg-[#2FA79B]" : ""
                 }`}
               >
-                Team
+                Inventory
               </button>
             </li>
             <li>

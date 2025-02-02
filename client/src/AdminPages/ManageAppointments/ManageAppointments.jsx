@@ -79,10 +79,10 @@ const ManageAppointments = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 p-8">
-      <h1 className="text-3xl font-bold text-center text-[#204E4A] mb-8">Manage Appointments</h1>
+      <h1 className="text-3xl font-bold text-center text-[#204E4A] mb-4 font-kugile">Manage Appointments</h1>
       <div className="space-y-8">
         {[...new Set(appointments.map((appt) => appt.Date))].map((date) => (
-          <div key={date} className="bg-white shadow-lg rounded-lg p-6">
+          <div key={date} className="bg-white shadow-lg rounded-lg p-3">
             <h2 className="text-xl font-semibold text-[#204E4A] mb-4 border-b border-gray-300 pb-2">
               {new Date(date).toDateString()}
             </h2>
@@ -92,21 +92,44 @@ const ManageAppointments = () => {
                 .map((appt) => (
                   <li
                     key={appt._id}
-                    className="flex flex-wrap items-center justify-between bg-gray-50 rounded-md shadow p-4 border-l-4 border-[#2FA79B]"
+                    className="flex flex-wrap items-center justify-between bg-gray-50 rounded-md shadow p-4 border-l-4 border-[#2FA79B] space-x-4"
                   >
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-700">
-                        <strong>Time:</strong> {appt.Time}
-                      </p>
-                      <p className="text-sm text-gray-700">
-                        <strong>Email:</strong> {appt.Email}
-                      </p>
+                    {/* Avatar and Customer Details */}
+                    <div className="flex items-center space-x-4">
+                      <img
+                        src={appt.Email ? `https://static.vecteezy.com/system/resources/previews/007/455/740/non_2x/woman-face-portrait-in-minimalist-modern-style-continuous-one-line-drawing-with-abstract-shapes-illustration-for-design-cards-posters-vector.jpg` : 'https://via.placeholder.com/40'}
+                        alt="Avatar"
+                        className="w-16 h-16 rounded-full object-cover"
+                      />
+                      <div>
+                        <p className="text-lg text-gray-700">
+                          <strong>Name:</strong> {appt.Name}
+                        </p>
+                        <p className="text-lg text-gray-700">
+                          <strong>Time:</strong> {appt.Time}
+                        </p>
+                      </div>
                     </div>
+
+                    {/* Services Display */}
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      <strong className='text-md'>Services: </strong>
+                      {appt.Services.map((service, index) => (
+                        <span
+                          key={index}
+                          className="bg-[#2FA79B] text-white px-2 py-1 rounded-md text-xs"
+                        >
+                          {service}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Delete Button */}
                     <button
                       onClick={() => handleDeleteClick(appt)}
-                      className="bg-[#E53E3E] text-white px-4 py-2 rounded-md shadow hover:bg-[#C53030] transition w-full sm:w-auto"
+                      className="bg-[#E53E3E] text-white px-4 py-2 rounded-md shadow hover:bg-[#C53030] transition w-full sm:w-auto mt-4 sm:mt-0"
                     >
-                      Delete
+                      Cancel Appointment
                     </button>
                   </li>
                 ))}
@@ -144,6 +167,11 @@ const ManageAppointments = () => {
       )}
     </div>
   );
+};
+
+// Helper to generate Gravatar hash for email
+const md5 = (email) => {
+  return email.trim().toLowerCase();
 };
 
 export default ManageAppointments;
