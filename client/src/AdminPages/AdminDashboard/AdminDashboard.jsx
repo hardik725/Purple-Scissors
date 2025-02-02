@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
+import LineChart from "../LineChart/LineChart";
 import CountUp from "react-countup"
 import {
   Chart as ChartJS,
@@ -20,6 +21,8 @@ const AdminDashboard = ({ email }) => {
   const [ratingsFrequency, setRatingsFrequency] = useState([0, 0, 0, 0, 0]); // Initialize ratingsFrequency
   const [orders, setOrders] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
+  const [revenueData, setRevenueData] = useState({ labels: [], data: [] });
+  const [appointmentData, setAppointmentData] = useState({ labels: [], data: []});
   const [topProducts, setTopProducts] = useState([]);
   const [appointments, setAppointments] = useState([]);
   const [totalCustomers, setTotalCustomers] = useState(0);
@@ -45,87 +48,133 @@ const AdminDashboard = ({ email }) => {
             "Content-Type": "application/json",
           },
         });
-
+  
         if (!response.ok) {
           throw new Error("Failed to fetch orders");
         }
-
+  
         const data = await response.json();
         setOrders(data);
-
+  
         let revenue = 0;
         const productMap = new Map();
-
-        // Calculate total revenue and product quantities
-        data.forEach((order) => {
-          const { Name, Quantity = 0, Price = 0 } = order;
-
-          // Accumulate revenue
+        const dailyRevenue = new Map();
+  
+        // Get last 15 days' revenue
+        const today = new Date();
+        for (let i = 14; i >= 0; i--) {
+          const date = new Date();
+          date.setDate(today.getDate() - i);
+          const dateString = date.toISOString().split("T")[0]; // Extract YYYY-MM-DD
+          dailyRevenue.set(dateString, 0);
+        }
+  
+        // Calculate total revenue and update daily revenue
+        data.forEach(({ OrderDate, Quantity = 0, Price = 0, Name }) => {
           revenue += Quantity * Price;
-
-          // Accumulate quantities for top products
+  
+          // Convert OrderDate to YYYY-MM-DD format
+          const orderDate = new Date(OrderDate).toISOString().split("T")[0];
+  
+          // Update revenue for that date if it falls within the last 15 days
+          if (dailyRevenue.has(orderDate)) {
+            dailyRevenue.set(orderDate, dailyRevenue.get(orderDate) + Quantity * Price);
+          }
+  
+          // Track top-selling products
           if (productMap.has(Name)) {
             productMap.set(Name, productMap.get(Name) + Quantity);
           } else {
             productMap.set(Name, Quantity);
           }
         });
-
+  
+        // Set revenue data for the chart
+        setRevenueData({
+          labels: Array.from(dailyRevenue.keys()),  // Dates
+          data: Array.from(dailyRevenue.values()),  // Revenue per day
+        });
+  
         // Set total revenue
         setTotalRevenue(revenue);
-
+  
         // Get top 5 products by quantity
         const sortedProducts = Array.from(productMap.entries())
           .sort((a, b) => b[1] - a[1]) // Sort by quantity in descending order
           .slice(0, 5); // Get the top 5
-
+  
         setTopProducts(sortedProducts);
-        console.log(sortedProducts);
       } catch (error) {
         setError(error.message);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchOrders();
   }, []);
+  
+  
 
   useEffect(() => {
-    fetch('https://purple-scissors.onrender.com/appointment/allappointments')
+    console.log("Total revenue for last 15 days:", revenueData);
+  }, [revenueData]);
+
+  useEffect(() => {
+    fetch("https://purple-scissors.onrender.com/appointment/allappointments")
       .then((response) => response.json())
       .then((data) => {
         const appointments = data.appointments || [];
-        
-        // Get today's date in YYYY-MM-DD format
-        const today = new Date().toISOString().split('T')[0];
   
-        // Filter today's appointments
-        const todayAppointments = appointments.filter(appointment => 
-          appointment.Date === today
+        // Get today's date in YYYY-MM-DD format
+        const todayDate = new Date().toISOString().split("T")[0];
+  
+        // Get last 15 days' dates (formatted as strings)
+        const dailyAppointment = new Map();
+        const today = new Date();
+        for (let i = 14; i >= 0; i--) {
+          const date = new Date(today);
+          date.setDate(today.getDate() - i);
+          const dateString = date.toISOString().split("T")[0]; // Format: YYYY-MM-DD
+          dailyAppointment.set(dateString, 0);
+        }
+  
+        // Count appointments per day (use the string `Date` field)
+        appointments.forEach(({ Date }) => {
+          if (dailyAppointment.has(Date)) {
+            dailyAppointment.set(Date, (dailyAppointment.get(Date) || 0) + 1);
+          }
+        });
+  
+        setAppointmentData({
+          labels: Array.from(dailyAppointment.keys()), // Dates
+          data: Array.from(dailyAppointment.values()), // Appointments per day
+        });
+  
+        // Filter today's appointments (direct string comparison)
+        const todayAppointments = appointments.filter(
+          (appointment) => appointment.Date === todayDate
         );
   
-        setTodayAppointment(todayAppointments); // Store all today's appointments
-        console.log("Today Appointment:");
-        console.log(todayappointment);
+        setTodayAppointment(todayAppointments);
+        console.log("Today Appointments:", todayAppointments);
   
         // Group appointments by customer name
-        const customerVisits = appointments.reduce((acc, appointment) => {
-          const { Name } = appointment;
-          acc[Name] = (acc[Name] || 0) + 1; // Count the number of visits
+        const customerVisits = appointments.reduce((acc, { Name }) => {
+          acc[Name] = (acc[Name] || 0) + 1; // Count visits
           return acc;
         }, {});
   
         // Convert to an array and sort by visit count
         const topCustomers = Object.entries(customerVisits)
           .map(([Name, visits]) => ({ Name, visits }))
-          .sort((a, b) => b.visits - a.visits) // Sort by visits in descending order
-          .slice(0, 4); // Get the top 4 customers
-        
+          .sort((a, b) => b.visits - a.visits) // Sort by visits
+          .slice(0, 4); // Get top 4 customers
+  
         // Calculate service frequency
-        const serviceFrequency = appointments.reduce((acc, appointment) => {
-          appointment.Services.forEach((service) => {
-            acc[service] = (acc[service] || 0) + 1; // Count the occurrences of each service
+        const serviceFrequency = appointments.reduce((acc, { Services }) => {
+          Services.forEach((service) => {
+            acc[service] = (acc[service] || 0) + 1;
           });
           return acc;
         }, {});
@@ -133,24 +182,24 @@ const AdminDashboard = ({ email }) => {
         // Convert to an array and sort by frequency
         const topServices = Object.entries(serviceFrequency)
           .map(([service, frequency]) => ({ service, frequency }))
-          .sort((a, b) => b.frequency - a.frequency); // Sort by frequency in descending order
+          .sort((a, b) => b.frequency - a.frequency)
+          .slice(0, 4);
   
-        // Optionally limit the number of services displayed
-        const topServicesLimited = topServices.slice(0, 4);
-        setTopServices(topServicesLimited);
-        setTopService(topServicesLimited[0]?.service || '');
+        setTopServices(topServices);
+        setTopService(topServices[0]?.service || "");
   
-        // Set the appointments and the top customers
+        // Set customers and total appointments
         setAppointments(topCustomers);
         setTotalCustomers(appointments.length);
       })
-      .catch((error) => console.error('Error fetching appointments:', error));
+      .catch((error) => console.error("Error fetching appointments:", error));
   }, []);
+  
+  
 
   useEffect(() => {
     console.log("Today Appointments (after state update):", todayappointment);
-  }, [todayappointment]);
-  
+  }, [todayappointment]);  
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -557,6 +606,8 @@ const AdminDashboard = ({ email }) => {
       </div>
     </div>
   </div>
+  <div className="w-full md:w-1/2 flex flex-col"><LineChart labels={revenueData.labels} data={revenueData.data} component={"revenue"}/>
+  <LineChart labels={appointmentData.labels} data={appointmentData.data} component={"customer"}/></div>
 </div>
 
 
@@ -603,7 +654,7 @@ const AdminDashboard = ({ email }) => {
 
 <section
   id="top-insights"
-  className="mb-12 bg-center bg-cover bg-opacity-90"
+  className="mb-6 bg-center bg-cover bg-opacity-90"
   style={{
     backgroundImage: window.innerWidth < 640
       ? 'url(https://img.freepik.com/free-photo/smiling-female-owner-hairdresser-salon-showing-ok-hand-sign_329181-1954.jpg?t=st=1737985244~exp=1737988844~hmac=76e082644bcb47765838126443df0d029b91ce4f07867e7335fda3530506615d&w=740)'
@@ -699,14 +750,6 @@ const AdminDashboard = ({ email }) => {
     </div>
   </div>
 </section>
-
-
-      <section id="inventory" className="mb-12">
-        <h2 className="text-2xl font-bold text-[#204E4A] mb-6">Inventory Overview</h2>
-        <div className="p-6 bg-white rounded-lg shadow-md">
-          <p>Track product stock levels and reorder alerts...</p>
-        </div>
-      </section>
     </div>
     </>
   );
