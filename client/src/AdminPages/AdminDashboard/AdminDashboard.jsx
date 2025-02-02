@@ -614,10 +614,10 @@ const AdminDashboard = ({ email }) => {
 
 
 
-    <div className="min-h-screen bg-gray-100 p-6 lg:p-12 font-kugile">
+    <div className="min-h-screen bg-gray-100 pt-6 lg:pt-12 font-kugile">
 
 <section id="charts" className="mb-12">
-  <h2 className="text-2xl font-bold text-[#204E4A] mb-6">
+  <h2 className="text-2xl font-bold text-[#204E4A] mb-6 text-center">
     Top Products
   </h2>
   <div
@@ -654,7 +654,7 @@ const AdminDashboard = ({ email }) => {
 
 <section
   id="top-insights"
-  className="mb-6 bg-center bg-cover bg-opacity-90"
+  className="pb-6 bg-center bg-cover bg-opacity-90"
   style={{
     backgroundImage: window.innerWidth < 640
       ? 'url(https://img.freepik.com/free-photo/smiling-female-owner-hairdresser-salon-showing-ok-hand-sign_329181-1954.jpg?t=st=1737985244~exp=1737988844~hmac=76e082644bcb47765838126443df0d029b91ce4f07867e7335fda3530506615d&w=740)'
