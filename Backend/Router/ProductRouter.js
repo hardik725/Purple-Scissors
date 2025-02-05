@@ -1,5 +1,5 @@
 import express from "express";
-import { getProductsByCategory,getProductsByCompany,getProductsBySubCategory,getallproducts } from "../Controller/ProductController.js";
+import { getProductsByCategory,getProductsByCompany,getProductsBySubCategory,getallproducts,addproduct } from "../Controller/ProductController.js";
 
 
 const router = express.Router();
@@ -7,6 +7,8 @@ const router = express.Router();
 router.post("/category",getProductsByCategory);
 
 router.post("/company",getProductsByCompany);
+
+router.post("/add",addproduct);
 
 router.post("/subcategory",getProductsBySubCategory);
 
