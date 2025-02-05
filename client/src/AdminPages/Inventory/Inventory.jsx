@@ -73,11 +73,10 @@ const Inventory = () => {
 
       {isModalOpen && (
   <div className="fixed inset-0 flex justify-center z-50 bg-black bg-opacity-40">
- <div 
-  className="bg-white rounded-lg shadow-2xl relative w-[90%] max-w-xl p-2 min-h-[10vh] max-h-[78vh] overflow-y-auto"
-  style={{ top: window.scrollY + 60 + 'px' }} 
->
-
+    <div 
+      className="bg-white rounded-lg shadow-2xl relative w-[90%] max-w-xl p-2 max-h-[81vh] sm:max-h-[78vh] overflow-y-auto"
+      style={{ top: window.scrollY + '60px' }}
+    >
       
       {/* Close Button Positioned at the Top-Left Corner */}
       <button 
