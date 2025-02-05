@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import AdminDashboard from "../../AdminPages/AdminDashboard/AdminDashboard";
 import CustomerReviews from "../../AdminPages/CustomerReviews/CustomerReviews";
 import ManageAppointments from "../../AdminPages/ManageAppointments/ManageAppointments";
+import ServiceSection from "../../AdminPages/ServiceSection/ServiceSection";
 import Inventory from "../../AdminPages/Inventory/Inventory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -36,7 +37,7 @@ const AdminPage = ({email,userName,onLogout}) => {
       case "reviews":
         return <CustomerReviews />;
       case "services":
-        return <div>Services Management Component Placeholder</div>;
+        return <ServiceSection/>;
       case "inventory":
         return <div><Inventory/></div>;
       case "settings":
