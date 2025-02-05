@@ -5,6 +5,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
+import Loader from '../../Components/Loader/Loader';
 
 
 const Inventory = () => {
@@ -55,6 +56,10 @@ const Inventory = () => {
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+  if (products.length === 0) {
+    return <Loader />;
+  } else {
+  
 
   return (
     <div className="min-h-screen bg-gray-50 p-2">
@@ -93,7 +98,7 @@ const Inventory = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-80">
+        <div className="fixed inset-0 flex justify-center pt-8 z-50 bg-black bg-opacity-80">
           <div className="bg-white rounded-lg shadow-2xl relative w-[90%] max-w-xl p-2 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
             {/* Close Button */}
             <button
@@ -111,73 +116,70 @@ const Inventory = () => {
       )}
     </div>
     <section>
-    <h2 className="text-2xl md:text-4xl font-bold font-kugile text-[#204E4A] mb-3 text-center underline">
-  Products by Company
-</h2>
+  <h2 className="text-2xl md:text-4xl font-bold font-kugile text-[#204E4A] mb-3 text-center underline">
+    Products by Company
+  </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {Object.keys(companyCategories).map((company, index) => (
-          <div
-            key={company}
-            className="p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-1 relative border-2 border-[#B1C29E]"
-          >
-            <h3 className="text-2xl font-bold text-white mb-4 bg-gradient-to-r from-[#204E4A] to-[#6D7F7D] text-center p-2 rounded-lg">
-              {company}
-            </h3>
-            <Swiper
-              slidesPerView={2}
-              spaceBetween={15}
-              breakpoints={{
-                768: {
-                  slidesPerView: 3,
-                },
-              }}
-              loop={true}
-              autoplay={{
-                delay: 0,
-                disableOnInteraction: false,
-              }}
-              speed={speeds[index % speeds.length]} // Rotate speed varies per slider
-              modules={[Autoplay]}
-              className="px-4 sm:px-6 lg:px-8"
-            >
-              {companyCategories[company].map((product) => (
-                <SwiperSlide key={product._id}>
-                  <div>
-                    <div className="category-card bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transform hover:scale-105 transition-all duration-300 relative group">
-                      <div
-                        className="category-image h-[10rem] bg-cover bg-center relative"
-                        style={{ backgroundImage: `url('${product.Images[0].url}')` }}
-                      >
-        <div className="absolute inset-0 bg-black bg-opacity-30 flex justify-center items-center border-2 border-purple-300 shadow-md text-center font-kugile flex-col">
-          <h3 className="text-white text-[10px]  md:text-3xl font-bold">
-            {product.Name}
-          </h3>
-          <h3 className="text-white text-[12px]  md:text-3xl font-bold">
-          ₹{product.Price}
-          </h3>
-        </div>                        
-                        {/* <div className="absolute inset-0 bg-black bg-opacity-30 flex justify-center items-center border-2 border-purple-300 shadow-md">
-                          <h3 className="text-white text-lg md:text-xl font-bold">
-                            {product.Name} - ₹{product.Price}
-                          </h3>
-                        </div> */}
-                      </div>
+  <div className="grid grid-cols-1 gap-8">
+    {Object.keys(companyCategories).map((company, index) => (
+      <div
+        key={company}
+        className="p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-1 relative border-2 border-[#B1C29E]"
+      >
+        <h3 className="text-2xl font-bold text-white mb-4 bg-gradient-to-r from-[#204E4A] to-[#6D7F7D] text-center p-2 rounded-lg">
+          {company}
+        </h3>
+        <Swiper
+          slidesPerView={2}
+          spaceBetween={15}
+          breakpoints={{
+            768: {
+              slidesPerView: 5,
+            },
+          }}
+          loop={true}
+          autoplay={{
+            delay: 0,
+            disableOnInteraction: false,
+          }}
+          speed={speeds[index % speeds.length]} // Rotate speed varies per slider
+          modules={[Autoplay]}
+          className="px-4 "
+        >
+          {companyCategories[company].map((product) => (
+            <SwiperSlide key={product._id}>
+              <div>
+                <div className="category-card bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transform hover:scale-105 transition-all duration-300 relative group">
+                  <div
+                    className="category-image h-[10rem] sm:h-[12rem] bg-cover bg-center relative"
+                    style={{ backgroundImage: `url('${product.Images[0].url}')` }}
+                  >
+                    <div className="absolute inset-0 bg-black bg-opacity-30 flex justify-center items-center border-2 border-purple-300 shadow-md text-center font-kugile flex-col">
+                      <h3 className="text-white text-[10px] md:text-lg font-bold">
+                        {product.Name}
+                      </h3>
+                      <h3 className="text-white text-[12px] md:text-lg font-bold">
+                        ₹{product.Price}
+                      </h3>
                     </div>
                   </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        ))}
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
-    </section>
+    ))}
+  </div>
+</section>
+
+
     <section>
     <h2 className="text-2xl md:text-4xl font-bold font-kugile text-[#204E4A] mb-3 text-center underline mt-4">
   Products by Categories
 </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-8">
         {Object.keys(categoryCategories).map((category, index) => (
           <div
             key={category}
@@ -191,7 +193,7 @@ const Inventory = () => {
               spaceBetween={15}
               breakpoints={{
                 768: {
-                  slidesPerView: 3,
+                  slidesPerView: 5,
                 },
               }}
               loop={true}
@@ -201,29 +203,24 @@ const Inventory = () => {
               }}
               speed={speeds[index % speeds.length]} // Rotate speed varies per slider
               modules={[Autoplay]}
-              className="px-4 sm:px-6 lg:px-8"
+              className="px-4"
             >
               {categoryCategories[category].map((product) => (
                 <SwiperSlide key={product._id}>
                   <div>
                     <div className="category-card bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transform hover:scale-105 transition-all duration-300 relative group">
                       <div
-                        className="category-image h-[10rem] bg-cover bg-center relative"
+                        className="category-image h-[10rem] md:h-[12rem] bg-cover bg-center relative"
                         style={{ backgroundImage: `url('${product.Images[0].url}')` }}
                       >
         <div className="absolute inset-0 bg-black bg-opacity-30 flex justify-center items-center border-2 border-purple-300 shadow-md text-center font-kugile flex-col">
-          <h3 className="text-white text-[10px]  md:text-3xl font-bold">
+          <h3 className="text-white text-[10px]  md:text-lg font-bold">
             {product.Name}
           </h3>
-          <h3 className="text-white text-[12px]  md:text-3xl font-bold">
+          <h3 className="text-white text-[12px]  md:text-lg font-bold">
           ₹{product.Price}
           </h3>
         </div>                        
-                        {/* <div className="absolute inset-0 bg-black bg-opacity-30 flex justify-center items-center border-2 border-purple-300 shadow-md">
-                          <h3 className="text-white text-lg md:text-xl font-bold">
-                            {product.Name} - ₹{product.Price}
-                          </h3>
-                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -236,6 +233,7 @@ const Inventory = () => {
     </section>
     </div>
   );
+}
 };
 
 export default Inventory;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Loader from "../../Components/Loader/Loader";
 
 const CustomerReviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -21,8 +22,8 @@ const CustomerReviews = () => {
     fetchReviews();
   }, []);
 
-  if (loading) {
-    return <div className="text-center mt-12 text-lg font-bold">Loading Reviews...</div>;
+  if (reviews.length === 0) {
+    return <Loader/>;
   }
 
   if (error) {

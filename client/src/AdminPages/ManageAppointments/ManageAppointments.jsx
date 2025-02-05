@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Loader from '../../Components/Loader/Loader';
 
 const ManageAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -76,7 +77,9 @@ const ManageAppointments = () => {
       alert('Error deleting appointment.');
     }
   };
-
+  if(appointments.length===0){
+    return <Loader/>;
+  }else{
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 p-8">
       <h1 className="text-3xl font-bold text-center text-[#204E4A] mb-4 font-kugile">Manage Appointments</h1>
@@ -167,6 +170,7 @@ const ManageAppointments = () => {
       )}
     </div>
   );
+}
 };
 
 // Helper to generate Gravatar hash for email
