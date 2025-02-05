@@ -53,7 +53,7 @@ const Inventory = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gray-50 p-2">
       <h1 className="text-3xl md:text-5xl font-extrabold text-center text-[#204E4A] mb-8 font-kugile">
         Product Inventory
       </h1>
@@ -72,9 +72,9 @@ const Inventory = () => {
       </button>
 
       {isModalOpen && (
-  <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40">
+  <div className="fixed inset-0 flex justify-center z-50 bg-black bg-opacity-40">
     <div 
-      className="bg-white rounded-lg shadow-2xl relative w-[90%] max-w-xl p-6 max-h-[80vh] overflow-y-auto"
+      className="bg-white rounded-lg shadow-2xl relative w-[90%] max-w-xl p-2 max-h-[69vh] sm:max-h-[78vh] overflow-y-auto"
       style={{ top: window.scrollY + '60px' }}
     >
       
@@ -87,10 +87,6 @@ const Inventory = () => {
         <FontAwesomeIcon icon={faXmark} />
       </button>
 
-      {/* Header Section */}
-      <div className="flex items-center justify-center border-b pb-3 mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">Add New Product</h2>
-      </div>
 
       {/* Content */}
       <AddInventory />
