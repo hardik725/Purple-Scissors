@@ -74,7 +74,7 @@ const Inventory = () => {
       {isModalOpen && (
   <div className="fixed inset-0 flex justify-center z-50 bg-black bg-opacity-40">
     <div 
-      className="bg-white rounded-lg shadow-2xl relative w-[90%] max-w-xl p-2 max-h-[81vh] sm:max-h-[85vh] overflow-y-auto"
+      className="bg-white rounded-lg shadow-2xl relative w-[90%] max-w-xl p-2 max-h-[87vh] sm:max-h-[85vh] overflow-y-auto"
       style={{ top: window.scrollY + '60px' }}
     >
       
