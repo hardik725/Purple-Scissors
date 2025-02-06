@@ -117,42 +117,38 @@ const AddInventory = () => {
     />
     
     {/* Company Dropdown */}
-    <input
-      type="text"
-      name="Company"
-      value={productData.Company}
-      onChange={handleChange}
-      required
-      placeholder="Company"
-      list="company-options"
-      className="p-3 rounded-lg border border-[#b076ff] text-gray-700 bg-white w-full focus:ring-2 focus:ring-purple-500"
-    />
-    <datalist id="company-options">
-      <option value="Jeannot" />
-      <option value="Raaga" />
-      <option value="VLCC" />
-      <option value="Lakme" />
-      <option value="Matrix" />
-      <option value="MAC" />
-    </datalist>
+    <select
+  name="Company"
+  value={productData.Company}
+  onChange={handleChange}
+  required
+  className="p-3 rounded-lg border border-[#b076ff] text-gray-700 bg-white w-full focus:ring-2 focus:ring-purple-500"
+>
+  <option value="" disabled>Select a Company</option>
+  <option value="Jeannot">Jeannot</option>
+  <option value="Raaga">Raaga</option>
+  <option value="VLCC">VLCC</option>
+  <option value="Lakme">Lakme</option>
+  <option value="Matrix">Matrix</option>
+  <option value="MAC">MAC</option>
+</select>
+
 
     {/* Category Dropdown */}
-    <input
-      type="text"
-      name="main"
-      value={productData.Category.main}
-      onChange={handleCategoryChange}
-      required
-      placeholder="Main Category"
-      list="category-options"
-      className="p-3 rounded-lg border border-[#b076ff] text-gray-700 bg-white w-full focus:ring-2 focus:ring-purple-500"
-    />
-    <datalist id="category-options">
-      <option value="Hair" />
-      <option value="Skin" />
-      <option value="Face" />
-      <option value="Makeup" />
-    </datalist>
+    <select
+  name="main"
+  value={productData.Category.main}
+  onChange={handleCategoryChange}
+  required
+  className="p-3 rounded-lg border border-[#b076ff] text-gray-700 bg-white w-full focus:ring-2 focus:ring-purple-500"
+>
+  <option value="" disabled>Select a Main Category</option>
+  <option value="Hair">Hair</option>
+  <option value="Skin">Skin</option>
+  <option value="Face">Face</option>
+  <option value="Makeup">Makeup</option>
+</select>
+
 
     <input
       type="text"
