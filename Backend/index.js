@@ -8,6 +8,7 @@ import EmailTransporter from "./Router/EmailTransporter.js";
 import TempUserRouter from "./Router/TempUserRouter.js";
 import ReviewRouter from "./Router/ReviewRouter.js";
 import ProductRouter from "./Router/ProductRouter.js";
+import ServiceRouter from "./Router/ServiceRouter.js";
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ app.use("/mail",EmailTransporter);
 app.use("/temp",TempUserRouter);
 app.use("/review",ReviewRouter);
 app.use("/product",ProductRouter);
+app.use("/service",ServiceRouter);
 
 // Example route
 app.get('/', (req, res) => {
