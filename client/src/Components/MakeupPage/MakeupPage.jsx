@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
+import Loader from "../Loader/Loader";
 
 const MakeupPage = ({ email, userName, onLogout }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [categoryData, setCategoryData] = useState([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -16,66 +18,51 @@ const MakeupPage = ({ email, userName, onLogout }) => {
     };
   }, []);
 
+        useEffect(() => {
+          const getData = async () => {
+            try {
+              const response = await fetch("https://purple-scissors.onrender.com/service/get", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ Category: "MakeUp" }),
+              });
+        
+              if (!response.ok) {
+                throw new Error("Failed to post category");
+              }
+        
+              const data = await response.json();
+              setCategoryData(data.services);
+            } catch (error) {
+              console.error("Error posting category:", error);
+            }
+          };
+        
+          getData();
+        }, []);
+
   const categories = [
     {
       title: "Bridal Makeup",
       image:
         "https://media.istockphoto.com/id/1174369498/photo/an-important-part-of-her-culture.jpg?s=612x612&w=0&k=20&c=pcRZSo9txn1brW0wcVYTey8i6H223DtO8KgKDlBqkcc=",
-      services: [
-        "Classic Bridal Look",
-        "Airbrush Makeup",
-        "HD Bridal Makeup",
-        "Contemporary Bridal Styles",
-        "Traditional Bridal Look",
-        "Reception Bridal Makeup",
-        "Engagement Ceremony Look",
-        "Pre-Bridal Skincare & Makeup Packages",
-      ],
     },
     {
       title: "Party Makeup",
       image:
         "https://media.istockphoto.com/id/964839486/photo/nice-rich-independent-confident-successful-luxury-sexy-girl-holding-hat-on-her-head-with-hands.jpg?s=612x612&w=0&k=20&c=O_ikrZq3YgPLt_lRXtLdVa52TjkcVbyBST6OeOx40xA=",
-      services: [
-        "Evening Glam Look",
-        "Cocktail Party Makeup",
-        "Themed Party Styles",
-        "Custom Glitter Effects",
-        "Festive Makeup",
-        "Matte Finish Party Look",
-        "Glow & Shimmer Makeup",
-        "Prom Makeup Styles",
-      ],
     },
     {
       title: "Professional Makeup",
       image:
         "https://media.istockphoto.com/id/687244776/photo/makeup-artist-applying-eyeshadow-on-a-girl.jpg?s=612x612&w=0&k=20&c=QkFL3oe-poYi4p1ZaboIOVie_ycRz0fTJG9Ex5LpNoQ=",
-      services: [
-        "Corporate Looks",
-        "Photo Shoot Makeup",
-        "Editorial Makeup",
-        "Interview Ready Styles",
-        "Portfolio Shoot Makeup",
-        "Stage & Performance Makeup",
-        "TV/Camera Ready Makeup",
-        "Custom Professional Looks",
-      ],
     },
     {
       title: "Everyday Makeup",
       image:
         "https://img.freepik.com/free-photo/young-woman-applying-compact-powder-with-makeup-brush_23-2148161319.jpg?t=st=1736958825~exp=1736962425~hmac=ed0dd8c53d5ab378a5a929447ecca47ce34e979bbc36fe02be8892ff3f263272&w=1380",
-      services: [
-        "Subtle Day Look",
-        "Natural Glow",
-        "No-Makeup Makeup Look",
-        "Minimalist Styles",
-        "Light Contouring & Highlighting",
-        "Casual Party Ready Look",
-        "Quick 10-Minute Makeup",
-        "Fresh & Dewy Everyday Look",
-      ],
     },
   ];
   
@@ -114,7 +101,7 @@ const MakeupPage = ({ email, userName, onLogout }) => {
 </div>
 
         <div className="space-y-12 relative z-10 mt-2">
-          {categories.map((category, index) => {
+          {categoryData.map((category, index) => {
             const marginTop = category.services.length * 31;
 
             return (
@@ -122,7 +109,7 @@ const MakeupPage = ({ email, userName, onLogout }) => {
                 key={index}
                 className="relative mx-auto w-11/12 lg:w-3/5"
                 style={{
-                  backgroundImage: `url(${category.image})`,
+                  backgroundImage: `url(${categories[index].image})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   height: "600px",
@@ -131,7 +118,7 @@ const MakeupPage = ({ email, userName, onLogout }) => {
               >
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-8">
                   <h2 className="text-3xl font-bold text-white mb-4">
-                    {category.title}
+                    {category.subCategory}
                   </h2>
                 </div>
 
@@ -149,8 +136,8 @@ const MakeupPage = ({ email, userName, onLogout }) => {
                       key={`${service}-${i}`}
                       className="flex justify-between text-white text-lg border-b border-gray-500 pb-2"
                     >
-                      <span>{service}</span>
-                      <span>Price TBD</span>
+                      <span>{service.name}</span>
+                      <span>{service.price}</span>
                     </li>
                   ))}
                 </ul>
@@ -205,17 +192,17 @@ const MakeupPage = ({ email, userName, onLogout }) => {
 </div>
 
         <div>
-          {categories.map((category, index) => (
+          {categoryData.map((category, index) => (
             <div
               key={index}
               className="relative bg-white shadow-lg overflow-hidden"
             >
               <div
                 className="h-64 bg-cover bg-center flex justify-center items-center text-center"
-                style={{ backgroundImage: `url(${category.image})` }}
+                style={{ backgroundImage: `url(${categories[index].image})` }}
               >
                 <h2 className="text-3xl font-bold text-black tracking-wide uppercase bg-white opacity-65 p-1">
-                  {category.title}
+                  {category.subCategory}
                 </h2>
               </div>
 
@@ -225,8 +212,8 @@ const MakeupPage = ({ email, userName, onLogout }) => {
                     key={`${service.name}-${i}`}
                     className="flex justify-between text-sm"
                   >
-                    <span>{service}</span>
-                    <span>TBD</span>
+                    <span>{service.name}</span>
+                    <span>{service.price}</span>
                   </li>
                 ))}
               </ul>

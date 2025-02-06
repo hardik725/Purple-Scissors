@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
+import Loader from "../Loader/Loader";
 
 const Essentials = ({ email, userName, onLogout }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [categoryData, setCategoryData] = useState([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -16,61 +18,53 @@ const Essentials = ({ email, userName, onLogout }) => {
     };
   }, []);
 
+        useEffect(() => {
+          const getData = async () => {
+            try {
+              const response = await fetch("https://purple-scissors.onrender.com/service/get", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ Category: "Essentials" }),
+              });
+        
+              if (!response.ok) {
+                throw new Error("Failed to post category");
+              }
+        
+              const data = await response.json();
+              setCategoryData(data.services);
+            } catch (error) {
+              console.error("Error posting category:", error);
+            }
+          };
+        
+          getData();
+        }, []);
+
   const categories = [
     {
       title: "Nail Care",
       image: "https://img.freepik.com/free-photo/woman-doing-manicure-client-close-up_23-2148697076.jpg?t=st=1736960428~exp=1736964028~hmac=c14eef6ff560097272deb78decba1464ebe8c5403e88bfc41afc9aecbe94ab47&w=1380",
-      services: [
-        "Manicure & Pedicure",
-        "Gel Nails",
-        "Nail Art",
-        "Cuticle Care",
-        "Acrylic Nail Extensions",
-        "Nail Strengthening Treatments",
-        "French Manicure",
-      ],
     },
     {
       title: "Threading & Waxing",
       image: "https://media.istockphoto.com/id/603912306/photo/master-in-the-cabin-removes-facial-hair-strand.jpg?s=612x612&w=0&k=20&c=FdMxBRQyZNn98Cvc7Okg_dmujvsrmBHbBzr3XluzT_8=",
-      services: [
-        "Eyebrow Threading",
-        "Full Face Threading",
-        "Body Waxing",
-        "Sensitive Skin Waxing",
-        "Brazilian Wax",
-        "Underarm Waxing",
-        "Leg & Arm Waxing",
-      ],
     },
     {
       title: "Body Grooming",
       image: "https://media.istockphoto.com/id/1372281793/photo/woman-body-and-face-skin-care-cosmetics-women-shoulder-hand-massage-beauty-model-with-armpit.jpg?s=612x612&w=0&k=20&c=FFN6kJ6yBxggSxcOKWMRJVtWADL98W0HCbnHiYuC3-M=",
-      services: [
-        "Body Polishing",
-        "Exfoliation Treatments",
-        "Hair Removal Services",
-        "Back Scrubs",
-        "Skin Hydration Treatments",
-        "Scalp Treatments",
-        "Collagen Boosting Therapy",
-      ],
     },
     {
       title: "Spa & Relaxation",
       image: "https://images.pexels.com/photos/3757952/pexels-photo-3757952.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      services: [
-        "Body Massage",
-        "Aromatherapy",
-        "Detox Treatments",
-        "Foot Spa",
-        "Hot Stone Therapy",
-        "Deep Tissue Massage",
-        "Reflexology",
-      ],
     },
   ];
-  
+
+  if(categoryData.length === 0){
+    return <Loader/>;
+  }
 
   if (!isMobile) {
     return (
@@ -106,7 +100,7 @@ const Essentials = ({ email, userName, onLogout }) => {
   </div>
 </div>
         <div className="space-y-12 relative z-10 mt-2">
-          {categories.map((category, index) => {
+          {categoryData.map((category, index) => {
             const marginTop = category.services.length * 31;
 
             return (
@@ -114,7 +108,7 @@ const Essentials = ({ email, userName, onLogout }) => {
                 key={index}
                 className="relative mx-auto w-11/12 lg:w-3/5"
                 style={{
-                  backgroundImage: `url(${category.image})`,
+                  backgroundImage: `url(${categories[index].image})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   height: "600px",
@@ -123,7 +117,7 @@ const Essentials = ({ email, userName, onLogout }) => {
               >
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-8">
                   <h2 className="text-3xl font-bold text-white mb-4">
-                    {category.title}
+                    {category.subCategory}
                   </h2>
                 </div>
 
@@ -141,8 +135,8 @@ const Essentials = ({ email, userName, onLogout }) => {
                       key={`${service}-${i}`}
                       className="flex justify-between text-white text-lg border-b border-gray-500 pb-2"
                     >
-                      <span>{service}</span>
-                      <span>Price TBD</span>
+                      <span>{service.name}</span>
+                      <span>{service.price}</span>
                     </li>
                   ))}
                 </ul>
@@ -197,17 +191,17 @@ const Essentials = ({ email, userName, onLogout }) => {
 </div>
 
         <div>
-          {categories.map((category, index) => (
+          {categoryData.map((category, index) => (
             <div
               key={index}
               className="relative bg-white shadow-lg overflow-hidden"
             >
               <div
                 className="h-64 bg-cover bg-center flex justify-center items-center text-center"
-                style={{ backgroundImage: `url(${category.image})` }}
+                style={{ backgroundImage: `url(${categories[index].image})` }}
               >
                 <h2 className="text-3xl font-bold text-black tracking-wide uppercase bg-white opacity-65 p-1">
-                  {category.title}
+                  {category.subCategory}
                 </h2>
               </div>
 
@@ -217,8 +211,8 @@ const Essentials = ({ email, userName, onLogout }) => {
                     key={`${service.name}-${i}`}
                     className="flex justify-between text-sm"
                   >
-                    <span>{service}</span>
-                    <span>TBD</span>
+                    <span>{service.name}</span>
+                    <span>{service.price}</span>
                   </li>
                 ))}
               </ul>

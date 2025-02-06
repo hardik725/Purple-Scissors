@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
+import Loader from "../Loader/Loader";
 
 const FacePage = ({ email, userName, onLogout }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [categoryData, setCategoryData] = useState([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -13,79 +15,57 @@ const FacePage = ({ email, userName, onLogout }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+        useEffect(() => {
+          const getData = async () => {
+            try {
+              const response = await fetch("https://purple-scissors.onrender.com/service/get", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ Category: "Face" }),
+              });
+        
+              if (!response.ok) {
+                throw new Error("Failed to post category");
+              }
+        
+              const data = await response.json();
+              setCategoryData(data.services);
+            } catch (error) {
+              console.error("Error posting category:", error);
+            }
+          };
+        
+          getData();
+        }, []);
+
   const categories = [
     {
       title: "Facials & Cleanups",
       image:
         "https://media.istockphoto.com/id/1393108496/photo/sensual-photo-of-beautiful-young-asian-woman-with-with-eyes-closed-applying-cotton-facial.jpg?s=612x612&w=0&k=20&c=5ZIDY_Pt7m9MBIcNEWJnGM7ckhKpvAtBOzKhqTlobl0=",
-      services: [
-        "Basic Cleanup (Oily, Dry, Combination Skin)",
-        "Advanced D Tan Cleanup",
-        "Bleach (Gold, Diamond, Oxy, Platinum)",
-        "Gold Facial",
-        "Diamond Facial",
-        "Insta Glow Facial (Gold, Diamond, Silver)",
-        "Chandan Facial",
-        "Fruit Facial (Banana, Kiwi, Papaya, Grapes)",
-        "Wine Facial",
-        "Chocolate Facial",
-        "Hydrating Glow Facial",
-        "Brightening Facial",
-        "Anti-Pollution Facial",
-      ],
     },
     {
       title: "Skin Treatments",
       image:
         "https://images.pexels.com/photos/3738355/pexels-photo-3738355.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      services: [
-        "Face Pigmentation Treatment",
-        "Acne Treatment",
-        "Anti-Aging Treatment (Age Lock Therapy)",
-        "Ozone Therapy",
-        "Scalp & Skin Detox",
-        "Collagen Boost Therapy",
-        "Skin Tightening Treatment",
-        "Dark Circle Reduction",
-        "Skin Brightening Therapy",
-        "Chemical Peels (Mild & Intense)",
-      ],
     },
     {
       title: "Customized Services",
       image:
         "https://media.istockphoto.com/id/1202956145/photo/cheerful-girlfriends-with-face-masks-wearing-bathrobes-drinking-champagne.jpg?s=612x612&w=0&k=20&c=Bv1aYWi-B74IVxwrbIUXVQLwacb8qtXBmc6RW45bHdE=",
-      services: [
-        "Oily Skin Cleanup",
-        "Dry Skin Cleanup",
-        "Combination Skin Cleanup",
-        "Customized Facials for Sensitive Skin",
-        "Blackhead & Whitehead Removal",
-        "Pore Refining Treatments",
-        "Soothing Therapy for Irritated Skin",
-        "Pre-Bridal & Bridal Custom Facials",
-      ],
     },
     {
       title: "Premium & Branded Services",
       image:
         "https://as2.ftcdn.net/v2/jpg/09/45/49/19/1000_F_945491939_l6s62aubKJtJv4PD9NbvD7oVH2bRPKB8.jpg",
-      services: [
-        "Raga Facial",
-        "Lotus Facial",
-        "O3+ Therapy",
-        "Shahnaz Gold Facial",
-        "Jannot Facial",
-        "Labell Anti-Aging Treatment",
-        "Luxury Gold Facial",
-        "Platinum Facial",
-        "24K Gold Radiance Treatment",
-        "Herbal & Organic Skin Care Facial",
-        "O3+ Whitening Treatment",
-      ],
     },
   ];
   
+  if(categoryData.length === 0){
+    return <Loader/>
+  }
 
   if (!isMobile) {
     return (
@@ -123,7 +103,7 @@ const FacePage = ({ email, userName, onLogout }) => {
 
         {/* Categories Section */}
         <div className="space-y-12 relative z-10 mt-2">
-          {categories.map((category, index) => {
+          {categoryData.map((category, index) => {
             const marginTop = category.services.length * 39;
 
             return (
@@ -131,7 +111,7 @@ const FacePage = ({ email, userName, onLogout }) => {
                 key={index}
                 className="relative mx-auto w-11/12 lg:w-3/5"
                 style={{
-                  backgroundImage: `url(${category.image})`,
+                  backgroundImage: `url(${categories[index].image})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   height: "500px",
@@ -141,7 +121,7 @@ const FacePage = ({ email, userName, onLogout }) => {
                 {/* Overlay Content */}
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-8">
                   <h2 className="text-3xl font-bold text-white mb-4">
-                    {category.title}
+                    {category.subCategory}
                   </h2>
                 </div>
 
@@ -160,8 +140,8 @@ const FacePage = ({ email, userName, onLogout }) => {
                       key={`${service}-${i}`}
                       className="flex justify-between text-white text-lg border-b border-gray-500 pb-2"
                     >
-                      <span>{service}</span>
-                      <span>Price TBD</span>
+                      <span>{service.name}</span>
+                      <span>{service.price}</span>
                     </li>
                   ))}
                 </ul>
@@ -219,7 +199,7 @@ const FacePage = ({ email, userName, onLogout }) => {
 
         {/* Categories */}
         <div>
-          {categories.map((category, index) => (
+          {categoryData.map((category, index) => (
             <div
               key={index}
               className="relative bg-white shadow-lg overflow-hidden"
@@ -227,10 +207,10 @@ const FacePage = ({ email, userName, onLogout }) => {
               {/* Background Image */}
               <div
                 className="h-64 bg-cover bg-center flex justify-center items-center text-center"
-                style={{ backgroundImage: `url(${category.image})` }}
+                style={{ backgroundImage: `url(${categories[index].image})` }}
               >
                 <h2 className="text-3xl font-bold text-black tracking-wide uppercase bg-white opacity-75 p-1">
-                  {category.title}
+                  {category.subCategory}
                 </h2>
               </div>
 
@@ -241,8 +221,8 @@ const FacePage = ({ email, userName, onLogout }) => {
                     key={`${service.name}-${i}`}
                     className="flex justify-between text-sm"
                   >
-                    <span>{service}</span>
-                    <span>TBD</span>
+                    <span>{service.name}</span>
+                    <span>{service.price}</span>
                   </li>
                 ))}
               </ul>

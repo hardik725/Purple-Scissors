@@ -1,10 +1,12 @@
 import React from "react";
 import { useState,useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
+import Loader from "../Loader/Loader";
 
 
 const HairPage = ({ email, userName, onLogout }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [categoryData, setCategoryData] = useState([]);
   
         useEffect(() => {
           const handleResize = () => {
@@ -19,72 +21,55 @@ const HairPage = ({ email, userName, onLogout }) => {
             window.removeEventListener("resize", handleResize);
           };
         }, []);
+        useEffect(() => {
+          const getData = async () => {
+            try {
+              const response = await fetch("https://purple-scissors.onrender.com/service/get", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ Category: "Hair" }),
+              });
+        
+              if (!response.ok) {
+                throw new Error("Failed to post category");
+              }
+        
+              const data = await response.json();
+              setCategoryData(data.services);
+            } catch (error) {
+              console.error("Error posting category:", error);
+            }
+          };
+        
+          getData();
+        }, []);
   const categories = [
     {
       title: "Haircuts & Styles",
       image:
         "https://images.pexels.com/photos/3065171/pexels-photo-3065171.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      services: [
-        "Single Length Cut",
-        "U Cut",
-        "V Cut",
-        "Layers",
-        "Millennium Cut",
-        "Full Laser Cut",
-        "Graduation Cut",
-        "Straight Style",
-        "Curl Style",
-        "Crimping",
-        "Jura (Hair Bun)",
-        "Custom Styling",
-      ],
     },
     {
       title: "Hair Treatments",
       image:
         "https://as1.ftcdn.net/v2/jpg/09/66/01/90/1000_F_966019067_zc1ScIkFNADnvR5WU8WlauRCyWc9L20G.jpg",
-      services: [
-        "Hair Straightening",
-        "Rebonding",
-        "Smoothening",
-        "Keratin Treatment",
-        "Hair Botox",
-        "Dandruff Treatment",
-        "Hair Fall Treatment",
-        "Protein Mask Therapy",
-        "Scalp Detox Treatment",
-      ],
     },
     {
       title: "Hair Coloring",
       image:
         "https://images.pexels.com/photos/20894394/pexels-photo-20894394/free-photo-of-hair-coloring-in-beauty-salon.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      services: [
-        "Global Coloring",
-        "Partial Highlight",
-        "Full Highlight",
-        "Balayage",
-        "Ombre",
-        "Root Touch-Up",
-        "Toner Application",
-        "Customized Hair Shades",
-      ],
     },
     {
       title: "Hair Spa & Care",
       image:
         "https://images.pexels.com/photos/7755680/pexels-photo-7755680.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      services: [
-        "Deep Conditioning",
-        "Hot Oil Treatment",
-        "Hair Spa",
-        "Scalp Treatment",
-        "Hydration Therapy",
-        "Anti-Frizz Care",
-        "Strengthening Hair Therapy",
-      ],
     },
   ];
+  if(categoryData.length === 0){
+    return <Loader/>;
+  }
   if(!isMobile){
   return (
 <div className="bg-[#EDEDFD] text-black font-kugile relative">
@@ -143,7 +128,7 @@ const HairPage = ({ email, userName, onLogout }) => {
 
   {/* Categories Section */}
   <div className="space-y-12 relative z-10 mt-2">
-    {categories.map((category, index) => {
+    {categoryData.map((category, index) => {
       // Calculate dynamic margin-top based on the number of services
       const marginTop = category.services.length * 39;
 
@@ -152,7 +137,7 @@ const HairPage = ({ email, userName, onLogout }) => {
           key={index}
           className="relative mx-auto w-11/12 lg:w-3/5"
           style={{
-            backgroundImage: `url(${category.image})`,
+            backgroundImage: `url(${categories[index].image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             height: "500px",
@@ -162,7 +147,7 @@ const HairPage = ({ email, userName, onLogout }) => {
           {/* Overlay Content */}
           <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-8">
             <h2 className="text-3xl font-bold text-white mb-4">
-              {category.title}
+              {category.subCategory}
             </h2>
           </div>
 
@@ -181,8 +166,8 @@ const HairPage = ({ email, userName, onLogout }) => {
                 key={`${service}-${i}`}
                 className="flex justify-between text-white text-lg border-b border-gray-500 pb-2"
               >
-                <span>{service}</span>
-                <span>Price TBD</span>
+                <span>{service.name}</span>
+                <span>{service.price}</span>
               </li>
             ))}
           </ul>
@@ -243,7 +228,7 @@ const HairPage = ({ email, userName, onLogout }) => {
   
         {/* Categories */}
         <div >
-          {categories.map((category, index) => (
+          {categoryData.map((category, index) => (
             <div
               key={index}
               className="relative bg-white shadow-lg overflow-hidden "
@@ -251,10 +236,10 @@ const HairPage = ({ email, userName, onLogout }) => {
               {/* Background Image */}
               <div
                 className="h-64 bg-cover bg-center flex justify-center items-center text-center"
-                style={{ backgroundImage: `url(${category.image})` }}
+                style={{ backgroundImage: `url(${categories[index].image})` }}
               >
                                 <h2 className="text-3xl font-bold text-black tracking-wide uppercase bg-white opacity-65 p-1">
-                  {category.title}
+                  {category.subCategory}
                 </h2>
               </div>
   
@@ -267,8 +252,8 @@ const HairPage = ({ email, userName, onLogout }) => {
                     key={`${service.name}-${i}`}
                     className="flex justify-between text-sm"
                   >
-                    <span>{service}</span>
-                    <span>TBD</span>
+                    <span>{service.name}</span>
+                    <span>{service.price}</span>
                   </li>
                 ))}
               </ul>
