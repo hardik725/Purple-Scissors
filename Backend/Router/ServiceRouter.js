@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post("/add", addService);
 
-router.get("/get",getServicesByCategory);
+router.post("/get",getServicesByCategory);
 
 export default router;
