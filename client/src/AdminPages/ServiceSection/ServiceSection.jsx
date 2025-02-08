@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../Components/Loader/Loader";
 import ServicePopup from "../ServicePopup/ServicePopup";// Importing the ServicePopup component
+import AddServiceForm from "../AddServiceForm/AddServiceForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,6 +19,13 @@ const ServiceSection = () => {
   const [topCustomer, setTopCustomer] = useState("");
 
   const [showPopup, setShowPopup] = useState(false); // State to control the popup visibility
+  const [showAddServicePopup, setShowAddServicePopup] = useState(false); 
+
+  // Toggle Add Service Popup
+  const toggleAddServicePopup = () => {
+    setShowAddServicePopup(!showAddServicePopup);
+  };
+  
 
   const apiCategories = [
     { key: "Hair", setter: setHairService },
@@ -82,6 +90,18 @@ const ServiceSection = () => {
       .catch((error) => console.error("Error fetching appointments:", error));
   }, []);
 
+  useEffect(() => {
+    if (showPopup) {
+      document.body.style.overflow = "hidden"; // Disable scrolling
+    } else {
+      document.body.style.overflow = "auto"; // Enable scrolling
+    }
+
+    return () => {
+      document.body.style.overflow = "auto"; // Cleanup on unmount
+    };
+  }, [showPopup]);
+
   const handleClick = (category) => {
     switch (category) {
       case "Hair":
@@ -108,6 +128,7 @@ const ServiceSection = () => {
   }
 
   return (
+    <div className="bg-black">
     <div className="min-h-screen w-full font-kugile text-xl flex flex-col items-center text-white text-center bg-gradient-radial from-[#B369D8] via-black to-black px-4 py-12">
       <h1 className="text-3xl md:text-4xl mb-6 font-bold mt-4">Our Services</h1>
 
@@ -155,7 +176,7 @@ const ServiceSection = () => {
       {/* Popup Component */}
       {showPopup && (
   <div className="fixed inset-0 flex justify-center z-50 bg-black bg-opacity-80">
-    <div className="bg-white shadow-2xl relative w-full max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+    <div className="bg-gradient-to-r from-[#bdc3c7] to-[#2c3e50] shadow-2xl relative w-full max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
       {/* Close button on top-right */}
       <button
         onClick={() => setShowPopup(false)}
@@ -173,8 +194,38 @@ const ServiceSection = () => {
   </div>
 )}
 
+<div className="mt-10 px-5 py-5 sm:px-10 sm:py-12 rounded-lg shadow-md border border-gray-300 bg-center bg-cover" 
+style={{backgroundImage: 'url(https://static.vecteezy.com/system/resources/previews/023/438/704/non_2x/single-one-line-drawing-happy-young-woman-in-hair-salon-going-for-change-of-style-discussing-hairstyling-with-her-hairdresser-holding-hair-dryer-modern-continuous-line-draw-design-graphic-vector.jpg)'}}>
+            <h3 className="text-xl font-semibold text-gray-800">Add a New Service</h3>
+            <p className="text-gray-600 text-sm mt-2">Click the button below to add a new service to this category.</p>
 
+            {/* Add Service Button */}
+            <div className="mt-8">
+              <button onClick={toggleAddServicePopup} 
+              className="px-5 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition-all duration-300 text-sm sm:text-lg">
+                + Add Service
+              </button>
+            </div>
+          </div>
+          {showAddServicePopup && (
+          <div className="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-80 p-2">
+            <div className="bg-white p-6 shadow-xl relative w-full max-w-md">
+              {/* Close Button */}
+              <button
+        onClick={toggleAddServicePopup} 
+        className="absolute top-0 right-0 bg-red-600 text-white text-lg p-3 transition-all duration-300 hover:bg-red-700 focus:outline-none z-20"
+        style={{ borderRadius: "0px 0px 0px 10px" }}
+      >
+        <FontAwesomeIcon icon={faXmark} />
+      </button>
+
+              {/* Add Service Form */}
+              <AddServiceForm onSubmit={() => setShowAddServicePopup(false)} />
+            </div>
+          </div>
+        )}
     </div>
+  </div>
   );
 };
 
