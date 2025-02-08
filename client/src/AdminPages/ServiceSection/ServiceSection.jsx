@@ -211,7 +211,7 @@ style={{backgroundImage: 'url(https://static.vecteezy.com/system/resources/previ
           <div className="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-80 p-2">
             <div className="bg-white p-6 shadow-xl relative w-full max-w-md">
               {/* Close Button */}
-              <button
+      <button
         onClick={toggleAddServicePopup} 
         className="absolute top-0 right-0 bg-red-600 text-white text-lg p-3 transition-all duration-300 hover:bg-red-700 focus:outline-none z-20"
         style={{ borderRadius: "0px 0px 0px 10px" }}
@@ -220,7 +220,8 @@ style={{backgroundImage: 'url(https://static.vecteezy.com/system/resources/previ
       </button>
 
               {/* Add Service Form */}
-              <AddServiceForm onSubmit={() => setShowAddServicePopup(false)} />
+              <AddServiceForm onSubmit={() => setShowAddServicePopup(false)} 
+                hairservice={hairService} faceservice={faceService} makeupservice={makeupService} essentialservice={essentialService}/>
             </div>
           </div>
         )}

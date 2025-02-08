@@ -5,7 +5,7 @@ function ServicePopup({ selectedCategory, selectedServices }) {
     <div className="z-10">
       {/* Pop-up overlay and content */}
       <div className="fixed inset-0 flex justify-center items-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-gradient-to-r from-[#bdc3c7] to-[#2c3e50] w-full max-w-3xl rounded-xl shadow-xl p-6 max-h-[85vh] overflow-y-auto transform transition-all duration-300 scale-100">
+      <div className="bg-gradient-to-r from-[#bdc3c7] to-[#2c3e50] w-full max-w-3xl shadow-xl p-6 max-h-[100vh] overflow-y-auto transform transition-all duration-300 scale-100">
         
         {/* Header */}
         <h2 className="text-3xl font-bold text-gray-900 text-center tracking-wide mb-6 capitalize">
